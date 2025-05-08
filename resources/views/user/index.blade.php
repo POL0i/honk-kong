@@ -8,36 +8,30 @@
 
     <h2 style= "font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Lista De Productos</h2>
     <a href="/home" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Volver</a>
-    <a href="/producto/crear" class="btn btn-primary"> Crear +</a>
+    <a href="/user/crear" class="btn btn-primary"> Crear +</a>
     <table class="table table-dark table-striped mt-4">
         <thead>
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Descripcion</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Link imagen</th>
-                <th scope="col">Promocion</th>
-                <th scope="col">ID categoria</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Contraseña</th>
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($productos as $producto)
+            @foreach($users as $user)
             <tr>
-                <td>{{$producto->id_producto}}</td>
-                <td>{{$producto->nombre}}</td>
-                <td>{{$producto->descripcion}}</td>
-                <td>{{$producto->precio}}</td>
-                <td>{{$producto->imagen_url}}</td>
-                <td>{{$producto->descuento}}</td>
-                <td>{{$producto->id_categoria}}</td>
+                <td>{{$user->id}}</td>
+                <td>{{$user->name}}</td>
+                <td>{{$user->email}}</td>
+                <td>{{$user->password}}</td>
                 <td>
     
-                    <form action="/producto/{{$producto->id_producto}}/eliminar" method="POST">
+                    <form action="/user/{{$user->id}}/eliminar" method="POST">
                         @CSRF
                         @method('delete')
-                        <a href="/producto/{{$producto->id_producto}}/editar" class="btn btn-info">Editar</a>
+                        <a href="/user/{{$user->id}}/editar" class="btn btn-info">Editar</a>
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
             

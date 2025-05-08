@@ -12,7 +12,8 @@ class PromocionesController extends Controller
      */
     public function index()
     {
-        //
+        $promociones=promociones::all();
+        return view('promocion.index',compact('promociones'));
     }
 
     /**
@@ -20,7 +21,7 @@ class PromocionesController extends Controller
      */
     public function create()
     {
-        //
+        return view('promocion.create');
     }
 
     /**
@@ -28,7 +29,8 @@ class PromocionesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $promocion=promociones::create($request->all());
+        return redirect('/promociones');
     }
 
     /**
@@ -42,24 +44,29 @@ class PromocionesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(promociones $promociones)
+    public function edit($id)
     {
-        //
+        $promocion=promociones::findorfail($id);
+        return view('promocion.edit',compact('promocion'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, promociones $promociones)
+    public function update(Request $request, $id)
     {
-        //
+        $promocion=promociones::findorfail($id);
+        $promocion->update($request->all());
+        return redirect('/promociones');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(promociones $promociones)
+    public function destroy($id)
     {
-        //
+        $promocion=promociones::findorfail($id);
+        $promocion->delete();
+        return redirect('/promociones');
     }
 }

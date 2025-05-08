@@ -12,7 +12,7 @@ class promociones extends Model
     protected $fillable=
     [
         'nombre',
-        'descripcion',
+        'valor',
         'fecha_inicio',
         'fecha_fin'
     ];

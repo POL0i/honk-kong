@@ -12,7 +12,8 @@ class CategoriasController extends Controller
      */
     public function index()
     {
-        //
+        $categorias=categorias::all();
+        return view('/categoria.index',compact('categorias'));
     }
 
     /**
@@ -20,7 +21,7 @@ class CategoriasController extends Controller
      */
     public function create()
     {
-        //
+        return view('/categoria.create');
     }
 
     /**
@@ -28,7 +29,8 @@ class CategoriasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $categoria=categorias::create($request->all());
+        return redirect('/categorias');
     }
 
     /**
@@ -42,24 +44,29 @@ class CategoriasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(categorias $categorias)
+    public function edit($id)
     {
-        //
+        $categoria=categorias::findorfail($id);
+        return view('/categoria.edit',compact('categoria'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, categorias $categorias)
+    public function update(Request $request, $id)
     {
-        //
+        $categoria=categorias::findorfail($id);
+        $categoria->update($request->all());
+        return redirect('/categorias');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(categorias $categorias)
+    public function destroy($id)
     {
-        //
+        $categoria=categorias::findorfail($id);
+        $categoria->delete();
+        return redirect('/categorias');
     }
 }

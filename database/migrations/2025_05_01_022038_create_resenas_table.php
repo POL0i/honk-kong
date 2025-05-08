@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_reseña');
             $table->text('comentario');
             $table->integer('calificacion')->check('calificacion >= 1 AND calificacion <= 5');
-            $table->timestamp('fecha')->useCurrent();
+            $table->date('fecha');
 
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

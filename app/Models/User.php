@@ -64,4 +64,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function reseñas()
+    {
+        return $this->hasMany(resenas::class, 'user_id','id');
+    }
 }

@@ -329,17 +329,32 @@ return [
         ],
         //['header' => 'account_settings'],
         [
-            'text' => 'profile',
-            'url' => 'admin/settings',
+            'text' => 'Usuarios',
+            'url' => '/user',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
+            'text' => 'Categorias',
+            'url' => '/categorias',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text' => 'multilevel',
+            'text' => 'Promociones',
+            'url' => '/promociones',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'Descuentos',
+            'url' => '/descuentos',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'Reseñas',
+            'url' => '/reseñas',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'multileve',
             'icon' => 'fas fa-fw fa-share',
             'submenu' => [
                 [

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\resenas;
+use App\Models\user;
 use Illuminate\Http\Request;
 
 class ResenasController extends Controller
@@ -12,7 +13,8 @@ class ResenasController extends Controller
      */
     public function index()
     {
-        //
+        $reseñas=resenas::all();
+        return view('reseña.index',compact('reseñas'));
     }
 
     /**
@@ -20,7 +22,8 @@ class ResenasController extends Controller
      */
     public function create()
     {
-        //
+        $users=user::all();
+        return view('reseña.create',compact('users'));
     }
 
     /**
@@ -28,7 +31,8 @@ class ResenasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reseña=resenas::create($request->all());
+        return redirect('/reseñas');
     }
 
     /**
@@ -42,24 +46,30 @@ class ResenasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(resenas $resenas)
+    public function edit($id)
     {
-        //
+        $users=user::all();
+        $reseña=resenas::findorfail($id);
+        return view('reseña.edit',compact('users','reseña'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, resenas $resenas)
+    public function update(Request $request, $id)
     {
-        //
+        $reseña=resenas::findorfail($id);
+        $reseña->update($request->all());
+        return redirect('/reseña');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(resenas $resenas)
+    public function destroy($id)
     {
-        //
+        $reseña=resenas::findorfail($id);
+        $reseña->delete();
+        return redirect('/reseña');
     }
 }

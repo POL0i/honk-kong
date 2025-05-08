@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class productos extends Model
 {
     use HasFactory;
-    protected $primatyKey='id_producto';
+    protected $primaryKey='id_producto';
     protected $fillable=[
         'nombre',
         'descripcion',
         'precio',
         'imagen_url',
-        'descuento'
+        'id_categoria'
     ];
 
     public function categorias()    

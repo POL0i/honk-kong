@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\categorias;
 use App\Models\productos;
+use App\Models\promociones;
 use Illuminate\Http\Request;
 
 class ProductosController extends Controller
@@ -21,7 +23,9 @@ class ProductosController extends Controller
      */
     public function create()
     {
-        //
+        $categorias=categorias::all();
+        $promociones=promociones::all();
+        return view('producto.create',compact('categorias','promociones'));
     }
 
     /**
@@ -29,7 +33,8 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $producto = Productos::create($request->all());
+        return redirect('/producto');
     }
 
     /**
@@ -43,24 +48,30 @@ class ProductosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(productos $productos)
+    public function edit($id)
     {
-        //
+        $producto=productos::findOrFail($id);
+        $categorias=categorias::all();
+        return view('producto.edit', compact('producto','categorias'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, productos $productos)
+    public function update(Request $request, $id)
     {
-        //
+        $producto = Productos::findOrFail($id);
+        $producto->update($request->all());
+        return redirect('/producto');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(productos $productos)
+    public function destroy($id)
     {
-        //
+        $producto = Productos::findOrFail($id);
+        $producto->delete();
+        return redirect('/producto');
     }
 }

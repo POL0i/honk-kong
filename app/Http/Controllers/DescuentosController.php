@@ -12,7 +12,8 @@ class DescuentosController extends Controller
      */
     public function index()
     {
-        //
+        $descuentos=descuentos::all();
+        return view('descuento.index',compact('descuentos'));
     }
 
     /**
@@ -20,7 +21,7 @@ class DescuentosController extends Controller
      */
     public function create()
     {
-        //
+        return view('descuento.create');
     }
 
     /**
@@ -28,7 +29,8 @@ class DescuentosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $descuento=descuentos::create($request->all());
+        return redirect('/descuentos');
     }
 
     /**
@@ -42,24 +44,29 @@ class DescuentosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(descuentos $descuentos)
+    public function edit($id)
     {
-        //
+        $descuento=descuentos::findorfail($id);
+        return view('descuento.edit',compact('descuento'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, descuentos $descuentos)
+    public function update(Request $request, $id)
     {
-        //
+        $descuento=descuentos::findorfail($id);
+        $descuento->update($request->all());
+        return redirect('/descuentos');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(descuentos $descuentos)
+    public function destroy($id)
     {
-        //
+        $descuento=descuentos::findorfail($id);
+        $descuento->delete();
+        return redirect('/descuentos');
     }
 }
