@@ -33,7 +33,7 @@ class pedidos extends Model
     }
     public function metodos_pagos()
     {
-        return $this->hasMany(metodos_pagos::class, 'id_pedido');
+        return $this->belongsTo(metodos_pagos::class, 'id_pago');
     }
     public function users()
     {

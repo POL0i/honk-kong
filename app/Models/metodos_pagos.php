@@ -17,14 +17,13 @@ class metodos_pagos extends Model
         'cvv',
         'monto',
         'estado', ['pendiente','aprobado','fallido','reembolsado'],
-        'user_id',
-        'id_pedido'
+        'user_id'
     
     ];
 
     public function pedidos()
     {
-        return $this->belongsTo(pedidos::class, 'id_pedido');
+        return $this->hasMany(pedidos::class, 'id_pago');
     }
     public function users()
     {

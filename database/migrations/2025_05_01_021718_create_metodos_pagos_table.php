@@ -21,9 +21,7 @@ return new class extends Migration
             $table->enum('estado',['pendiente','aprobado','fallido','reembolsado'])->default('pendiente');
 
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('id_pedido');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('id_pedido')->references('id_pedido')->on('pedidos');
             $table->timestamps();
         });
     }

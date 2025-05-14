@@ -18,6 +18,9 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
             $table->enum('estado', ['pendiente', 'completado', 'fallido'])->default('pendiente');
             $table->string('direccion_envio', 255)->nullable();
+
+            $table->unsignedBigInteger('id_pago');
+            $table->foreign('id_pago')->references('id_pago')->on('metodos_pagos');
             $table->timestamps();
         });
     }

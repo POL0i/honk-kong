@@ -354,6 +354,36 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
+            'text' => 'Envios',
+            'url' => '/envios',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'Pedidos',
+            'url' => '/pedidos',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'Pagos',
+            'url' => '/pagos',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'Detalle de pedidos',
+            'url' => '/dtpedidos',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'Aplicacion de descuentos',
+            'url' => '/apdescuentos',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'Aplicacion de promociones',
+            'url' => '/appromociones',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
             'text' => 'multileve',
             'icon' => 'fas fa-fw fa-share',
             'submenu' => [
