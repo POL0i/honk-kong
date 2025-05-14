@@ -60,7 +60,7 @@ class ResenasController extends Controller
     {
         $reseña=resenas::findorfail($id);
         $reseña->update($request->all());
-        return redirect('/reseña');
+        return redirect('/reseñas');
     }
 
     /**
@@ -70,6 +70,6 @@ class ResenasController extends Controller
     {
         $reseña=resenas::findorfail($id);
         $reseña->delete();
-        return redirect('/reseña');
+        return redirect('/reseñas');
     }
 }

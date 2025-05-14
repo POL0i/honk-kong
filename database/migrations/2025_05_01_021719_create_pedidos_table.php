@@ -18,7 +18,6 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
             $table->enum('estado', ['pendiente', 'completado', 'fallido'])->default('pendiente');
             $table->string('direccion_envio', 255)->nullable();
-            $table->string('metodo_pago', 50)->nullable();
             $table->timestamps();
         });
     }

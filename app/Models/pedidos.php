@@ -11,18 +11,17 @@ class pedidos extends Model
     protected $primaryKey='id_pedido';
     protected $fillable=
     [
-        'id_pedido',
         'user_id',
         'fecha',
         'total',
         'estado', ['pendiente', 'completado', 'fallido'],
         'direccion_envio',
-        'metodo_pago'
+        'id_pago'
     ];
 
     public function envios()
     {
-        return $this->belongsTo(envios::class, 'id_envio');
+        return $this->hasOne(envios::class, 'id_envio');
     }
     public function detalle_pedido()
     {
