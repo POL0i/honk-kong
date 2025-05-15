@@ -14,9 +14,7 @@ class metodos_pagos extends Model
         'nombre_titular',
         'numero_targera',
         'fecha_expiracion',
-        'cvv',
-        'monto',
-        'estado', ['pendiente','aprobado','fallido','reembolsado'],
+        'cvc',
         'user_id'
     
     ];

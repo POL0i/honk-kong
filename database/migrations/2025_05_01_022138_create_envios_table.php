@@ -17,7 +17,7 @@ return new class extends Migration
             $table->timestamp('fecha_envio')->useCurrent();
             $table->timestamp('fecha_estimada_llegada')->nullable();
             $table->string('metodo_envio', 50);
-            $table->enum('estado_envio', ['pendiente', 'enviado', 'entregado'])->default('pendiente');
+            $table->string('estado_envio');
 
             $table->unsignedBigInteger('id_pedido');
             $table->foreign('id_pedido')->references('id_pedido')->on('pedidos');

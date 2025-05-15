@@ -16,9 +16,7 @@ return new class extends Migration
             $table->string('nombre_titular');
             $table->integer('numero_targera');
             $table->string('fecha_expiracion');
-            $table->string('cvv');
-            $table->float('monto');
-            $table->enum('estado',['pendiente','aprobado','fallido','reembolsado'])->default('pendiente');
+            $table->integer('cvc');
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

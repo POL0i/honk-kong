@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\metodos_pagos;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MetodosPagosController extends Controller
@@ -12,7 +13,8 @@ class MetodosPagosController extends Controller
      */
     public function index()
     {
-        //
+        $pagos=metodos_pagos::all();
+        return view('pago.index',compact('pagos'));
     }
 
     /**
@@ -20,7 +22,8 @@ class MetodosPagosController extends Controller
      */
     public function create()
     {
-        //
+        $clientes=User::all();
+        return view('pago.create',compact('clientes'));
     }
 
     /**
@@ -28,7 +31,8 @@ class MetodosPagosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pago=metodos_pagos::create($request->all());
+        return redirect('/pagos');
     }
 
     /**
@@ -42,24 +46,30 @@ class MetodosPagosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(metodos_pagos $metodos_pagos)
+    public function edit($id)
     {
-        //
+        $pago=metodos_pagos::findorfail($id);
+        $clientes=User::all();
+        return view('pago.edit',compact('pago','clientes'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, metodos_pagos $metodos_pagos)
+    public function update(Request $request, $id)
     {
-        //
+        $pago=metodos_pagos::findorfail($id);
+        $pago->update($request->all());
+        return redirect('/pagos');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(metodos_pagos $metodos_pagos)
+    public function destroy($id)
     {
-        //
+        $pago=metodos_pagos::findorfail($id);
+        $pago->delete();
+        return redirect('/pagos');
     }
 }

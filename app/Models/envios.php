@@ -15,7 +15,7 @@ class envios extends Model
         'fecha_envio',
         'fecha_estimada_llegada',
         'metodo_envio',
-        'estado_envio', ['pendiente', 'enviado', 'entregado'],
+        'estado_envio',
         'id_pedido'
     ];
 

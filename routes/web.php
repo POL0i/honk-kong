@@ -7,8 +7,9 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\PromocionesController;
 use App\Http\Controllers\DescuentosController;
 use App\Http\Controllers\ResenasController;
-use App\Models\categorias;
-use App\Models\promociones;
+use App\Http\Controllers\MetodosPagosController;
+use App\Http\Controllers\PedidosController;
+use App\Http\Controllers\EnviosController;
 
 Route::get('/', function () {
     return view('home');
@@ -57,9 +58,32 @@ route::post('/reseñas/guardar',[resenasController::class, 'store'])->name('home
 route::get('/reseñas/{id}/editar',[resenasController::class, 'edit'])->name('home');
 route::Put('/reseñas/{id}/actualizar', [resenasController::class, 'update'])->name('home');
 route::delete('/reseñas/{id}/eliminar', [resenasController::class, 'destroy'])->name('home');
+//metodos de pago
+route::get('/pagos', [metodosPagosController::class, 'index'])->name('home'); 
+route::get('/pagos/crear', [metodosPagosController::class, 'create'])->name('home');
+route::post('/pagos/guardar',[metodosPagosController::class, 'store'])->name('home');
+route::get('/pagos/{id}/editar',[metodosPagosController::class, 'edit'])->name('home');
+route::Put('/pagos/{id}/actualizar', [metodosPagosController::class, 'update'])->name('home');
+route::delete('/pagos/{id}/eliminar', [metodosPagosController::class, 'destroy'])->name('home');
+//pedidos
+route::get('/pedidos', [pedidosController::class, 'index'])->name('home'); 
+route::get('/pedidos/crear', [pedidosController::class, 'create'])->name('home');
+route::post('/pedidos/guardar',[pedidosController::class, 'store'])->name('home');
+route::get('/pedidos/{id}/editar',[pedidosController::class, 'edit'])->name('home');
+route::Put('/pedidos/{id}/actualizar', [pedidosController::class, 'update'])->name('home');
+route::delete('/pedidos/{id}/eliminar', [pedidosController::class, 'destroy'])->name('home');
+//envios
+route::get('/envios', [enviosController::class, 'index'])->name('home'); 
+route::get('/envios/crear', [enviosController::class, 'create'])->name('home');
+route::post('/envios/guardar',[enviosController::class, 'store'])->name('home');
+route::get('/envios/{id}/editar',[enviosController::class, 'edit'])->name('home');
+route::Put('/envios/{id}/actualizar', [enviosController::class, 'update'])->name('home');
+route::delete('/envios/{id}/eliminar', [enviosController::class, 'destroy'])->name('home');
 
 
 //con autentificacion
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

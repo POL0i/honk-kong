@@ -14,7 +14,7 @@ class pedidos extends Model
         'user_id',
         'fecha',
         'total',
-        'estado', ['pendiente', 'completado', 'fallido'],
+        'estado',
         'direccion_envio',
         'id_pago'
     ];

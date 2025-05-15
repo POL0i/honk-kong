@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\envios;
+use App\Models\pedidos;
 use Illuminate\Http\Request;
 
 class EnviosController extends Controller
@@ -12,7 +13,9 @@ class EnviosController extends Controller
      */
     public function index()
     {
-        //
+        $envios=envios::all();
+        $pedidos=pedidos::all();
+        return view('envio.index',compact('envios','pedidos'));
     }
 
     /**
@@ -20,7 +23,8 @@ class EnviosController extends Controller
      */
     public function create()
     {
-        //
+        $pedidos=pedidos::all();
+        return view('envio.create',compact('pedidos'));
     }
 
     /**
@@ -28,7 +32,8 @@ class EnviosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $envio=envios::create($request->all());
+        return redirect('/envios');
     }
 
     /**
@@ -42,24 +47,30 @@ class EnviosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(envios $envios)
+    public function edit($id)
     {
-        //
+        $envio=envios::findorfail($id);
+        $pedidos=pedidos::all();
+        return view('envio.edit',compact('envio','pedidos'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, envios $envios)
+    public function update(Request $request, $id)
     {
-        //
+        $envio=envios::findorfail($id);
+        $envio->update($request->all());
+        return redirect('/envios');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(envios $envios)
+    public function destroy($id)
     {
-        //
+        $envio=envios::findorfail($id);
+        $envio->delete();
+        return redirect('/envios');
     }
 }

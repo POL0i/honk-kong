@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
             $table->timestamp('fecha')->useCurrent();
             $table->decimal('total', 10, 2);
-            $table->enum('estado', ['pendiente', 'completado', 'fallido'])->default('pendiente');
+            $table->string('estado');
             $table->string('direccion_envio', 255)->nullable();
 
             $table->unsignedBigInteger('id_pago');
