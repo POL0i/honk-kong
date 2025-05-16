@@ -8,6 +8,12 @@ class detalle_pedidos extends Model
 {
     public $incrementing=false;
     protected $primaryKey= ['id_pedido','id_producto'];
+    protected $fillable= [
+        'cantidad',
+        'precio',
+        'id_pedido',
+        'id_producto'
+    ];
     public $timestamps=false;
 
     public function pedidos()

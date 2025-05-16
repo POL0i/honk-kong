@@ -8,6 +8,10 @@ class aplicaciones_promociones extends Model
 {
     public $incrementing=false;
     protected $primaryKey= ['id_producto','id_promocion'];
+    protected $fillable= [
+        'id_producto',
+        'id_promocion'
+    ];
     public $timestamps=false;
 
     public function promociones()

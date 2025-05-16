@@ -8,6 +8,10 @@ class aplicaciones_descuentos extends Model
 {
     public $incrementing=false;
     protected $primaryKey= ['id_descuento','id_pedido'];
+    protected $fillable= [
+        'id_pedido',
+        'id_descuento'
+    ];
     public $timestamps=false;
 
     public function descuento()

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\aplicaciones_descuentos;
+use App\Models\descuentos;
+use App\Models\pedidos;
 use Illuminate\Http\Request;
 
 class AplicacionesDescuentosController extends Controller
@@ -12,7 +14,10 @@ class AplicacionesDescuentosController extends Controller
      */
     public function index()
     {
-        //
+        $apdescuentos=aplicaciones_descuentos::all();
+        $descuentos=descuentos::all();
+        $pedidos=pedidos::all();
+        return view('apdescuento.index',compact('apdescuentos','descuentos','pedidos'));
     }
 
     /**

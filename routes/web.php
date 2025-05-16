@@ -10,13 +10,25 @@ use App\Http\Controllers\ResenasController;
 use App\Http\Controllers\MetodosPagosController;
 use App\Http\Controllers\PedidosController;
 use App\Http\Controllers\EnviosController;
+use App\Http\Controllers\AplicacionesPromocionesController;
 
+/* 
 Route::get('/', function () {
     return view('home');
 });
+*/
 
 
-//rutas para producto
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/', function () {
+        return view('home');
+    })->name('dashboard');
+    //rutas para producto
 route::get('/producto', [ProductosController::class, 'index'])->name('home'); 
 route::get('/producto/crear', [ProductosController::class, 'create'])->name('home');
 route::post('/producto/guardar',[ProductosController::class, 'store'])->name('home');
@@ -79,18 +91,13 @@ route::post('/envios/guardar',[enviosController::class, 'store'])->name('home');
 route::get('/envios/{id}/editar',[enviosController::class, 'edit'])->name('home');
 route::Put('/envios/{id}/actualizar', [enviosController::class, 'update'])->name('home');
 route::delete('/envios/{id}/eliminar', [enviosController::class, 'destroy'])->name('home');
-
-
+//aplicaiones de promociones
+route::get('/appromociones', [aplicacionespromocionesController::class, 'index'])->name('home'); 
+route::get('/appromociones/crear', [aplicacionespromocionesController::class, 'create'])->name('home');
+route::post('/appromociones/guardar',[aplicacionespromocionesController::class, 'store'])->name('home');
+route::get('/appromociones/{id1}/{id2}/editar',[aplicacionespromocionesController::class, 'edit'])->name('home');
+route::Put('/appromociones/{id1}/{id2}/actualizar', [aplicacionespromocionesController::class, 'update'])->name('home');
+route::delete('/appromociones/{id1}/{id2}/eliminar', [aplicacionespromocionesController::class, 'destroy'])->name('home');
 //con autentificacion
 
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/home', function () {
-        return view('home');
-    })->name('dashboard');
-    
 });
