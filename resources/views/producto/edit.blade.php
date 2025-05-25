@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="ruta-a-tu-archivo.css">
 
     <h2 style= "font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Editar Datos Del Producto</h2>
-    <form action="/producto/{{$producto->id_producto}}/actualizar" method="POST">
+    <form action="/producto/{{$producto->id_producto}}/actualizar" method="POST" enctype="multipart/form-data">
         @method('PUT')
         
         <!-- CSRF Token (Laravel) -->

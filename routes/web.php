@@ -11,6 +11,8 @@ use App\Http\Controllers\MetodosPagosController;
 use App\Http\Controllers\PedidosController;
 use App\Http\Controllers\EnviosController;
 use App\Http\Controllers\AplicacionesPromocionesController;
+use App\Http\Controllers\TiendaController;
+use App\Http\Controllers\CarritoController;
 
 /* 
 Route::get('/', function () {
@@ -19,13 +21,22 @@ Route::get('/', function () {
 */
 
 
+Route::get('/', [TiendaController::class, 'index'])->name('inicio');
+Route::get('/', [TiendaController::class, 'index'])->name('inicio');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
+    Route::get('/carrito', [CarritoController::class, 'ver'])->name('carrito.ver');
+    Route::post('/carrito/eliminar', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
+    
+});
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/', function () {
+    Route::get('/home', function () {
         return view('home');
     })->name('dashboard');
     //rutas para producto
