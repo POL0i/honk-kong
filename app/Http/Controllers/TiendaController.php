@@ -7,6 +7,7 @@ use App\Models\Categorias;
 use App\Models\Productos;
 use App\Models\Promociones;
 use App\Models\Resenas;
+use App\Models\User;
 
 class TiendaController extends Controller
 {
@@ -14,7 +15,9 @@ class TiendaController extends Controller
     {
         $categorias = Categorias::all();
         $productos = Productos::all();
-        return view('tienda.inicio', compact('categorias','productos'));
+        $clientes=User::all();
+        $reseñas=Resenas::with('users')->latest()->take(10)->get();
+        return view('tienda.inicio', compact('categorias','productos','reseñas','clientes'));
     }
     public function categoria($id)
     {
