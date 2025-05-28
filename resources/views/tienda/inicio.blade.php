@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <!-- Íconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   
+    <link rel="stylesheet" href="{{asset('css/barraVertical.css')}}">
 
     <style>
         /* Tipografía de Google Fonts */
@@ -314,20 +314,33 @@ body {
 </button>
 
 <!-- SIDEBAR IZQUIERDO -->
-<div id="sidebar" style="width: 250px; height: calc(100vh - 70px); background-color: #222; color: white; position: fixed; top: 70px; left: -250px; transition: left 0.3s ease; z-index: 998; padding-top: 1rem;">
+<div id="sidebar">
 
     <!-- BOTÓN CERRAR (X) -->
     <button id="closeSidebar" style="position: absolute; top: 10px; right: 10px; font-size: 50px; background: none; border: none; color: white; cursor: pointer;">
         &times;
     </button>
-
-    <ul style="list-style: none; padding: 1rem;">
-        <li><a href="#" style="color: white; text-decoration: none;"> <h1>Categorias:</h1> </a></li>
-        @foreach($categorias as $categoria)
-            <h4> <a href="#" style="color: white; text-decoration: none;" >{{$categoria->nombre}}</a> </h4>
-        @endforeach
-        <li><a href="#" style="color: white; text-decoration: none;"> <h1>Reseñas</h1> </a></li>
+    <ul class="sidebar-menu">
+      <li class="sidebar-title">CATEGORÍAS:</li>
+      @foreach($categorias as $categoria)
+        <li><a href="/{{$categoria->nombre}}/{{$categoria->id_categoria}}/buscar">{{ $categoria->nombre }}</a></li>
+      @endforeach
+      <li style="  border-bottom: 1px solid rgba(255, 255, 255, 0.2)"></li>
+      <li><a href="/tienda.reseñas">RESEÑAS</a></li>
     </ul>
+    
+    <div class="redes-sociales">
+      <a href="#"><i class="fab fa-facebook-f">  FACEBOOK</i></a>
+      <a href="#"><i class="fab fa-instagram"></i>  INSTAGRAM</a>
+    </div>
+
+    
+  <div class="contacto-sidebar">
+    <p>📞 +591 70899084</p>
+    <p >✉️ info@hongkongrapida.com</p>
+    <p style="  border-bottom: 1px solid rgba(255, 255, 255, 0.2)"></p>
+  </div>
+
 </div>
 
     {{-- Contenido principal --}}
@@ -345,6 +358,10 @@ body {
                     </div>
                  @endforeach
             </div>
+
+            {{--Promociones de productos--}}
+
+
             {{--REseñas--}}
             <h2 style=" text-align: center; margin-top: 60px; font-size: 50px ; color: #ffffff">LO QUE DICEN LOS CLIENTES</h2>
 

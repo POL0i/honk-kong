@@ -2,6 +2,7 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/contactanos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/barraVertical.css') }}">
 @endpush
 
 @section('content')

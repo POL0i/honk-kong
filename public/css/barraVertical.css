@@ -1,0 +1,53 @@
+/* Estilo para la barra lateral completa */
+#sidebar {
+  width: 250px;
+  height: calc(100vh - 70px);
+  background-color: #1a1a2e; /* Fondo oscuro elegante */
+  color: white;
+  position: fixed;
+  top: 70px;
+  left: -250px;
+  transition: left 0.3s ease;
+  z-index: 998;
+  
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Lista dentro del sidebar */
+#sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Título de sección (Categorías, Reseñas) */
+#sidebar .sidebar-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 1rem;
+  color: #f5c518;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 5px;
+}
+
+/* Enlaces */
+#sidebar a {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  padding: 8px 12px;
+  display: block;
+  border-radius: 6px;
+  transition: background 0.3s, padding-left 0.3s;
+  margin-top: 6px;
+}
+
+/* Efecto hover en enlaces */
+#sidebar a:hover {
+  background-color: #e31837;
+  padding-left: 18px;
+}

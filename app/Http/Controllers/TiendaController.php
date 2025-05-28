@@ -30,4 +30,10 @@ class TiendaController extends Controller
     $categorias = Categorias::all();
     return view('tienda.contactanos',compact('categorias'));
    }
+   public function buscar($id)
+   {
+    $categorias = Categorias::all();
+    $productos=Productos::where('id_categoria',$id)->get();
+    return view('tienda.buscar',compact('productos','categorias'));
+   }
 }
