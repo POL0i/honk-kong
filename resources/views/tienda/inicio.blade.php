@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{asset('css/barraVertical.css')}}">
 
-    <style>
-        /* Tipografía de Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    <style>/* Tipografía de Google Fonts */
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 /* 1. Fuente Roboto para todo */
 body {
@@ -323,7 +323,7 @@ body {
     <ul class="sidebar-menu">
       <li class="sidebar-title">CATEGORÍAS:</li>
       @foreach($categorias as $categoria)
-        <li><a href="/{{$categoria->nombre}}/{{$categoria->id_categoria}}/buscar">{{ $categoria->nombre }}</a></li>
+        <li><a href="buscar/{{$categoria->id_categoria}}">{{ $categoria->nombre }}</a></li>
       @endforeach
       <li style="  border-bottom: 1px solid rgba(255, 255, 255, 0.2)"></li>
       <li><a href="/tienda.reseñas">RESEÑAS</a></li>

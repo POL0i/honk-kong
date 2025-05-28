@@ -1,0 +1,55 @@
+/*reseñas*/
+
+.reseñas-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+  
+  .reseñas-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .reseña-card {
+    min-width: 300px;
+    max-width: 300px;
+    padding: 32px;
+   
+    text-align: center;
+    background: #f8f8f8;
+    margin-right: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+  }
+  
+  .user-icon {
+    font-size: 60px;
+    color: #ccc;
+    margin-bottom: 10px;
+  }
+  
+  
+  .reseña-mensaje {
+    font-style: italic;
+    color: #333;
+  }
+  
+  .reseña-nombre {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
+    font-size: 20px;
+  }
+  /*diseño estrellas*/
+  .rating-stars {
+    margin-bottom: 10px;
+    color: #f1c40f; /* color dorado */
+  }
+  
+  .rating-stars i {
+    margin-right: 4px;
+    font-size: 18px;
+  }
+  

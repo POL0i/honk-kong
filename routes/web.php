@@ -24,7 +24,7 @@ Route::get('/', function () {
 Route::get('/', [TiendaController::class, 'index'])->name('inicio');
 Route::get('/quienes', [TiendaController::class, 'mostrar'])->name('quienes');
 Route::get('/contactanos', [TiendaController::class, 'contacto'])->name('contactanos');
-Route::get('/hamburgesa/{id}/buscar', [TiendaController::class, 'buscar'])->name('buscar');
+Route::get('/buscar/{id}', [TiendaController::class, 'buscar'])->name('buscar');
 
 
 Route::middleware(['auth'])->group(function () {
