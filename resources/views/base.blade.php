@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <!-- Íconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   
+    @stack('styles')  <!-- Esto es lo que hace que se cargue el CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         /* Tipografía de Google Fonts */
@@ -287,7 +288,7 @@ body {
     <nav class="nav-links">
       <a href="/">Home</a>
       <a href="/quienes">Quiénes somos</a>
-      <a href="#contacto">Contáctanos</a>
+      <a href="/contactanos">Contáctanos</a>
     <div class="nav-actions">
         <a href="/login" class="icon-button">
             <i class="fas fa-user"></i> Iniciar sesión
@@ -301,12 +302,9 @@ body {
     
   </div>
 
-  <div class="banner-content">
-    <h1>¡Tu pizza favorita, recién horneada!</h1>
-    <p>Disfruta de sabores irresistibles con calidad garantizada</p>
-    <a href="#menu" class="order-now-btn">Ordenar ahora</a>
-  </div>
-
+  <main class="container mt-4">
+    @yield('content')
+  </main>
 <!-- Botón hamburguesa -->
 <button id="toggleSidebar" style="position: fixed; top: 1rem; left: 1rem; z-index: 1101; background: none; border: none; font-size: 2rem; color: white;">
 
@@ -330,57 +328,6 @@ body {
     </ul>
 </div>
 
-    {{-- Contenido principal --}}
-    <div class="page">
-        <div>
-            <h1 style="text-align: center; font-size: 50px; color: #ffffff">NUESTROS PRODUCTOS</h1>
-            <div class="products-container">
-                @foreach ($productos as $producto)
-                    <div class="product-card">
-                        <img src="{{ asset('storage/' . $producto->imagen_url) }}" alt="{{ $producto->nombre }}">
-                        <h3>{{ $producto->nombre }}</h3>
-                        <h4>{{ $producto->descripcion }}</h4>
-                        <p class="price">Bs {{ number_format($producto->precio, 2) }}</p>
-                        <button class="add-to-cart">Agregar al carrito</button>
-                    </div>
-                 @endforeach
-            </div>
-            {{--REseñas--}}
-            <h2 style=" text-align: center; margin-top: 60px; font-size: 50px ; color: #ffffff">LO QUE DICEN LOS CLIENTES</h2>
-
-            <div class="reseñas-container" id="reseñasContainer">
-                @foreach ($reseñas as $reseña)
-                    <div class="reseña-card">
-                        <div class="user-icon">
-                            <i class="fas fa-user-circle"></i>
-                            
-                            <p1 class="reseña-nombre"> {{ $reseña->users->name ?? 'Usuario anónimo' }}</p1>
-                        </div>
-                        <div class="reseña-texto">
-                            <p class="reseña-mensaje">"{{ $reseña->comentario }}"</p>
-                            <p class="reseña-mensaje">{{$reseña->fecha}} </p>
-                             <!-- Estrellas de calificación -->
-                            <div class="rating-stars">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $reseña->calificacion)
-                                        <i class="fas fa-star"></i>
-                                    @else
-                                        <i class="far fa-star"></i>
-                                    @endif
-                                @endfor
-                            </div>
-                        </div>
-                    </div>
-             @endforeach
-
-            </div>
-
-        
-          </div>
-          
-        </div>
-    </div>
-    </div>
     {{--scrips--}}
     {{--barra diagonal--}}
     <script>
@@ -416,24 +363,7 @@ body {
     </script>
     
      
-        {{--loop infinito scrip---}}
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const container = document.getElementById('reseñasContainer');
-            
-                container.addEventListener('wheel', function(e) {
-                    e.preventDefault();
-                    container.scrollLeft += e.deltaY*5;
-                });
-            
-                // Loop infinito simulado
-                container.addEventListener('scroll', () => {
-                    if (container.scrollLeft >= container.scrollWidth / 2) {
-                        container.scrollLeft = 0;
-                    }
-                });
-            });
-            </script>
+   
         
 </body>
 </html>

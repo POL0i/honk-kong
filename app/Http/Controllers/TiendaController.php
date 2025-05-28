@@ -19,12 +19,15 @@ class TiendaController extends Controller
         $reseñas=Resenas::with('users')->latest()->take(10)->get();
         return view('tienda.inicio', compact('categorias','productos','reseñas','clientes'));
     }
-    public function categoria($id)
-    {
-        $categoria = Categorias::findOrFail($id);
-        $productos = Productos::where('categoria_id', $id)->get();
 
-        //return view('tienda.show', compact('categoria', 'productos'));
-    }
-   
+   public function mostrar()
+   {
+    $categorias = Categorias::all();
+    return view('tienda.quienes',compact('categorias'));
+   }
+   public function contacto()
+   {
+    $categorias = Categorias::all();
+    return view('tienda.contactanos',compact('categorias'));
+   }
 }
