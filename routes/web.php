@@ -53,11 +53,8 @@ Route::middleware([
 
 
 Route::middleware(['auth', 'can:admin-only'])->group(function () {
-route::get('/producto', [ProductosController::class, 'index'])->name('home'); 
-    
-});
 
-
+    route::get('/producto', [ProductosController::class, 'index'])->name('home'); 
 route::get('/producto/crear', [ProductosController::class, 'create'])->name('home');
 route::post('/producto/guardar',[ProductosController::class, 'store'])->name('home');
 route::get('/producto/{id}/editar',[ProductosController::class, 'edit'])->name('home');
@@ -72,6 +69,11 @@ route::post('/user/guardar',[UsersController::class, 'store'])->name('home');
 route::get('/user/{id}/editar',[UsersController::class, 'edit'])->name('home');
 route::Put('/user/{id}/actualizar', [UsersController::class, 'update'])->name('home');
 route::delete('/user/{id}/eliminar', [UsersController::class, 'destroy'])->name('home');
+
+// web.php
+Route::post('/user/{id}/cambiar-rol', [UsersController::class, 'cambiarRol'])->name('user.cambiarRol');
+
+
 //categorias
 route::get('/categorias', [categoriasController::class, 'index'])->name('home'); 
 route::get('/categorias/crear', [categoriasController::class, 'create'])->name('home');
@@ -128,6 +130,13 @@ route::post('/appromociones/guardar',[aplicacionespromocionesController::class, 
 route::get('/appromociones/{id1}/{id2}/editar',[aplicacionespromocionesController::class, 'edit'])->name('home');
 route::Put('/appromociones/{id1}/{id2}/actualizar', [aplicacionespromocionesController::class, 'update'])->name('home');
 route::delete('/appromociones/{id1}/{id2}/eliminar', [aplicacionespromocionesController::class, 'destroy'])->name('home');
-//con autentificacion
+//con autentificacion    
+
+
+
+});
+
+
+
 
 });

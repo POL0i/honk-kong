@@ -59,6 +59,14 @@ class UsersController extends Controller
         $user->update($request->all());
         return redirect('/user');
     }
+    public function cambiarRol($id)
+{
+    $user = User::findOrFail($id);
+    $user->role = $user->role === 'admin' ? 'cliente' : 'admin';
+    $user->save();
+
+    return redirect()->back()->with('success', 'Rol cambiado correctamente.');
+}
 
     /**
      * Remove the specified resource from storage.

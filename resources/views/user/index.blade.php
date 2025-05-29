@@ -1,3 +1,5 @@
+
+
 @extends('home')
 
 @section('contenido')
@@ -16,6 +18,7 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Contraseña</th>
+                <th scope="col">Rol</th>
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
@@ -26,14 +29,40 @@
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->password}}</td>
+                <td>{{$user->role}}</td>
                 <td>
-    
+
+                
                     <form action="/user/{{$user->id}}/eliminar" method="POST">
                         @CSRF
                         @method('delete')
                         <a href="/user/{{$user->id}}/editar" class="btn btn-info">Editar</a>
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
+                 
+    <form action="/user/{{$user->id}}/eliminar" method="POST" style="display: inline-block;">
+        @csrf
+        @method('delete')
+        <a href="/user/{{$user->id}}/editar" class="btn btn-info">Editar</a>
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+    </form>
+
+   @php
+    $usuarioAutenticado = Auth::id();
+@endphp
+
+@if($user->id !== $usuarioAutenticado)
+    <form action="{{ route('user.cambiarRol', $user->id) }}" method="POST" style="display: inline-block; margin-top: 5px;">
+        @csrf
+        <button type="submit" class="btn btn-warning">
+            {{ $user->role === 'admin' ? 'Hacer cliente' : 'Hacer admin' }}
+        </button>
+    </form>
+@else
+    <span class="text-muted">No puedes cambiar tu propio rol</span>
+@endif
+
+
             
                 </td>
             </tr>

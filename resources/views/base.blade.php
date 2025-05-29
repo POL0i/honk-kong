@@ -17,6 +17,32 @@
     <style> <!-- Tipografía de Google Fonts -->
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
     </style>
+
+
+<style>
+  #botonFlotante {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff9900;
+      color: white;
+      padding: 15px;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 24px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      z-index: 9999;
+      transition: background 0.3s;
+  }
+
+  #botonFlotante:hover {
+      background-color: #ff6600;
+      text-decoration: none;
+  }
+</style>
+
+
+
 </head>
 <body>
 
@@ -30,9 +56,29 @@
       <a href="/quienes">Quiénes somos</a>
       <a href="/contactanos">Contáctanos</a>
     <div class="nav-actions">
-        <a href="/login" class="icon-button">
-            <i class="fas fa-user"></i> Iniciar sesión
-        </a>
+
+        @auth
+    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+        @csrf
+        <button type="submit" class="icon-button" style="background: none; border: none; color: white; cursor: pointer;">
+            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+        </button>
+    </form>
+@else
+    <a href="{{ route('login') }}" class="icon-button">
+        <i class="fas fa-user"></i> Iniciar sesión
+    </a>
+@endauth
+
+@if(auth()->check() && auth()->user()->role === 'admin')
+    <a href="/home" id="botonFlotante">
+        <i class="fas fa-home"></i>
+    </a>
+@endif
+
+
+
+
         <a href="/carrito" class="icon-button cart-button">
             <i class="fas fa-shopping-cart"></i>
             <span class="cart-count">3</span> <!-- Cambia este número dinámicamente -->
