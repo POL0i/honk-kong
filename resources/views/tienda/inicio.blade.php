@@ -27,21 +27,21 @@
            @endforeach
       </div>
 
-      {{--Promociones de productos
+      {{--Promociones de productos--}}
       <div>
         <h1 style="text-align: center; font-size: 50px; color: #ffffff">NUESTROS PROMOCIONES</h1>
         <div class="products-container">
             @foreach ($aplicaciones as $aplicacion)
                 <div class="product-card">
-                    <img src="{{ asset('storage/' . $aplicacion->producto->imagen_url) }}" alt="{{ $aplicacion->producto->nombre }}">
-                    <h3>{{ $aplicacion->producto->nombre }}</h3>
-                    <h4>{{ $aplicacion->producto->descripcion }}</h4>
-                    <p class="price">Bs {{ number_format($aplicacion->producto->precio, 2) }}</p>
+                    <img src="{{ asset('storage/' . $aplicacion->imagen_url) }}" alt="{{ $aplicacion->nombre }}">
+                    <h3>{{ $aplicacion->nombre }}</h3>
+                    <h4>{{ $aplicacion->descripcion }}</h4>
+                    <p class="price">Bs {{ number_format($aplicacion->precio - $aplicacion->precio*$aplicacion->valor, 2) }}</p>
                     <button class="add-to-cart">Agregar al carrito</button>
                 </div>
              @endforeach
         </div>
-        --}}
+        
       {{--REseñas--}}
       <h2 style=" text-align: center; margin-top: 60px; font-size: 50px ; color: #ffffff">LO QUE DICEN LOS CLIENTES</h2>
 

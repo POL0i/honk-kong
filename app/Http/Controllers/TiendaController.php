@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Categorias;
 use App\Models\Productos;
@@ -17,7 +18,11 @@ class TiendaController extends Controller
         $productos = Productos::all();
         $clientes=User::all();
         $reseñas=Resenas::with('users')->latest()->take(10)->get();
-        $aplicaciones = aplicaciones_promociones::with(['productos', 'promociones'])->whereHas('productos')->get();
+        $aplicaciones = DB::table('aplicaciones_promociones as ap')
+        ->join('productos as p', 'ap.id_producto', '=', 'p.id_producto')
+        ->join('promociones as pr', 'ap.id_promocion', '=', 'pr.id_promocion')
+        ->select('p.nombre', 'p.descripcion', 'p.precio', 'p.imagen_url', 'pr.nombre as promocion_nombre', 'pr.valor')
+        ->get();
         //dd($aplicaciones->pluck('aplicaciones'));
         return view('tienda.inicio', compact('categorias','productos','reseñas','clientes','aplicaciones'));
     }

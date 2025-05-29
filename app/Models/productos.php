@@ -23,7 +23,7 @@ class productos extends Model
     }
     public function aplicaciones_promociones()
     {
-        return $this->belongsToMany(aplicaciones_promociones::class, 'id_producto');
+        return $this->hasMany(aplicaciones_promociones::class, 'id_producto');
     }
     public function detalle_pedidos()
     {
