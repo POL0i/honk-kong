@@ -42,5 +42,21 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
+    
+        $this->app->instance(
+            \Laravel\Fortify\Contracts\LoginResponse::class,
+            new class implements \Laravel\Fortify\Contracts\LoginResponse {
+                public function toResponse($request)
+                {
+                    $user = $request->user();
+
+                    if ($user->role === 'admin') {
+                        return redirect('/home');
+                    } else {
+                        return redirect('/');
+                    }
+                }
+            }
+        );
     }
 }

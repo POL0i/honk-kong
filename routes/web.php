@@ -13,26 +13,33 @@ use App\Http\Controllers\EnviosController;
 use App\Http\Controllers\AplicacionesPromocionesController;
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\AplicacionesDescuentosController;
+use App\Http\Controllers\DetallePedidosController;
+use App\Http\Controllers\AplicacionesResenasController;
+use App\Http\Controllers\AplicacionesMetodosPagosController;
+use App\Http\Controllers\AplicacionesPedidosController;
+use App\Http\Controllers\AplicacionesEnviosController;
+use App\Http\Controllers\AplicacionesCarritoController;
+use App\Http\Controllers\AplicacionesProductosController;
+use App\Http\Controllers\AplicacionesCategoriasController;
 
-/* 
-Route::get('/', function () {
-    return view('home');
-});
-*/
+use App\http\Controllers\AplicacionesUsuariosController;
+
 
 
 Route::get('/', [TiendaController::class, 'index'])->name('inicio');
 Route::get('/quienes', [TiendaController::class, 'mostrar'])->name('quienes');
 Route::get('/contactanos', [TiendaController::class, 'contacto'])->name('contactanos');
-Route::get('/buscar/{id}', [TiendaController::class, 'buscar'])->name('buscar');
-Route::get('/reseña', [TiendaController::class, 'reseña'])->name('reseña');
+Route::get('/hamburgesa/{id}/buscar', [TiendaController::class, 'buscar'])->name('buscar');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
     Route::get('/carrito', [CarritoController::class, 'ver'])->name('carrito.ver');
     Route::post('/carrito/eliminar', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
     
-});
+}); 
+
 
 Route::middleware([
     'auth:sanctum',
@@ -43,12 +50,21 @@ Route::middleware([
         return view('home');
     })->name('dashboard');
     //rutas para producto
+
+
+Route::middleware(['auth', 'can:admin-only'])->group(function () {
 route::get('/producto', [ProductosController::class, 'index'])->name('home'); 
+    
+});
+
+
 route::get('/producto/crear', [ProductosController::class, 'create'])->name('home');
 route::post('/producto/guardar',[ProductosController::class, 'store'])->name('home');
 route::get('/producto/{id}/editar',[ProductosController::class, 'edit'])->name('home');
 route::Put('/producto/{id}/actualizar', [ProductosController::class, 'update'])->name('home');
 route::delete('/producto/{id}/eliminar', [ProductosController::class, 'destroy'])->name('home');
+
+
 //users
 route::get('/user', [UsersController::class, 'index'])->name('home'); 
 route::get('/user/crear', [UsersController::class, 'create'])->name('home');

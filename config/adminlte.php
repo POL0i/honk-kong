@@ -319,7 +319,15 @@ return [
             'text' => 'blog',
             'url' => 'admin/blog',
             'can' => 'manage-blog',
+        ],  
+        [
+            'text' => 'Inicio',
+            'url' => '/',
+            'icon' => 'fas fa-hamburger',
+            'label' => 4,
+            'label_color' => 'success',
         ],
+
         [
             'text' => 'producto',
             'url' => '/producto',
