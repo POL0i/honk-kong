@@ -9,7 +9,7 @@
 <div>
  
   <div class="banner-content">
-    <h1>¡Tu pizza favorita, recién horneada!</h1>
+    <h1>¡Tu comida favorita, recién hecha!</h1>
     <p>Disfruta de sabores irresistibles con calidad garantizada</p>
     <a href="#menu" class="order-now-btn">Ordenar ahora</a>
   </div>
@@ -29,13 +29,14 @@
 
       {{--Promociones de productos--}}
       <div>
-        <h1 style="text-align: center; font-size: 50px; color: #ffffff">NUESTROS PROMOCIONES</h1>
+        <h1 style="text-align: center; font-size: 50px; color: #ffffff">NUESTRAS PROMOCIONES</h1>
         <div class="products-container">
             @foreach ($aplicaciones as $aplicacion)
                 <div class="product-card">
                     <img src="{{ asset('storage/' . $aplicacion->imagen_url) }}" alt="{{ $aplicacion->nombre }}">
                     <h3>{{ $aplicacion->nombre }}</h3>
-                    <h4>{{ $aplicacion->descripcion }}</h4>
+                    <h4 class="price">-{{ $aplicacion->valor*100 }}% menos  </h4>
+                    <h3 style="font-size: 17px;">{{ $aplicacion->fecha_inicio}} a {{$aplicacion->fecha_fin}}</h4>
                     <p class="price">Bs {{ number_format($aplicacion->precio - $aplicacion->precio*$aplicacion->valor, 2) }}</p>
                     <button class="add-to-cart">Agregar al carrito</button>
                 </div>
