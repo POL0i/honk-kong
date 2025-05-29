@@ -13,8 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link rel="stylesheet" href="{{asset('css/baner.css')}}">
-    <link rel="stylesheet" href="/css/producto.css">
-    <link rel="stylesheet" href="style.css/reseña.css">
+    <link rel="stylesheet" href="/css/barraVertical.css">
     <style> <!-- Tipografía de Google Fonts -->
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
     </style>
@@ -67,7 +66,7 @@
       <li><a href="/buscar/{{$categoria->id_categoria}}">{{ $categoria->nombre }}</a></li>
     @endforeach
     <li style="  border-bottom: 1px solid rgba(255, 255, 255, 0.2)"></li>
-    <li><a href="/tienda.reseñas">RESEÑAS</a></li>
+    <li><a href="/reseña">RESEÑAS</a></li>
   </ul>
   
   <div class="redes-sociales">
@@ -118,7 +117,24 @@
         });
     </script>
     
-     
+     {{--loop infinito scrip---}}
+     <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const container = document.getElementById('reseñasContainer');
+      
+          container.addEventListener('wheel', function(e) {
+              e.preventDefault();
+              container.scrollLeft += e.deltaY*5;
+          });
+      
+          // Loop infinito simulado
+          container.addEventListener('scroll', () => {
+              if (container.scrollLeft >= container.scrollWidth / 2) {
+                  container.scrollLeft = 0;
+              }
+          });
+      });
+      </script>
    
         
 </body>

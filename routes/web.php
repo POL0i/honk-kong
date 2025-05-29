@@ -25,7 +25,7 @@ Route::get('/', [TiendaController::class, 'index'])->name('inicio');
 Route::get('/quienes', [TiendaController::class, 'mostrar'])->name('quienes');
 Route::get('/contactanos', [TiendaController::class, 'contacto'])->name('contactanos');
 Route::get('/buscar/{id}', [TiendaController::class, 'buscar'])->name('buscar');
-
+Route::get('/reseña', [TiendaController::class, 'reseña'])->name('reseña');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');

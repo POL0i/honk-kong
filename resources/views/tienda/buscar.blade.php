@@ -1,13 +1,18 @@
 @extends('base')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/barraVertical.css') }}">
+    <link rel="stylesheet" href="/css/producto.css">
 @endpush
 
 @section('content')
-     
+      
+    <div class="banner-content">
+        <h1>¡Tu pizza favorita, recién horneada!</h1>
+        <p>Disfruta de sabores irresistibles con calidad garantizada</p>
+        <a href="#menu" class="order-now-btn">Ordenar ahora</a>
+    </div>
     <div>
-        <h1 style=" margin-top: 100px; margin-bottom: 0px; text-align: center; font-size: 50px; color: #ffffff">NUESTROS PRODUCTOS</h1>
+        <h1 style=" margin-top: 0px; margin-bottom: 0px; text-align: center; font-size: 50px; color: #ffffff">NUESTROS PRODUCTOS</h1>
         <div class="products-container">
             @foreach ($productos as $producto)
                 <div class="product-card">
