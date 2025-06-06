@@ -9,6 +9,7 @@ use App\Models\Productos;
 use App\Models\aplicaciones_promociones;
 use App\Models\Resenas;
 use App\Models\User;
+use Illuminate\Support\Facades\Redirect;
 
 class TiendaController extends Controller
 {
@@ -52,12 +53,26 @@ class TiendaController extends Controller
    public function mostrarPerfil()
     {
         $categorias = Categorias::all();
-        $usuario = auth()->user(); // O User::find($id);
-        return view('tienda.perfil', compact('usuario','categorias'));
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error','Debes iniciar sesion');
+        }
+        else{
+            $usuario = auth()->user(); 
+            return view('tienda.perfil', compact('usuario','categorias'));
+        }
+       
     }
-    public function editar($id)
+    public function editarperfil($id)
     {
-
+        $categorias = Categorias::all();
+        $usuario=User::findorfail($id);
+        return view('tienda.editperfil',compact('categorias','usuario'));
+    }
+    public function actualizarPerfil( Request $REQUEST, $id)
+    {
+        $usuario=User::findorfail($id);
+        $usuario->update($REQUEST->all());
+        return Redirect('/perfil');
     }
 
 }

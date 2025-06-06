@@ -1,0 +1,134 @@
+.titulo {
+  color: #00d4ff;
+  margin: 0px;  
+}
+
+.perfil-container {
+  max-width: 900px;
+  margin: 85px auto;
+  padding: 30px 30px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #f8f9fa;
+  text-align: center;
+}
+
+/* Avatar centrado */
+.perfil-avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.perfil-avatar img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+  object-fit: cover;
+}
+
+.perfil-avatar label {
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #00d4ff;
+  font-size: 20px;
+}
+
+.perfil-avatar input[type="file"] {
+  display: none;
+}
+
+/* Info horizontal y legible */
+.perfil-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+  justify-content: center;
+  text-align: left;
+}
+
+.perfil-info > div {
+  flex: 1 1 40%;
+  display: flex;
+  flex-direction: column;
+  color: #f1f1f1;
+}
+
+.perfil-info label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #00d4ff;
+  font-size: 20px;
+}
+
+.perfil-info input {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 18px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.perfil-info input:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 5px #00d4ff;
+}
+
+/* Botones centrados y con estilo */
+.perfil-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.btn-editar, .btn-cancelar {
+  padding: 12px 28px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+
+.btn-editar {
+  background-color: #00d4ff;
+  color: #222;
+  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+}
+
+.btn-editar:hover {
+  background-color: #00b5d8;
+}
+
+.btn-cancelar {
+  background-color: transparent;
+  border: 2px solid #00d4ff;
+  color: #00d4ff;
+}
+
+.btn-cancelar:hover {
+  background-color: #00d4ff;
+  color: #222;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .perfil-info > div {
+    flex: 1 1 100%;
+  }
+}

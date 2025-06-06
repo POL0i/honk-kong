@@ -22,7 +22,6 @@ use App\Http\Controllers\AplicacionesEnviosController;
 use App\Http\Controllers\AplicacionesCarritoController;
 use App\Http\Controllers\AplicacionesProductosController;
 use App\Http\Controllers\AplicacionesCategoriasController;
-
 use App\http\Controllers\AplicacionesUsuariosController;
 
 
@@ -32,6 +31,10 @@ Route::get('/quienes', [TiendaController::class, 'mostrar'])->name('quienes');
 Route::get('/contactanos', [TiendaController::class, 'contacto'])->name('contactanos');
 Route::get('/buscar/{id}', [TiendaController::class, 'buscar'])->name('buscar');
 Route::get('/reseña', [TiendaController::class, 'reseña'])->name('reseña');
+Route::get('/perfil', [TiendaController::class, 'mostrarPerfil'])->name('mostrarPerfil');
+Route::get('/perfil/{id}/editar', [TiendaController::class, 'editarperfil'])->name('editperfil');
+//prueva
+route::Put('/perfil/{id}/actualizar', [TiendaController::class, 'actualizarPerfil'])->name('actualizarPerfil');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
@@ -54,7 +57,7 @@ Route::middleware([
 
 Route::middleware(['auth', 'can:admin-only'])->group(function () {
 
-    route::get('/producto', [ProductosController::class, 'index'])->name('home'); 
+route::get('/producto', [ProductosController::class, 'index'])->name('home'); 
 route::get('/producto/crear', [ProductosController::class, 'create'])->name('home');
 route::post('/producto/guardar',[ProductosController::class, 'store'])->name('home');
 route::get('/producto/{id}/editar',[ProductosController::class, 'edit'])->name('home');
