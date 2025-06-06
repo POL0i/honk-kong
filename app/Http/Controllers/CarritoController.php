@@ -2,48 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\categorias;
 use Illuminate\Http\Request;
 use App\Models\productos;
 
 class CarritoController extends Controller
 {
-    public function agregar(Request $request)
+    public function agregar($id)
     {
-        $producto = productos::findOrFail($request->id_producto);
-        $cantidad = $request->cantidad ?? 1;
+        $productoDB = Productos::findorfail($id);
 
-        $carrito = session()->get('carrito', []);
-
-        if(isset($carrito[$producto->id_producto])){
-            $carrito[$producto->id_producto]['cantidad'] += $cantidad;
-        } else {
-            $carrito[$producto->id] = [
-                "nombre" => $producto->nombre,
-                "precio" => $producto->precio,
-                "cantidad" => $cantidad,
-                "imagen" => $producto->imagen_url,
-            ];
+        if (!$productoDB) {
+            return redirect()->back()->with('error', 'Producto no encontrado');
         }
-
-        session()->put('carrito', $carrito);
-
-        return redirect()->back()->with('success', 'Producto agregado al carrito');
+    
+        $producto = [
+            'id' => $productoDB->id_producto,
+            'nombre' => $productoDB->nombre,
+            'precio' => $productoDB->precio,
+            'cantidad' => 1,
+        ];
+    
+        $carrito = session()->get('carrito', []);
+    
+        if (isset($carrito[$producto['id']])) {
+            $carrito[$producto['id']]['cantidad'] += 1;
+        } else {
+            $carrito[$producto['id']] = $producto;
+        }
+    
+        session(['carrito' => $carrito]);
+    
+        return redirect('/');
     }
 
     public function ver()
     {
-        $carrito = session()->get('carrito', []);
-        return view('tienda.carrito', compact('carrito'));
-    }
-
-    public function eliminar(Request $request)
-    {
-        $carrito = session()->get('carrito', []);
-        if(isset($carrito[$request->producto_id])){
-            unset($carrito[$request->producto_id]);
-            session()->put('carrito', $carrito);
+        $categorias=categorias::all();
+        $carrito = session('carrito', []);
+        $total = 0;
+    
+        foreach ($carrito as $producto) {
+            $total += $producto['precio'] * $producto['cantidad'];
         }
-
-        return redirect()->back()->with('success', 'Producto eliminado del carrito');
+    
+        return view('carrito.vercarrito', compact('carrito', 'total','categorias'));
     }
+
+    public function eliminar()
+    {
+        session()->forget('carrito');
+        return redirect()->back()->with('success', 'Carrito vaciado correctamente');
+    }
+    
 }

@@ -52,6 +52,7 @@
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-decoration: none;
   }
   
   .add-to-cart:hover {

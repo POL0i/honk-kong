@@ -32,6 +32,10 @@
   padding-bottom: 5px;
 }
 
+#sidebar .sidebar-title a {
+  color: #f5c518;
+}
+
 /* Enlaces */
 #sidebar a {
   color: white;

@@ -1,0 +1,96 @@
+
+    .carrito-container {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        color: #333;
+        max-width: 1000px;
+        margin-top: 100px;
+        font-family: 'Poppins', sans-serif;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .carrito-container h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 36px;
+        color: #ff4d4f;
+        text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    
+
+    table.carrito-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    table.carrito-table th,
+    table.carrito-table td {
+        padding: 16px;
+        border-bottom: 1px solid #eee;
+        text-align: center;
+        font-size: 17px;
+        color: #333;
+    }
+
+    table.carrito-table th {
+        background-color: #fff3f3;
+        color: #ff4d4f;
+        font-weight: 600;
+    }
+
+    .total {
+        text-align: right;
+        font-size: 20px;
+        font-weight: bold;
+        color: #222;
+        margin-bottom: 30px;
+    }
+
+    .btn-carrito {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3);
+        margin-right: 10px;
+    }
+
+    .btn-carrito.checkout {
+        background: linear-gradient(to right, #ff4d4f, #ff7a45);
+    }
+
+    .btn-carrito.checkout:hover {
+        opacity: 0.9;
+        transform: scale(1.03);
+    }
+
+    .btn-carrito.volver {
+        background-color: #1890ff;
+    }
+
+    .btn-carrito.volver:hover {
+        background-color: #1572d5;
+    }
+
+    .btn-carrito.eliminar {
+        background-color: #ff4d4f;
+        color: white;
+    }
+    
+    .btn-carrito.eliminar:hover {
+        background-color: #d9363e;
+        transform: scale(1.05);
+    }
+     .btn-carrito.checkout:hover{
+        background-color: #d9363e;
+        transform: scale(1.05);
+     }

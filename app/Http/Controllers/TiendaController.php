@@ -31,23 +31,23 @@ class TiendaController extends Controller
    public function mostrar()
    {
     $categorias = Categorias::all();
-    return view('tienda.quienes',compact('categorias'));
+        return view('tienda.quienes',compact('categorias'));
    }
    public function contacto()
    {
     $categorias = Categorias::all();
-    return view('tienda.contactanos',compact('categorias'));
+        return view('tienda.contactanos',compact('categorias'));
    }
    public function buscar($id)
    {
-    $categorias = Categorias::all();
-    $productos=Productos::where('id_categoria',$id)->get();
-    return view('tienda.buscar',compact('productos','categorias'));
+        $categorias = Categorias::all();
+        $productos=Productos::where('id_categoria',$id)->get();
+        return view('tienda.buscar',compact('productos','categorias'));
    }
    public function reseña(){
-    $categorias = Categorias::all();
-    $reseñas=resenas::All();
-    return view('tienda.reseña',compact('categorias','reseñas'));
+        $categorias = Categorias::all();
+        $reseñas=resenas::All();
+        return view('tienda.reseña',compact('categorias','reseñas'));
    }
    
    public function mostrarPerfil()

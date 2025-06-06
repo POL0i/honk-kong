@@ -22,7 +22,7 @@
                   <h3>{{ $producto->nombre }}</h3>
                   <h4>{{ $producto->descripcion }}</h4>
                   <p class="price">Bs {{ number_format($producto->precio, 2) }}</p>
-                  <button class="add-to-cart">Agregar al carrito</button>
+                  <a class="add-to-cart" href="/carrito/agregar/{{$producto->id_producto}}" >Agregar al carrito</a>
               </div>
            @endforeach
       </div>

@@ -50,9 +50,9 @@
                     </a>
                 @endif
             
-            <a href="/carrito" class="icon-button cart-button">
+            <a href="/carrito/ver" class="icon-button cart-button">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count">3</span> <!-- Cambia este número dinámicamente -->
+                <span class="cart-count">{{$carritoCantidad}}</span> <!-- Cambia este número dinámicamente -->
             </a>
             <!--boton de perfil-->
             <a href="/perfil" class="boton-usuario">
@@ -68,6 +68,46 @@
     @yield('content')
   </main>
 </div>
+<!--footer-->
+<footer class="footer">
+    <div class="footer-container">
+      <!-- Columna izquierda: Contacto -->
+      <div class="footer-column contact">
+        <h3>Contáctanos</h3>
+        <p><i class="fas fa-phone-alt"></i> <a href="tel:+123456789">+1 234 567 89</a></p>
+        <p><i class="fas fa-envelope"></i> <a href="mailto:ventas@comidita.com">ventas@comidita.com</a></p>
+        <p><i class="fas fa-map-marker-alt"></i> <a href="#">Calle Sabrosa 123, Ciudad Del Sabor</a></p>
+      </div>
+  
+      <!-- Columna centro: Logo -->
+      <div class="footer-column center-logo">
+        <img src="/storage/imagen/fondo.jpg" alt="Logo Comidita" class="logo-footer">
+        <p class="slogan">"El sabor que te hace volver"</p>
+      </div>
+  
+      <!-- Columna derecha: Redes sociales -->
+      <div class="footer-column social">
+        <h3>Síguenos</h3>
+        <div class="social-icons">
+          <a href="https://facebook.com" target="_blank" class="icon facebook" title="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://instagram.com" target="_blank" class="icon instagram" title="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://wa.me/123456789" target="_blank" class="icon whatsapp" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Parte inferior -->
+    <div class="footer-bottom">
+      <p>© 2025 Honk Kong. Todos los derechos reservados.</p>
+    </div>
+</footer>
+  
 
 <!-- Botón hamburguesa -->
 <button id="toggleSidebar" class="btn_sidebar">
@@ -77,32 +117,18 @@
 
 <!-- SIDEBAR IZQUIERDO -->
 <div id="sidebar">
-
-  <!-- BOTÓN CERRAR (X) -->
-  <button id="closeSidebar" style="position: absolute; top: 10px; right: 10px; font-size: 50px; background: none; border: none; color: white; cursor: pointer;">
-      &times;
-  </button>
-  <ul class="sidebar-menu">
-    <li class="sidebar-title">CATEGORÍAS:</li>
-    @foreach($categorias as $categoria)
-      <li><a href="/buscar/{{$categoria->id_categoria}}">{{ $categoria->nombre }}</a></li>
-    @endforeach
-    <li style="  border-bottom: 1px solid rgba(255, 255, 255, 0.2)"></li>
-    <li><a href="/reseña">RESEÑAS</a></li>
-  </ul>
-  
-  <div class="redes-sociales">
-    <a href="#"><i class="fab fa-facebook-f">  FACEBOOK</i></a>
-    <a href="#"><i class="fab fa-instagram"></i>  INSTAGRAM</a>
-  </div>
-
-  
-<div class="contacto-sidebar">
-  <p>📞 +591 70899084</p>
-  <p >✉️ info@hongkongrapida.com</p>
-  <p style="  border-bottom: 1px solid rgba(255, 255, 255, 0.2)"></p>
-</div>
-
+    <!-- BOTÓN CERRAR (X) -->
+    <button id="closeSidebar" style="position: absolute; top: 10px; right: 10px; font-size: 50px; background: none; border: none; color: white; cursor: pointer;">
+        &times;
+    </button>
+    <ul class="sidebar-menu">
+        <li class="sidebar-title">CATEGORÍAS</li>
+            @foreach($categorias as $categoria)
+        <li><a href="/buscar/{{$categoria->id_categoria}}">{{ $categoria->nombre }}</a></li>
+        @endforeach
+        <li style="  border-bottom: 1px solid rgba(255, 255, 255, 0.2)"></li>
+        <li class="sidebar-title"><a href="/reseña">RESEÑAS</a></li>
+    </ul>
 </div>
 
     {{--scrips--}}

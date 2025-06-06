@@ -37,8 +37,8 @@ Route::get('/perfil/{id}/editar', [TiendaController::class, 'editarperfil'])->na
 route::Put('/perfil/{id}/actualizar', [TiendaController::class, 'actualizarPerfil'])->name('actualizarPerfil');
 
 Route::middleware(['auth'])->group(function () {
-    Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
-    Route::get('/carrito', [CarritoController::class, 'ver'])->name('carrito.ver');
+    Route::get('/carrito/agregar/{id}', [CarritoController::class, 'agregar'])->name('carrito.agregar');
+    Route::get('/carrito/ver', [CarritoController::class, 'ver'])->name('carrito.vercarrito');
     Route::post('/carrito/eliminar', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
     
 }); 
