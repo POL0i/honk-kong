@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('metodos_pagos', function (Blueprint $table) {
             $table->id('id_pago');
             $table->string('nombre_titular');
-            $table->integer('numero_targera');
+            $table->string('numero_targera');
             $table->string('fecha_expiracion');
             $table->integer('cvc');
 

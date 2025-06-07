@@ -35,9 +35,9 @@
                 <div class="product-card">
                     <img src="{{ asset('storage/' . $aplicacion->imagen_url) }}" alt="{{ $aplicacion->nombre }}">
                     <h3>{{ $aplicacion->nombre }}</h3>
-                    <h4 class="price">-{{ $aplicacion->valor*100 }}% menos  </h4>
+                    <h4 class="price">-{{ $aplicacion->valor }}% menos  </h4>
                     <h3 style="font-size: 17px;">{{ $aplicacion->fecha_inicio}} a {{$aplicacion->fecha_fin}}</h4>
-                    <p class="price">Bs {{ number_format($aplicacion->precio - $aplicacion->precio*$aplicacion->valor, 2) }}</p>
+                    <p class="price">Bs {{ number_format($aplicacion->precio - $aplicacion->precio*$aplicacion->valor*0.01, 2) }}</p>
                     <button class="add-to-cart">Agregar al carrito</button>
                 </div>
              @endforeach
