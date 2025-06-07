@@ -33,7 +33,7 @@
         </table>
 
         <div class="total">Total general: Bs {{ number_format($total, 2) }}</div>
-        <a href="#" class="btn-carrito checkout">Proceder al pago</a>
+        <a href="/carrito/pago" class="btn-carrito checkout">Proceder al pago</a>
         <form action="/carrito/eliminar" method="POST" style="display: inline-block;">
             @csrf
             <button type="submit" class="btn-carrito eliminar">

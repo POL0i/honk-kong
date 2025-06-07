@@ -1,0 +1,125 @@
+.form-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    font-family: 'Segoe UI', sans-serif;
+    background: transparent;
+}
+
+.payment-form {
+    width: 100%;
+    max-width: 600px;
+    padding: 30px 50px;
+    margin-top: 50px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.payment-form h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 50px; /* Aumentado */
+    font-weight: 700;
+    color: #00c6ff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.payment-form input {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-size: 15px;
+    outline: none;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* ✅ Para respetar padding/margen en ambos lados */
+}
+
+/* Eliminar flechas de inputs number */
+.payment-form input[type=number]::-webkit-inner-spin-button,
+.payment-form input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.payment-form input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.payment-form input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.payment-form input:focus {
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.payment-form button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.payment-form button:hover {
+    background: linear-gradient(135deg, #0093e9, #005cbf);
+}
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.btn-confirmar {
+    flex: 1;
+    padding: 12px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-confirmar:hover {
+    background-color: #ff4e4e;
+}
+
+.btn-cancelar {
+    flex: 1;
+    padding: 12px;
+    background-color: #aaa;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.btn-cancelar:hover {
+    background-color: #888;
+}

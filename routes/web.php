@@ -33,14 +33,15 @@ Route::get('/buscar/{id}', [TiendaController::class, 'buscar'])->name('buscar');
 Route::get('/reseña', [TiendaController::class, 'reseña'])->name('reseña');
 Route::get('/perfil', [TiendaController::class, 'mostrarPerfil'])->name('mostrarPerfil');
 Route::get('/perfil/{id}/editar', [TiendaController::class, 'editarperfil'])->name('editperfil');
-//prueva
 route::Put('/perfil/{id}/actualizar', [TiendaController::class, 'actualizarPerfil'])->name('actualizarPerfil');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/carrito/agregar/{id}', [CarritoController::class, 'agregar'])->name('carrito.agregar');
     Route::get('/carrito/ver', [CarritoController::class, 'ver'])->name('carrito.vercarrito');
     Route::post('/carrito/eliminar', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
-    
+    Route::get('/carrito/pago', [CarritoController::class, 'pago'])->name('carrito.pago');
+    Route::get('/carrito/procesar', [CarritoController::class, 'procesarPago'])->name('carrito.procesar');
+
 }); 
 
 
