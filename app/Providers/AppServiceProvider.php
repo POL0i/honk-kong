@@ -20,10 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     { /*nuevo esto*/
-        View::composer('*', function ($view) {
-            $carrito = session('carrito', []);
-            $totalCantidad = array_sum(array_column($carrito, 'cantidad'));
-            $view->with('carritoCantidad', $totalCantidad);
-        });
+          View::composer('*', function ($view) {
+        $carrito = session('carrito', []);
+        $totalCantidad = array_sum(array_column($carrito, 'cantidad')); // suma total de cantidades
+        $view->with('carritoCantidad', $totalCantidad); // se comparte con todas las vistas
+    });
     }
 }

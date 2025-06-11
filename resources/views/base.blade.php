@@ -52,7 +52,7 @@
             
             <a href="/carrito/ver" class="icon-button cart-button">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count">{{$carritoCantidad}}</span> <!-- Cambia este número dinámicamente -->
+                <span class="cart-count">{{ $carritoCantidad }}</span> <!-- Cambia este número dinámicamente -->
             </a>
             <!--boton de perfil-->
             <a href="/perfil" class="boton-usuario">

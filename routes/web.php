@@ -42,6 +42,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/carrito/pago', [CarritoController::class, 'pago'])->name('carrito.pago');
     Route::post('/carrito/procesar', [CarritoController::class, 'procesarPago'])->name('carrito.procesar');
 
+    Route::post('/carrito/actualizar/{id}', [CarritoController::class, 'actualizar'])->name('carrito.actualizar');
+    Route::delete('/carrito/eliminar/{id}', [CarritoController::class, 'eliminarItem'])->name('carrito.eliminar.item');
+
 }); 
 
 

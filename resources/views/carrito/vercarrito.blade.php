@@ -12,24 +12,49 @@
 
     @if (count($carrito) > 0)
         <table class="carrito-table">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Precio unitario</th>
-                    <th>Cantidad</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($carrito as $item)
-                    <tr>
-                        <td>{{ $item['nombre'] }}</td>
-                        <td>Bs {{ number_format($item['precio'], 2) }}</td>
-                        <td>{{ $item['cantidad'] }}</td>
-                        <td>Bs {{ number_format($item['precio'] * $item['cantidad'], 2) }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
+              <thead>
+        <tr>
+            <th></th> <!-- Botón de eliminar -->
+            <th>Producto</th>
+            <th>Precio unitario</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($carrito as $item)
+            <tr>
+                <td>
+                    <form action="{{ route('carrito.eliminar.item', $item['id']) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-eliminar">🗑️</button>
+                    </form>
+                </td>
+                <td>{{ $item['nombre'] }}</td>
+                <td>Bs {{ number_format($item['precio'], 2) }}</td>
+                <td class="cantidad-cell">
+                    <form action="{{ route('carrito.actualizar', $item['id']) }}" method="POST" class="form-cantidad">
+                        @csrf
+                        <input type="hidden" name="accion" value="restar">
+                        <button type="submit" class="btn-cantidad">➖</button>
+                    </form>
+
+                    <span class="cantidad-numero">{{ $item['cantidad'] }}</span>
+
+                    <form action="{{ route('carrito.actualizar', $item['id']) }}" method="POST" class="form-cantidad">
+                        @csrf
+                        <input type="hidden" name="accion" value="sumar">
+                        <button type="submit" class="btn-cantidad">➕</button>
+                    </form>
+                </td>
+                <td>Bs {{ number_format($item['precio'] * $item['cantidad'], 2) }}</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+
+
         </table>
 
         <div class="total">Total general: Bs {{ number_format($total, 2) }}</div>

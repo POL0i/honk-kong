@@ -3,7 +3,7 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url('/storage/imagen/fondo.jpg');
+    background-image: url('https://cdn.pixabay.com/photo/2019/05/20/18/31/burger-4217255_1280.jpg');
 
     background-size: cover;
     background-position: center;

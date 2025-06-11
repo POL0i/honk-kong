@@ -94,3 +94,16 @@
         background-color: #d9363e;
         transform: scale(1.05);
      }
+     .input-cantidad {
+    width: 50px;
+    text-align: center;
+}
+
+.btn-actualizar {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 3px 6px;
+    cursor: pointer;
+    margin-left: 5px;
+}
