@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Hong Kong Comida Rápida') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <!-- Favicon -->
+    <link rel="icon" href="https://i.imgur.com/3vt7l0G.png" type="image/png">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
 
-        <!-- Styles -->
-        @livewireStyles
-    </head>
-    <body>
-        <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">
-            {{ $slot }}
-        </div>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    @livewireStyles
+</head>
+<body class="hold-transition login-page" 
+      style="background: url('https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=1924') no-repeat center center fixed; background-size: cover;">
+    
+    {{ $slot }}
 
-        @livewireScripts
-    </body>
+    @livewireScripts
+    <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+</body>
 </html>

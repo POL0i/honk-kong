@@ -1,48 +1,141 @@
 <x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+    <style>
+        /* Estilos específicos para el login */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+        }
+        
+        .dark-transparent-card {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-input-dark {
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input-dark:focus {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+        
+        .form-checkbox-dark {
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-right: 0.5rem;
+        }
+        
+        .text-white-80 { color: rgba(255, 255, 255, 0.8); }
+        .text-white-60 { color: rgba(255, 255, 255, 0.6); }
+        .divider { border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 1.5rem 0; }
+        
+        /* Animaciones */
+        @keyframes pulse-grow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-logo {
+            animation: pulse-grow 2s infinite ease-in-out;
+        }
+        
+        .hover-grow {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-grow:hover {
+            transform: scale(1.03);
+        }
+    </style>
 
-        <x-validation-errors class="mb-4" />
+    <div class="login-container">
+        <div class="login-box">
+            <div class="dark-transparent-card hover-grow">
+                <!-- Logo y Encabezado -->
+                <div class="text-center mb-6">
+                    <img src="https://i.imgur.com/3vt7l0G.png" 
+                         alt="Logo Hong Kong" 
+                         class="mx-auto mb-3 animate-logo"
+                         style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.2);">
+                    
+                    <h1 class="text-3xl font-bold text-white mb-1" style="text-shadow: 0 2px 4px rgba(0,0,0,0.3);">HONG KONG</h1>
+                    <p class="text-white-80 uppercase text-sm mb-1 tracking-widest">CHINESE FOOD</p>
+                    <p class="text-white-60 text-xs italic">"Sabores que enamoran"</p>
+                </div>
+                
+                <!-- Formulario -->
+                <x-validation-errors class="mb-4 text-red-300 text-sm" />
 
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-                {{ $value }}
-            </div>
-        @endsession
+                @session('status')
+                    <div class="mb-4 text-green-400 text-sm">
+                        {{ $value }}
+                    </div>
+                @endsession
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
 
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            </div>
+                    <!-- Email -->
+                    <div class="mb-4">
+                        <label for="email" class="block text-white-80 mb-2 text-sm font-medium">Correo electrónico</label>
+                        <input id="email" class="form-input-dark" type="email" name="email" :value="old('email')" required autofocus />
+                    </div>
 
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
+                    <!-- Password -->
+                    <div class="mb-4">
+                        <label for="password" class="block text-white-80 mb-2 text-sm font-medium">Contraseña</label>
+                        <input id="password" class="form-input-dark" type="password" name="password" required />
+                    </div>
 
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-                </label>
-            </div>
+                    <!-- Remember Me -->
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center">
+                            <input id="remember_me" type="checkbox" name="remember" class="form-checkbox-dark rounded" />
+                            <label for="remember_me" class="ml-2 text-white-80 text-sm">Recuérdame</label>
+                        </div>
+                        
+                        <a href="{{ route('password.request') }}" class="text-white-60 hover:text-white text-sm transition-colors">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
 
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
+                    <!-- Botón Ingresar -->
+                    <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded font-bold transition-colors shadow-md">
+                        INGRESAR
+                    </button>
+                </form>
+
+                <!-- Enlace de registro -->
+                <div class="divider"></div>
+                <div class="text-center text-sm">
+                    <span class="text-white-60">¿No tienes una cuenta?</span> 
+                    <a href="{{ route('register') }}" class="text-white-80 hover:text-red-300 font-medium ml-1 transition-colors">
+                        Regístrate aquí
                     </a>
-                @endif
-
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
-                </x-button>
+                </div>
             </div>
-        </form>
-    </x-authentication-card>
+        </div>
+    </div>
 </x-guest-layout>
