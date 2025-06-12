@@ -72,5 +72,6 @@ class User extends Authenticatable
     public function reseñas()
     {
         return $this->hasMany(resenas::class, 'user_id','id');
+         return $this->hasMany(Resena::class);
     }
 }

@@ -26,6 +26,15 @@ use App\http\Controllers\AplicacionesUsuariosController;
 
 
 
+
+Route::prefix('resenas')->middleware('auth')->group(function() {
+    Route::get('/producto/{producto}/create', [ResenasController::class, 'createByUser'])
+        ->name('resenas.createByUser');
+        
+    Route::post('/store', [ResenasController::class, 'storeByUser'])
+        ->name('resenas.storeByUser');
+});
+
 Route::get('/', [TiendaController::class, 'index'])->name('inicio');
 Route::get('/quienes', [TiendaController::class, 'mostrar'])->name('quienes');
 Route::get('/contactanos', [TiendaController::class, 'contacto'])->name('contactanos');

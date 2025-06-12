@@ -1,0 +1,46 @@
+/* Estilos para botones y acciones */
+.product-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.add-to-cart {
+    background: #4CAF50;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    flex: 1;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background: #3e8e41;
+    transform: translateY(-2px);
+}
+
+.in-cart-disabled {
+    background: #9E9E9E;
+    cursor: not-allowed;
+}
+
+.review-btn {
+    background: #2196F3;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex: 1;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.review-btn:hover {
+    background: #0b7dda;
+    transform: translateY(-2px);
+}

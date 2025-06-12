@@ -29,4 +29,9 @@ class productos extends Model
     {
         return $this->belongsToMany(detalle_pedidos::class, 'id_producto');
     }
+    public function reseñas ()
+{
+      return $this->hasMany(Resena::class, 'producto_id', 'id_producto');
+}
+
 }

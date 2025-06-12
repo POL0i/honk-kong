@@ -1,71 +1,234 @@
- /*productos*/
- .products-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 40px;
-  }
-  
-  .product-card {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s;
-  }
-  
-  
-  
-  .product-card:hover {
-    transform: scale(1.03);
-  }
-  
-  .product-card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 15px;
-  }
-  
-  .product-card h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #1f52b3;
-  }
-  
-  .product-card .price {
-    font-size: 18px;
-    font-weight: bold;
-    color: #e31837;
-    margin-bottom: 10px;
-  }
-  
-  .add-to-cart {
-    background-color: #e31837;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-decoration: none;
-  }
-  
-  .add-to-cart:hover {
-    background-color: #c4162d;
-  }
+/* ========== ESTILOS GENERALES ========== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
 
-  .in-cart {
-    background-color: #cccccc;
-    color: #333;
-    padding: 10px 20px;
-    border-radius: 5px;
+/* ========== BANNER PRINCIPAL ========== */
+.banner-content {
+    background: linear-gradient(135deg, rgba(255, 145, 0, 0.8), rgba(255, 200, 0, 0.8));
+    padding: 60px 20px;
     text-align: center;
-    cursor: not-allowed;
+    color: white;
+    margin-bottom: 40px;
+}
+
+.banner-content h1 {
+    font-size: 2.5rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.order-now-btn {
+    display: inline-block;
+    background: #ffffff;
+    color: #ff6f00;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.order-now-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* ========== TÍTULOS DE SECCIÓN ========== */
+.section-title {
+    text-align: center;
+    margin-top: 60px;
+    font-size: 50px;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* ========== TARJETAS DE PRODUCTOS/PROMOCIONES ========== */
+.product-card, .promotion-card {
+    background: rgba(255, 179, 71, 0.85);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.product-card:hover, .promotion-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.product-card img, .promotion-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.product-card h3, .promotion-card h3 {
+    color: #5a2f0b;
+    margin: 10px 0 5px;
+    font-size: 1.4rem;
+}
+
+.product-card h4, .promotion-card h4 {
+    color: #7a4a1b;
+    margin: 5px 0;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.promo-dates {
+    font-size: 17px;
+    color: #5a2f0b;
+}
+
+.price {
+    color: #c2390a;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+/* ========== GRIDS DE PRODUCTOS/PROMOCIONES ========== */
+.products-grid, .promotions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding: 30px;
+}
+
+/* ========== ACCIONES Y BOTONES ========== */
+.product-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.add-to-cart {
+    background: #4CAF50;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    flex: 1;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background: #3e8e41;
+    transform: translateY(-2px);
+}
+
+.in-cart-disabled {
+    background: #9E9E9E;
+    cursor: not-allowed;
+}
+
+.review-btn {
+    background: #2196F3;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex: 1;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.review-btn:hover {
+    background: #0b7dda;
+    transform: translateY(-2px);
+}
+
+/* ========== RESEÑAS ========== */
+.reseñas-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    justify-content: flex-start;
+    padding: 20px;
+    gap: 15px;
+}
+
+.reseñas-container::-webkit-scrollbar {
+    display: none;
+}
+
+.reseña-card {
+    min-width: 300px;
+    max-width: 300px;
+    padding: 24px;
+    text-align: center;
+    background: rgba(255, 230, 200, 0.9);
+    margin-right: 15px;
+    border-radius: 18px;
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.3);
+    border-left: 6px solid #ff7f50;
+    transition: transform 0.3s ease-in-out;
+}
+
+.reseña-card:hover {
+    transform: scale(1.05);
+}
+
+.user-icon {
+    font-size: 50px;
+    color: #FFD700;
+    margin-bottom: 10px;
+}
+
+.reseña-nombre {
+    margin-top: 8px;
+    font-weight: bold;
+    color: #5a2d0c;
+    font-size: 18px;
+}
+
+.reseña-mensaje {
+    font-style: italic;
+    color: #ff4500;
+    font-size: 14px;
+}
+
+.rating-stars {
+    margin-bottom: 10px;
+    color: #ffcc00;
+}
+
+.rating-stars i {
+    margin-right: 4px;
+    font-size: 16px;
+}
+
+/* ========== MEDIA QUERIES (RESPONSIVE) ========== */
+@media (max-width: 900px) {
+    .products-grid, .promotions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .products-grid, .promotions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .product-card, .promotion-card {
+        padding: 15px;
+    }
+    
+    .section-title {
+        font-size: 40px;
+    }
 }

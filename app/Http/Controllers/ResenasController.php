@@ -2,15 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\resenas;
-use App\Models\user;
+use App\Models\Resena; // Nombre correcto del modelo
+use App\Models\User;   // User en PascalCase
+use App\Models\Producto;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ResenasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function createByUser($productoId)
+    {
+        $producto = Producto::findOrFail($productoId);
+        return view('resenas.create-by-user', compact('producto'));
+    }
+
+    public function storeByUser(Request $request)
+    {
+        $request->validate([
+            'comentario' => 'required|string|max:500',
+            'calificacion' => 'required|integer|min:1|max:5',
+            'producto_id' => 'required|exists:productos,id_producto'
+        ]);
+
+        Resena::create([
+            'comentario' => $request->comentario,
+            'calificacion' => $request->calificacion,
+            'fecha' => now(),
+            'user_id' => Auth::id(),
+            'producto_id' => $request->producto_id
+        ]);
+
+        return redirect()->route('productos.index')
+            ->with('success', 'Reseña agregada exitosamente');
+    }
+
+
     public function index()
     {
         $reseñas=resenas::all();

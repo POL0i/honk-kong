@@ -32,3 +32,18 @@
     color: #ff4500; /* Naranja intenso */
     font-style: italic;
 }
+.rating-stars {
+    color: #ffc107;
+    margin-top: 10px;
+}
+.reseña-nombre {
+    font-weight: bold;
+    color: #5a2f0b;
+}
+
+.reseñas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 30px;
+}
