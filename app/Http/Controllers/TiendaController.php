@@ -22,7 +22,7 @@ class TiendaController extends Controller
         $aplicaciones = DB::table('aplicaciones_promociones as ap')
         ->join('productos as p', 'ap.id_producto', '=', 'p.id_producto')
         ->join('promociones as pr', 'ap.id_promocion', '=', 'pr.id_promocion')
-        ->select('p.nombre', 'p.descripcion', 'p.precio', 'p.imagen_url', 'pr.nombre as promocion_nombre', 'pr.valor','pr.fecha_inicio','pr.fecha_fin')
+        ->select('p.id_producto', 'p.nombre', 'p.descripcion', 'p.precio', 'p.imagen_url', 'pr.nombre as promocion_nombre', 'pr.valor','pr.fecha_inicio','pr.fecha_fin')
         ->get();
         //dd($aplicaciones->pluck('aplicaciones'));
         return view('tienda.inicio', compact('categorias','productos','reseñas','clientes','aplicaciones'));

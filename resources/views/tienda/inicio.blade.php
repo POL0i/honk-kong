@@ -24,51 +24,56 @@
                   <h3>{{ $producto->nombre }}</h3>
                   <h4>{{ $producto->descripcion }}</h4>
                   <p class="price">Bs {{ number_format($producto->precio, 2) }}</p>
-            @php
-    $enCarrito = isset($carrito[$producto->id_producto]);
-@endphp
+                @php
+                    $enCarrito = isset($carrito[$producto->id_producto]);
+                @endphp
 
-@if (!$enCarrito)
-    <a class="add-to-cart" href="/carrito/agregar/{{$producto->id_producto}}">
-        Agregar al carrito
-    </a>
-@else
-    <div class="add-to-cart in-cart-disabled">  
-        Ya en el carrito
-    </div>
-@endif
+                @if (!$enCarrito)
+                    <a class="add-to-cart" href="/carrito/agregar/{{$producto->id_producto}}">
+                        Agregar al carrito
+                    </a>
+                @else
+                    <div class="add-to-cart in-cart-disabled">  
+                        Ya en el carrito
+                    </div>
+                @endif
                 </div>
            @endforeach
       </div>
 
       {{--Promociones de productos--}}
-      <div>
+    <div>
         <h1 style="text-align: center; font-size: 50px; color: #ffffff">NUESTRAS PROMOCIONES</h1>
         <div class="products-container">
             @foreach ($aplicaciones as $aplicacion)
                 <div class="product-card">
-                    <img src="{{ $producto->imagen_url }}" alt="{{ $producto->nombre }}">
+                    <img src="{{ $aplicacion->imagen_url }}" alt="{{ $aplicacion->nombre }}">
                     <h3>{{ $aplicacion->nombre }}</h3>
                     <h4 class="price">-{{ $aplicacion->valor }}% menos  </h4>
                     <h3 style="font-size: 17px;">{{ $aplicacion->fecha_inicio}} a {{$aplicacion->fecha_fin}}</h4>
                     <p class="price">Bs {{ number_format($aplicacion->precio - $aplicacion->precio*$aplicacion->valor*0.01, 2) }}</p>
-   @php
-    $enCarrito = isset($carrito[$producto->id_producto]);
-@endphp
+                    @php
+                        $enCarrito = isset($carrito[$aplicacion->id_producto]);
+                        $precioPromocional = $aplicacion->precio - $aplicacion->precio * $aplicacion->valor * 0.01;
+                    @endphp
 
-@if (!$enCarrito)
-    <a class="add-to-cart" href="/carrito/agregar/{{$producto->id_producto}}">
-        Agregar al carrito
-    </a>
-    
-@else
-    <div class="add-to-cart in-cart-disabled">  
-        Ya en el carrito
-    </div>
-@endif
+                    @if (!$enCarrito)
+                    <form method="GET" action="/carrito/agregar/{{$aplicacion->id_producto}}">
+                        @csrf
+                        <input type="hidden" name="id_producto" value="{{ $aplicacion->id_producto }}">
+                        <input type="hidden" name="cantidad" value="1">
+                        <input type="hidden" name="precio" value="{{ $precioPromocional }}">
+                        <button type="submit" class="add-to-cart">Agregar al carrito</button>
+                    </form>
+                    @else
+                        <div class="add-to-cart in-cart-disabled">  
+                            Ya en el carrito
+                        </div>
+                    @endif
                 </div>
-             @endforeach
+            @endforeach
         </div>
+    </div>
         
       {{--REseñas--}}
       <h2 style=" text-align: center; margin-top: 60px; font-size: 50px ; color: #ffffff">LO QUE DICEN LOS CLIENTES</h2>
