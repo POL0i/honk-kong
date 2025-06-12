@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hong Kong Comida Rápida</title>
+    <title>Hong Kong
+    </title>
 
     @stack('styles')  <!-- Esto es lo que hace que se cargue el CSS -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -52,7 +53,7 @@
             
             <a href="/carrito/ver" class="icon-button cart-button">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count">{{$carritoCantidad}}</span> <!-- Cambia este número dinámicamente -->
+                <span class="cart-count">{{ $carritoCantidad }}</span>   <!-- Cambia este número dinámicamente -->
             </a>
             <!--boton de perfil-->
             <a href="/perfil" class="boton-usuario">

@@ -3,6 +3,8 @@
 @push('styles')
     <link rel="stylesheet" href="css/producto.css">
     <link rel="stylesheet" href="css/reseña.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 @endpush
 
 @section('content')
@@ -18,12 +20,24 @@
       <div class="products-container">
           @foreach ($productos as $producto)
               <div class="product-card">
-                  <img src="{{ asset('storage/' . $producto->imagen_url) }}" alt="{{ $producto->nombre }}">
+                  <img src="{{ $producto->imagen_url }}" alt="{{ $producto->nombre }}">
                   <h3>{{ $producto->nombre }}</h3>
                   <h4>{{ $producto->descripcion }}</h4>
                   <p class="price">Bs {{ number_format($producto->precio, 2) }}</p>
-                  <a class="add-to-cart" href="/carrito/agregar/{{$producto->id_producto}}" >Agregar al carrito</a>
-              </div>
+            @php
+    $enCarrito = isset($carrito[$producto->id_producto]);
+@endphp
+
+@if (!$enCarrito)
+    <a class="add-to-cart" href="/carrito/agregar/{{$producto->id_producto}}">
+        Agregar al carrito
+    </a>
+@else
+    <div class="add-to-cart in-cart-disabled">  
+        Ya en el carrito
+    </div>
+@endif
+                </div>
            @endforeach
       </div>
 
@@ -33,12 +47,25 @@
         <div class="products-container">
             @foreach ($aplicaciones as $aplicacion)
                 <div class="product-card">
-                    <img src="{{ asset('storage/' . $aplicacion->imagen_url) }}" alt="{{ $aplicacion->nombre }}">
+                    <img src="{{ $producto->imagen_url }}" alt="{{ $producto->nombre }}">
                     <h3>{{ $aplicacion->nombre }}</h3>
                     <h4 class="price">-{{ $aplicacion->valor }}% menos  </h4>
                     <h3 style="font-size: 17px;">{{ $aplicacion->fecha_inicio}} a {{$aplicacion->fecha_fin}}</h4>
                     <p class="price">Bs {{ number_format($aplicacion->precio - $aplicacion->precio*$aplicacion->valor*0.01, 2) }}</p>
-                    <button class="add-to-cart">Agregar al carrito</button>
+   @php
+    $enCarrito = isset($carrito[$producto->id_producto]);
+@endphp
+
+@if (!$enCarrito)
+    <a class="add-to-cart" href="/carrito/agregar/{{$producto->id_producto}}">
+        Agregar al carrito
+    </a>
+    
+@else
+    <div class="add-to-cart in-cart-disabled">  
+        Ya en el carrito
+    </div>
+@endif
                 </div>
              @endforeach
         </div>

@@ -49,8 +49,8 @@ class CarritoController extends Controller
         foreach ($carrito as $producto) {
             $total += $producto['precio'] * $producto['cantidad'];
         }
-    
-        return view('carrito.vercarrito', compact('carrito', 'total','categorias'));
+     $carritoCantidad = count($carrito);
+        return view('carrito.vercarrito', compact('carrito', 'total','categorias', 'carritoCantidad'));
     }
 
     public function eliminar()
@@ -140,6 +140,27 @@ class CarritoController extends Controller
         return redirect('/')->with('success', '¡Pedido realizado con éxito!');
         
 }
+public function actualizar(Request $request, $id)
+{
+    $carrito = session('carrito', []);
 
-    
+    if (isset($carrito[$id])) {
+        if ($request->accion === 'sumar') {
+            $carrito[$id]['cantidad']++;
+        } elseif ($request->accion === 'restar' && $carrito[$id]['cantidad'] > 1) {
+            $carrito[$id]['cantidad']--;
+        }
+        session(['carrito' => $carrito]);
+    }
+
+    return redirect()->back();
+}
+public function eliminarItem($id)
+{
+    $carrito = session('carrito', []);
+    unset($carrito[$id]);
+    session(['carrito' => $carrito]);
+
+    return redirect()->back()->with('success', 'Producto eliminado del carrito');
+}
 }

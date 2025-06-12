@@ -58,3 +58,14 @@
   .add-to-cart:hover {
     background-color: #c4162d;
   }
+
+  .in-cart {
+    background-color: #cccccc;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: not-allowed;
+    font-weight: bold;
+    margin-top: 10px;
+}
