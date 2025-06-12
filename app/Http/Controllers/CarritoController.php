@@ -12,20 +12,29 @@ use App\Models\productos;
 
 class CarritoController extends Controller
 {
-    public function agregar($id)
+    public function agregar(request $request ,$id)
     {
         $productoDB = Productos::findorfail($id);
-
-        if (!$productoDB) {
-            return redirect()->back()->with('error', 'Producto no encontrado');
+        if ($request->all()==[]) {
+            if (!$productoDB) {
+                return redirect()->back()->with('error', 'Producto no encontrado');
+            }
+        
+            $producto = [
+                'id' => $productoDB->id_producto,
+                'nombre' => $productoDB->nombre,
+                'precio' => $productoDB->precio,
+                'cantidad' => 1,
+            ];
+        }else
+        {
+            $producto = [
+                'id' => $request->id_producto,
+                'nombre' => $request->nombre,
+                'precio' => $request->precio,
+                'cantidad' => 1,
+            ];
         }
-    
-        $producto = [
-            'id' => $productoDB->id_producto,
-            'nombre' => $productoDB->nombre,
-            'precio' => $productoDB->precio,
-            'cantidad' => 1,
-        ];
     
         $carrito = session()->get('carrito', []);
     

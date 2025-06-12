@@ -25,11 +25,11 @@ class pedidos extends Model
     }
     public function detalle_pedido()
     {
-        return $this->belongsToMany(detalle_pedidos::class, 'id_pedido');
+        return $this->hasMany(detalle_pedidos::class, 'id_pedido');
     }
     public function aplicaciones_descuentos()
     {
-        return $this->belongsToMany(aplicaciones_descuentos::class, 'id_pedido');
+        return $this->hasMany(aplicaciones_descuentos::class, 'id_pedido');
     }
     public function metodos_pagos()
     {

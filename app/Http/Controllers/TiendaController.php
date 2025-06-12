@@ -21,12 +21,11 @@ class TiendaController extends Controller
         $reseñas = Resena::with('user')->latest()->take(10)->get(); // Usando el modelo Resena (singular)
         
         $aplicaciones = DB::table('aplicaciones_promociones as ap')
-            ->join('productos as p', 'ap.id_producto', '=', 'p.id_producto')
-            ->join('promociones as pr', 'ap.id_promocion', '=', 'pr.id_promocion')
-            ->select('p.nombre', 'p.descripcion', 'p.precio', 'p.imagen_url', 
-                     'pr.nombre as promocion_nombre', 'pr.valor','pr.fecha_inicio','pr.fecha_fin')
-            ->get();
-
+        ->join('productos as p', 'ap.id_producto', '=', 'p.id_producto')
+        ->join('promociones as pr', 'ap.id_promocion', '=', 'pr.id_promocion')
+        ->select('p.id_producto', 'p.nombre', 'p.descripcion', 'p.precio', 'p.imagen_url', 'pr.nombre as promocion_nombre', 'pr.valor','pr.fecha_inicio','pr.fecha_fin')
+        ->get();
+        //dd($aplicaciones->pluck('aplicaciones'));
         return view('tienda.inicio', compact('categorias','productos','reseñas','clientes','aplicaciones'));
     }
 

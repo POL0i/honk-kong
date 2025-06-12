@@ -146,6 +146,14 @@ Route::middleware([
         route::get('/appromociones/{id1}/{id2}/editar',[aplicacionespromocionesController::class, 'edit'])->name('home');
         route::Put('/appromociones/{id1}/{id2}/actualizar', [aplicacionespromocionesController::class, 'update'])->name('home');
         route::delete('/appromociones/{id1}/{id2}/eliminar', [aplicacionespromocionesController::class, 'destroy'])->name('home');
+        //detalle de pedidos
+        route::get('/dtpedidos', [DetallePedidosController::class, 'index'])->name('home'); 
+        route::get('/dtpedidos/crear', [DetallePedidosController::class, 'create'])->name('home');
+        route::post('/dtpedidos/guardar',[DetallePedidosController::class, 'store'])->name('home');
+        route::get('/dtpedidos/{id1}/{id2}/editar',[DetallePedidosController::class, 'edit'])->name('home');
+        route::Put('/dtpedidos/{id1}/{id2}/actualizar', [DetallePedidosController::class, 'update'])->name('home');
+        route::delete('/dtpedidos/{id1}/{id2}/eliminar', [DetallePedidosController::class, 'destroy'])->name('home');
+        
         //con autentificacion    
 
 
