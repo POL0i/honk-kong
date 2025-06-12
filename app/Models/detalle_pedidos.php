@@ -14,7 +14,7 @@ class detalle_pedidos extends Model
         'id_pedido',
         'id_producto'
     ];
-    public $timestamps=false;
+    public $timestamps=true;
 
     public function pedidos()
     {

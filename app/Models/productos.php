@@ -27,6 +27,6 @@ class productos extends Model
     }
     public function detalle_pedidos()
     {
-        return $this->belongsToMany(detalle_pedidos::class, 'id_producto');
+        return $this->hasMany(detalle_pedidos::class, 'id_producto');
     }
 }

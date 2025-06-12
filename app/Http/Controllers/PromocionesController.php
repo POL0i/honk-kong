@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\promociones;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class PromocionesController extends Controller
@@ -55,9 +56,21 @@ class PromocionesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $promocion=promociones::findorfail($id);
-        $promocion->update($request->all());
-        return redirect('/promociones');
+        try{
+            
+            $promocion=promociones::findorfail($id);
+            $promocion->update($request->all());
+            return redirect('/promociones');
+
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) { // Código de error de duplicado
+                return redirect()->back()->with('error', 'Este producto ya fue registrado en pedidos.');
+
+            }
+    
+            return redirect()->back()->with('error', 'Ocurrió un error inesperado. Intenta de nuevo.');
+        }
+   
     }
 
     /**
