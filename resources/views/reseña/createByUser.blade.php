@@ -1,11 +1,18 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-2xl text-white leading-tight">
+    <!-- Barra superior negra -->
+    <div class="bg-black py-4 px-6 shadow-md">
+        <h1 class="text-2xl font-bold text-white">
             @isset($producto)
                 Escribe tu reseña para {{ $producto->nombre }}
             @else
                 Crear nueva reseña
             @endisset
+        </h1>
+    </div>
+
+    <x-slot name="header">
+        <h2 class="font-semibold text-2xl text-white leading-tight">
+            <!-- Este contenido ahora está en la barra negra, puedes dejarlo vacío o poner algo adicional -->
         </h2>
     </x-slot>
 
