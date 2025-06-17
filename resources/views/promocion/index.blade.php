@@ -1,45 +1,196 @@
 @extends('home')
 
 @section('contenido')
-     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-
-    <h2 style= "font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Lista De promociones</h2>
-    <a href="/home" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Volver</a>
-    <a href="/promociones/crear" class="btn btn-primary"> Crear +</a>
-    <table class="table table-dark table-striped mt-4">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Valor</th>
-                <th scope="col">Fecha de inicio</th>
-                <th scope="col">Fecha fin</th>
-                <th scope="col">Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($promociones as $promocion)
-            <tr>
-                <td>{{$promocion->id_promocion}}</td>
-                <td>{{$promocion->nombre}}</td>
-                <td>{{$promocion->valor}}</td>
-                <td>{{$promocion->fecha_inicio}}</td>
-                <td>{{$promocion->fecha_fin}}</td>
-                <td>
-    
-                    <form action="/promociones/{{$promocion->id_promocion}}/eliminar" method="POST">
-                        @CSRF
-                        @method('delete')
-                        <a href="/promociones/{{$promocion->id_promocion}}/editar" class="btn btn-info">Editar</a>
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                    </form>
+<div class="container-fluid py-4">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0 text-primary">
+                    <i class="fas fa-percentage me-2"></i>Gestión de Promociones
+                </h2>
+                <div>
+                    <a href="/home" class="btn btn-sm btn-outline-secondary me-2">
+                        <i class="fas fa-chevron-left me-1"></i> Volver
+                    </a>
+                    <a href="/promociones/crear" class="btn btn-sm btn-primary">
+                        <i class="fas fa-plus me-1"></i> Nueva Promoción
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 10%">ID</th>
+                            <th style="width: 25%">Promoción</th>
+                            <th style="width: 15%">Descuento</th>
+                            <th style="width: 20%">Fecha Inicio</th>
+                            <th style="width: 20%">Fecha Fin</th>
+                            <th style="width: 10%" class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($promociones as $promocion)
+                        <tr class="{{ $promocion->fecha_fin < now() ? 'bg-light-warning' : '' }}">
+                            <td class="fw-bold text-muted">#{{ $promocion->id_promocion }}</td>
+                            <td>
+                                <div class="fw-semibold">{{ $promocion->nombre }}</div>
+                                <small class="text-muted">ID: {{ $promocion->id_promocion }}</small>
+                            </td>
+                            <td>
+                                <span class="badge bg-danger-light text-danger">
+                                    {{ $promocion->valor }}% OFF
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary-light text-primary">
+                                    {{ \Carbon\Carbon::parse($promocion->fecha_inicio)->format('d M Y') }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge {{ $promocion->fecha_fin < now() ? 'bg-secondary-light text-secondary' : 'bg-success-light text-success' }}">
+                                    {{ \Carbon\Carbon::parse($promocion->fecha_fin)->format('d M Y') }}
+                                    @if($promocion->fecha_fin < now())
+                                    <i class="fas fa-clock ms-1" title="Promoción expirada"></i>
+                                    @endif
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="/promociones/{{ $promocion->id_promocion }}/editar" 
+                                       class="btn btn-outline-primary rounded-start"
+                                       data-bs-toggle="tooltip"
+                                       title="Editar promoción">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    
+                                    <button class="btn btn-outline-danger rounded-end"
+                                            onclick="confirmDelete({{ $promocion->id_promocion }})"
+                                            data-bs-toggle="tooltip"
+                                            title="Eliminar promoción">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+            <div class="card-footer bg-white text-center py-3">
+                <div class="text-muted">
+                    Total de promociones: {{ count($promociones) }}
+                    <span class="badge bg-success-light text-success ms-2">
+                        Activas: {{ $promociones->where('fecha_fin', '>=', now())->count() }}
+                    </span>
+                    <span class="badge bg-secondary-light text-secondary ms-2">
+                        Expiradas: {{ $promociones->where('fecha_fin', '<', now())->count() }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Confirmar acción</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                ¿Estás seguro de realizar esta acción?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmAction">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Formulario oculto para eliminar -->
+<form id="deleteForm" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
 @endsection
+
+@push('css')
+<style>
+    .card {
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    
+    .bg-primary-light {
+        background-color: rgba(13, 110, 253, 0.1);
+    }
+    
+    .bg-danger-light {
+        background-color: rgba(220, 53, 69, 0.1);
+    }
+    
+    .bg-success-light {
+        background-color: rgba(25, 135, 84, 0.1);
+    }
+    
+    .bg-secondary-light {
+        background-color: rgba(108, 117, 125, 0.1);
+    }
+    
+    .bg-warning-light {
+        background-color: rgba(255, 193, 7, 0.1);
+    }
+    
+    .bg-light-warning {
+        background-color: rgba(255, 193, 7, 0.05);
+    }
+    
+    .badge {
+        padding: 0.35em 0.65em;
+        font-weight: 500;
+    }
+    
+    .btn-group-sm .btn {
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+    }
+</style>
+@endpush
+
+@push('js')
+<script>
+    // Inicializar tooltips
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+
+    // Función para eliminar promoción
+    function confirmDelete(promocionId) {
+        const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+        document.getElementById('modalTitle').textContent = 'Eliminar promoción';
+        document.getElementById('modalBody').textContent = '¿Estás seguro de eliminar esta promoción? Esta acción no se puede deshacer.';
+        
+        document.getElementById('confirmAction').onclick = function() {
+            const form = document.getElementById('deleteForm');
+            form.action = `/promociones/${promocionId}/eliminar`;
+            form.submit();
+        };
+        
+        modal.show();
+    }
+</script>
+@endpush
