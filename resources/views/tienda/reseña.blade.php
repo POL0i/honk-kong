@@ -1,35 +1,50 @@
 @extends('base')
 
 @push('styles')
-    <link rel="stylesheet" href="css/reseña1.css">
+    <link rel="stylesheet" href="css/reseña.css">
 @endpush
 @section('content')
-<h2 style=" text-align: center; margin-bottom: 0; margin-top: 100px; font-size: 50px ; color: #ff4500;">LO QUE DICEN LOS CLIENTES</h2>
+{{-- Reseñas --}}
+<h2 style="text-align: center; margin-top: 100px; font-size: 50px; color: #ffffff">LO QUE DICEN LOS CLIENTES</h2>
 
 <div class="reseñas-container" id="reseñasContainer">
-    @foreach ($reseñas as $reseña)
+    @forelse ($reseñas as $reseña)
         <div class="reseña-card">
-            <div class="user-icon">
-                <i class="fas fa-user-circle"></i>
-                
-                <p1 class="reseña-nombre"> {{ $reseña->users->name ?? 'Usuario anónimo' }}</p1>
+            {{-- Mostrar información del producto --}}
+            <div class="producto-info">
+                <small>Reseña para: <strong>{{ $reseña->producto->nombre ?? 'Producto no disponible' }}</strong></small>
+                <small>(ID: {{ $reseña->producto_id }})</small>
             </div>
-            <div class="reseña-texto">
-                <p class="reseña-mensaje">"{{ $reseña->comentario }}"</p>
-                <p class="reseña-mensaje">{{$reseña->fecha}} </p>
-                 <!-- Estrellas de calificación -->
-                <div class="rating-stars">
+            
+            {{-- Información del usuario --}}
+            <div class="user-info">
+                <div class="user-icon">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="reseña-nombre">
+                        {{ $reseña->user->name ?? 'Usuario anónimo' }}
+                    </span>
+                </div>
+            </div>
+            
+            {{-- Contenido de la reseña --}}
+            <div class="reseña-contenido">
+                <blockquote class="reseña-mensaje">"{{ $reseña->comentario }}"</blockquote>
+                <time class="reseña-fecha">{{ \Carbon\Carbon::parse($reseña->fecha)->format('d/m/Y H:i') }}</time>
+                
+                {{-- Calificación con estrellas --}}
+                <div class="rating-stars" aria-label="Calificación: {{ $reseña->calificacion }} de 5 estrellas">
                     @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= $reseña->calificacion)
-                            <i class="fas fa-star"></i>
-                        @else
-                            <i class="far fa-star"></i>
-                        @endif
+                        <i class="{{ $i <= $reseña->calificacion ? 'fas' : 'far' }} fa-star"></i>
                     @endfor
+                    <span class="rating-value">({{ $reseña->calificacion }}/5)</span>
                 </div>
             </div>
         </div>
- @endforeach
+    @empty
+        <div class="no-reseñas">
+            <p>No hay reseñas disponibles todavía.</p>
+        </div>
+    @endforelse
 
 </div>
 @endsection
