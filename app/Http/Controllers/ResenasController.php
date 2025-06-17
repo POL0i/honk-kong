@@ -51,7 +51,7 @@ public function createByUser($productoId)
         'producto_id' => $request->producto_id,
     ]);
 
-    return redirect()->route('/home')->with('success', '¡Gracias por tu reseña!');
+    return redirect()->route('/inicio')->with('success', '¡Gracias por tu reseña!');
 }
 
     public function index()
