@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Pagination\Paginator;
+
 
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     { /*nuevo esto*/
+        paginator::useBootstrap();
     View::composer('*', function ($view) {
         $carrito = session('carrito', []);
         $totalProductos = count($carrito); // número de productos distintos
@@ -30,5 +33,6 @@ class AppServiceProvider extends ServiceProvider
     });
 
     Blade::component('layouts.guest', 'guest-layout');
-    }
+ }
+
 }

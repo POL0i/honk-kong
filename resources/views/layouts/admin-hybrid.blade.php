@@ -4,22 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') | Admin</title>
-    
-    <!-- AdminLTE CSS completo -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <!-- Estilos personalizados -->
+    <!-- Tus estilos personalizados -->
     <link href="{{ asset('css/admin-styles.css') }}" rel="stylesheet">
     
     @yield('styles')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-        <!-- Navbar de AdminLTE (original) -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- =============================================== -->
+        <!-- Navbar de AdminLTE (mejorado) -->
+        <!-- =============================================== -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light border-bottom-0">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -30,23 +36,36 @@
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="/home" class="nav-link">Inicio</a>
                 </li>
+                @yield('navbar-left')
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
+                @yield('navbar-right')
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="bi bi-person-circle"></i>
                     </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> Perfil
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
+                        </a>
+                    </div>
                 </li>
             </ul>
         </nav>
 
-        <!-- Sidebar de AdminLTE (original) -->
+        <!-- =============================================== -->
+        <!-- Sidebar de AdminLTE (mejorado) -->
+        <!-- =============================================== -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="/home" class="brand-link">
-                <span class="brand-text font-weight-light">Panel Admin</span>
+            <a href="/home" class="brand-link text-center">
+                <span class="brand-text font-weight-light">PANEL ADMIN</span>
             </a>
 
             <!-- Sidebar -->
@@ -54,66 +73,83 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Menú principal -->
+                        <li class="nav-header">MENÚ PRINCIPAL</li>
+                        
                         <li class="nav-item">
-                            <a href="/reseñas" class="nav-link">
-                                <i class="nav-icon bi bi-chat-square-text"></i>
+                            <a href="/reseñas" class="nav-link @if(Request::is('reseñas*')) active @endif">
+                                <i class="nav-icon fas fa-comments"></i>
                                 <p>Reseñas</p>
                             </a>
                         </li>
+                        
                         <li class="nav-item">
-                            <a href="/productos" class="nav-link">
-                                <i class="nav-icon bi bi-box-seam"></i>
+                            <a href="/productos" class="nav-link @if(Request::is('productos*')) active @endif">
+                                <i class="nav-icon fas fa-box"></i>
                                 <p>Productos</p>
                             </a>
                         </li>
+                        
                         <li class="nav-item">
-                            <a href="/usuarios" class="nav-link">
-                                <i class="nav-icon bi bi-people"></i>
+                            <a href="/usuarios" class="nav-link @if(Request::is('usuarios*')) active @endif">
+                                <i class="nav-icon fas fa-users"></i>
                                 <p>Usuarios</p>
                             </a>
                         </li>
-                        <!-- Agrega más items según necesites -->
+                        
+                        @yield('sidebar-items')
                     </ul>
                 </nav>
             </div>
         </aside>
 
-        <!-- Content Wrapper -->
+        <!-- =============================================== -->
+        <!-- Contenido principal (área para tus estilos) -->
+        <!-- =============================================== -->
         <div class="content-wrapper">
-            <!-- Content Header -->
+            <!-- Encabezado de contenido -->
+            @hasSection('content_header')
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">@yield('title')</h1>
+                            <h1 class="m-0">@yield('content_header')</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            @yield('content_header_actions')
                         </div>
                     </div>
                 </div>
             </div>
+            @endif
 
-            <!-- Main content -->
-            <div class="content">
+            <!-- Contenido principal -->
+            <section class="content">
                 <div class="container-fluid">
                     @yield('content')
                 </div>
-            </div>
+            </section>
         </div>
 
-        <!-- Footer de AdminLTE -->
+        <!-- =============================================== -->
+        <!-- Footer -->
+        <!-- =============================================== -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2023</strong>
+            <div class="float-right d-none d-sm-block">
+                <b>Versión</b> 1.0.0
+            </div>
+            <strong>Copyright &copy; {{ date('Y') }} Tu Empresa.</strong> Todos los derechos reservados.
         </footer>
     </div>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap 4 (necesario para AdminLTE) -->
+    <!-- Bootstrap 4 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE JS -->
+    <!-- AdminLTE -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-    <!-- DataTables JS -->
+    <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <!-- DataTables Bootstrap 4 JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
     
     @yield('scripts')

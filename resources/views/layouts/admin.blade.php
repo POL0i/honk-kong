@@ -1,40 +1,78 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title')</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title') | {{ config('app.name') }}</title>
     
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <!-- Estilos personalizados -->
-    <link href="{{ asset('css/admin-styles.css') }}" rel="stylesheet">
-    
-    @yield('styles')
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    @yield('css')
 </head>
-<body>
-    @include('partials.admin-navbar') <!-- Si tienes una navbar específica -->
-    
-    <div class="container-fluid py-4">
-        @yield('content')
-    </div>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <!-- DataTables Bootstrap 5 JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <!-- Bootstrap 5 JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Navbar -->
+    @include('adminlte::partials.navbar.master')
     
-    @yield('scripts')
+    <!-- Main Sidebar Container -->
+    @include('adminlte::partials.sidebar.left-sidebar')
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">@yield('content_header')</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        @yield('breadcrumbs')
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                @yield('content')
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    @include('adminlte::partials.footer.footer')
+
+    <!-- Control Sidebar -->
+    @include('adminlte::partials.sidebar.right-sidebar')
+    
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="{{ asset('vendor/adminlte/plugins/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('vendor/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+<!-- DataTables -->
+<script src="{{ asset('vendor/adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<!-- Custom scripts -->
+@yield('scripts')
 </body>
 </html>
