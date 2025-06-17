@@ -26,6 +26,6 @@ class Resena extends Model
      */
     public function producto()
     {
-        return $this->belongsTo(Producto::class, 'producto_id', 'id_producto');
+        return $this->belongsTo(productos::class, 'producto_id', 'id_producto');
     }
 }

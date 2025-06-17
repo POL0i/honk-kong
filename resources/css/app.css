@@ -5,3 +5,68 @@
 [x-cloak] {
     display: none;
 }
+.btn-review {
+    display: block;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn-review:hover {
+    background-color: #45a049;
+}
+/* resources/css/app.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tus estilos personalizados */
+.star {
+    transition: all 0.2s ease-in-out;
+}
+
+#comentario {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Fondo personalizado */
+body {
+    background-image: url('/images/background.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* Barra de navegación personalizada */
+.navbar-custom {
+    background: rgba(40, 40, 40, 0.8); /* Fondo semitransparente */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-custom .nav-link {
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #f8f9fa;
+}

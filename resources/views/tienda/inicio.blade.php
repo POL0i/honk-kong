@@ -1,3 +1,12 @@
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/banner.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/producto.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/actions.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/reseña.css') }}">
+     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+@endpush
 @extends('base')
 
 @push('styles')
@@ -38,33 +47,17 @@
                             Ya en el carrito
                         </div>
                     @endif
-                    
-                    <a href="{{ route('resenas.createByUser', ['producto' => $producto->id_producto]) }}" 
-                       class="review-btn" 
-                       title="Dejar reseña sobre este producto">
-                        <i class="fas fa-comment-alt"></i>
-                    </a>
+                            <a href="{{ route('reseñas.createByUser', ['producto' => $producto->id_producto]) }}" class="btn-review">
+                               
+                                <i class="far fa-comment"></i>
+                            </a>
+
                 </div>
             </div>
         @endforeach
     </div>
     </div>
     <!-- Promociones -->
-    <div>
-        <h1 class="section-title">NUESTRAS PROMOCIONES</h1>
-        <div class="promotions-grid">
-                @if (!$enCarrito)
-                    <a class="add-to-cart" href="/carrito/agregar/{{$producto->id_producto}}">
-                        Agregar al carrito
-                    </a>
-                @else
-                    <div class="add-to-cart in-cart-disabled">  
-                        Ya en el carrito
-                    </div>
-                @endif
-                </div>
-           @endforeach
-      </div>
 
       {{--Promociones de productos--}}
     <div>
@@ -95,59 +88,53 @@
                             Ya en el carrito
                         </div>
                     @endif
-                    <div class="product-actions">
-                        @if (!$enCarrito)
-                            <a class="add-to-cart" href="/carrito/agregar/{{$producto->id_producto}}">
-                                Agregar al carrito
-                            </a>
-                        @else
-                            <div class="add-to-cart in-cart-disabled">  
-                                Ya en el carrito
-                            </div>
-                        @endif
-                        
-                        <a href="{{ route('resenas.createByUser', ['producto' => $producto->id_producto]) }}" 
-                           class="review-btn" 
-                           title="Dejar reseña sobre este producto">
-                            <i class="fas fa-comment-alt"></i>
-                        </a>
-                    </div>
+
                 </div>
             @endforeach
         </div>
     </div>
         
-      {{--REseñas--}}
-      <h2 style=" text-align: center; margin-top: 60px; font-size: 50px ; color: #ffffff">LO QUE DICEN LOS CLIENTES</h2>
+{{-- Reseñas --}}
+<h2 style="text-align: center; margin-top: 60px; font-size: 50px; color: #ffffff">LO QUE DICEN LOS CLIENTES</h2>
 
-      <div class="reseñas-container" id="reseñasContainer">
-          @foreach ($reseñas as $reseña)
-              <div class="reseña-card">
-                  <div class="user-icon">
-                      <i class="fas fa-user-circle"></i>
-                      
-                      <p1 class="reseña-nombre"> {{ $reseña->users->name ?? 'Usuario anónimo' }}</p1>
-                  </div>
-                  <div class="reseña-texto">
-                      <p class="reseña-mensaje">"{{ $reseña->comentario }}"</p>
-                      <p class="reseña-mensaje">{{$reseña->fecha}} </p>
-                       <!-- Estrellas de calificación -->
-                      <div class="rating-stars">
-                          @for ($i = 1; $i <= 5; $i++)
-                              @if ($i <= $reseña->calificacion)
-                                  <i class="fas fa-star"></i>
-                              @else
-                                  <i class="far fa-star"></i>
-                              @endif
-                          @endfor
-                      </div>
-                  </div>
-              </div>
-       @endforeach
-
-      </div>
-
-  
-    </div>
+<div class="reseñas-container" id="reseñasContainer">
+    @forelse ($reseñas as $reseña)
+        <div class="reseña-card">
+            {{-- Mostrar información del producto --}}
+            <div class="producto-info">
+                <small>Reseña para: <strong>{{ $reseña->producto->nombre ?? 'Producto no disponible' }}</strong></small>
+                <small>(ID: {{ $reseña->producto_id }})</small>
+            </div>
+            
+            {{-- Información del usuario --}}
+            <div class="user-info">
+                <div class="user-icon">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="reseña-nombre">
+                        {{ $reseña->user->name ?? 'Usuario anónimo' }}
+                    </span>
+                </div>
+            </div>
+            
+            {{-- Contenido de la reseña --}}
+            <div class="reseña-contenido">
+                <blockquote class="reseña-mensaje">"{{ $reseña->comentario }}"</blockquote>
+                <time class="reseña-fecha">{{ \Carbon\Carbon::parse($reseña->fecha)->format('d/m/Y H:i') }}</time>
+                
+                {{-- Calificación con estrellas --}}
+                <div class="rating-stars" aria-label="Calificación: {{ $reseña->calificacion }} de 5 estrellas">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <i class="{{ $i <= $reseña->calificacion ? 'fas' : 'far' }} fa-star"></i>
+                    @endfor
+                    <span class="rating-value">({{ $reseña->calificacion }}/5)</span>
+                </div>
+            </div>
+        </div>
+    @empty
+        <div class="no-reseñas">
+            <p>No hay reseñas disponibles todavía.</p>
+        </div>
+    @endforelse
 </div>
+
 @endsection

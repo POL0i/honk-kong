@@ -4,38 +4,55 @@ namespace App\Http\Controllers;
 
 use App\Models\Resena; // Nombre correcto del modelo
 use App\Models\User;   // User en PascalCase
-use App\Models\Producto;
+use App\Models\productos;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ResenasController extends Controller
 {
-    public function createByUser($productoId)
-    {
-        $producto = Producto::findOrFail($productoId);
-        return view('resenas.create-by-user', compact('producto'));
+public function createByUser($productoId)
+{
+    // Primero obtenemos el producto
+    $producto = productos::findOrFail($productoId);
+
+    // Verifica si el usuario ya ha dejado una reseña para este producto
+    $existingReview = Resena::where('user_id', auth()->id())
+                          ->where('producto_id', $producto->id_producto)
+                          ->first();
+
+    if ($existingReview) {
+        return redirect()->back()->with('error', 'Ya has dejado una reseña para este producto.');
     }
 
-    public function storeByUser(Request $request)
-    {
-        $request->validate([
-            'comentario' => 'required|string|max:500',
-            'calificacion' => 'required|integer|min:1|max:5',
-            'producto_id' => 'required|exists:productos,id_producto'
-        ]);
+    return view('reseña.createByUser', compact('producto'));
+}
+   public function storeByUser(Request $request)
+{
+    $request->validate([
+        'comentario' => 'required|string|max:500',
+        'calificacion' => 'required|integer|between:1,5',
+        'producto_id' => 'required|exists:productos,id_producto',
+    ]);
 
-        Resena::create([
-            'comentario' => $request->comentario,
-            'calificacion' => $request->calificacion,
-            'fecha' => now(),
-            'user_id' => Auth::id(),
-            'producto_id' => $request->producto_id
-        ]);
+    // Verifica si el usuario ya ha dejado una reseña para este producto
+    $existingReview = Resena::where('user_id', auth()->id())
+                          ->where('producto_id', $request->producto_id)
+                          ->first();
 
-        return redirect()->route('productos.index')
-            ->with('success', 'Reseña agregada exitosamente');
+    if ($existingReview) {
+        return redirect()->back()->with('error', 'Ya has dejado una reseña para este producto.');
     }
 
+    Resena::create([
+        'comentario' => $request->comentario,
+        'calificacion' => $request->calificacion,
+        'fecha' => now(),
+        'user_id' => auth()->id(),
+        'producto_id' => $request->producto_id,
+    ]);
+
+    return redirect()->route('/home')->with('success', '¡Gracias por tu reseña!');
+}
 
     public function index()
     {

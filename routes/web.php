@@ -25,15 +25,16 @@ use App\Http\Controllers\AplicacionesCategoriasController;
 use App\http\Controllers\AplicacionesUsuariosController;
 
 
+// Ruta para mostrar el formulario de reseña
+Route::get('/reseñas/create/{producto}', [ResenasController::class, 'createByUser'])
+    ->name('reseñas.createByUser')
+    ->middleware('auth'); // Asegura que solo usuarios autenticados puedan dejar reseñas
 
+// Ruta para guardar la reseña (ya la tienes en tu formulario como route('reseñas.storeByUser'))
+Route::post('/reseñas', [ResenasController::class, 'storeByUser'])
+    ->name('reseñas.storeByUser')
+    ->middleware('auth');
 
-Route::prefix('resenas')->middleware('auth')->group(function() {
-    Route::get('/producto/{producto}/create', [ResenasController::class, 'createByUser'])
-        ->name('resenas.createByUser');
-        
-    Route::post('/store', [ResenasController::class, 'storeByUser'])
-        ->name('resenas.storeByUser');
-});
 
 Route::get('/', [TiendaController::class, 'index'])->name('inicio');
 Route::get('/quienes', [TiendaController::class, 'mostrar'])->name('quienes');
@@ -70,7 +71,7 @@ Route::middleware([
 
     Route::middleware(['auth', 'can:admin-only'])->group(function () {
 
-        route::get('/producto', [ProductosController::class, 'index'])->name('home'); 
+        Route::get('/producto', [ProductosController::class, 'index'])->name('home');
         route::get('/producto/crear', [ProductosController::class, 'create'])->name('home');
         route::post('/producto/guardar',[ProductosController::class, 'store'])->name('home');
         route::get('/producto/{id}/editar',[ProductosController::class, 'edit'])->name('home');
