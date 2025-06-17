@@ -56,7 +56,7 @@ public function createByUser($productoId)
 
     public function index()
     {
-        $reseñas=resenas::all();
+        $reseñas=Resena::all();
         return view('reseña.index',compact('reseñas'));
     }
 
@@ -92,7 +92,7 @@ public function createByUser($productoId)
     public function edit($id)
     {
         $users=user::all();
-        $reseña=resenas::findorfail($id);
+        $reseña=Resena::findorfail($id);
         return view('reseña.edit',compact('users','reseña'));
     }
 
@@ -101,7 +101,7 @@ public function createByUser($productoId)
      */
     public function update(Request $request, $id)
     {
-        $reseña=resenas::findorfail($id);
+        $reseña=Resena::findorfail($id);
         $reseña->update($request->all());
         return redirect('/reseñas');
     }
@@ -111,7 +111,7 @@ public function createByUser($productoId)
      */
     public function destroy($id)
     {
-        $reseña=resenas::findorfail($id);
+        $reseña=Resena::findorfail($id);
         $reseña->delete();
         return redirect('/reseñas');
     }

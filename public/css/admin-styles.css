@@ -1,0 +1,193 @@
+/* resources/css/admin-styles.css */
+
+/* resources/css/admin-styles.css */
+:root {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --accent-color: #4895ef;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --success-color: #4cc9f0;
+    --danger-color: #f72585;
+}
+
+/* Ajustes para el layout híbrido */
+.main-sidebar {
+    background-color: #343a40 !important;
+}
+
+.brand-link {
+    border-bottom: 1px solid #4b545c;
+}
+
+.nav-sidebar > .nav-item .nav-link.active {
+    background-color: var(--primary-color);
+}
+
+/* Mantén tus estilos existentes pero ajusta selectores si es necesario */
+/* Asegúrate que estos estilos no interfieran con AdminLTE */
+.admin-card {
+    border-radius: 0.25rem;
+    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+    margin-bottom: 1rem;
+    background: #fff;
+}
+
+/* Mantén tus colores personalizados pero con selectores más específicos */
+.content-wrapper .admin-btn-primary {
+    background-color: #4361ee;
+    border-color: #4361ee;
+}
+
+.content-wrapper .admin-btn-primary:hover {
+    background-color: #3f37c9;
+}
+
+/* Ajustes para DataTables en AdminLTE */
+.content-wrapper .admin-table {
+    width: 100% !important;
+}
+
+/* Asegúrate que el sidebar mantenga su estilo original */
+.main-sidebar, .main-sidebar * {
+    transition: none !important;
+    transform: none !important;
+}
+
+
+
+:root {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --accent-color: #4895ef;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --success-color: #4cc9f0;
+    --danger-color: #f72585;
+}
+
+.admin-card {
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    border: none;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+}
+
+.admin-card-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 1.5rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.admin-btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    border-radius: 8px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.admin-btn-primary:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+}
+
+.admin-btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.admin-btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(247, 37, 133, 0.3);
+}
+
+.admin-btn-info {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.admin-btn-info:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(72, 149, 239, 0.3);
+}
+
+.admin-table-responsive {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.admin-table {
+    margin-bottom: 0;
+}
+
+.admin-table thead {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.admin-table th {
+    border: none;
+    padding: 1rem;
+    font-weight: 500;
+}
+
+.admin-table td {
+    vertical-align: middle;
+    padding: 1rem;
+    border-top: 1px solid #f1f3f9;
+}
+
+.admin-table tr:hover {
+    background-color: rgba(67, 97, 238, 0.05);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.admin-badge {
+    padding: 0.5em 0.75em;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    color: #dee2e6;
+}
+
+/* Estilos específicos para rating (opcional, solo si lo necesitas) */
+.rating {
+    color: #ffc107;
+    font-size: 1.1rem;
+}

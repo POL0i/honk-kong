@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Hong kong') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -136,33 +136,7 @@
     <x-banner />
 
     <!-- Barra de navegación personalizada -->
-    <nav class="custom-navbar border-b border-gray-200 dark:border-gray-700">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <!-- Logo -->
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="{{ url('/') }}">
-                            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-10">
-                        </a>
-                    </div>
-                    
-                    <!-- Título personalizado integrado en la navbar -->
-                    <div class="hidden md:block ml-6">
-                        <h2 class="text-white text-lg font-semibold">
-                            @if(isset($header))
-                                {{ $header }}
-                            @else
-                                {{ config('app.name', 'Laravel') }}
-                            @endif
-                        </h2>
-                    </div>
-                </div>
 
-                @livewire('navigation-menu')
-            </div>
-        </div>
-    </nav>
 
     <!-- Page Content -->
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">

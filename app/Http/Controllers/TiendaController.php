@@ -44,7 +44,7 @@ class TiendaController extends Controller
     public function buscar($id)
     {
         $categorias = Categorias::all();
-        $productos=Producto::where('id_categoria',$id)->get(); // Usando el modelo Producto (singular)
+        $productos=Productos::where('id_categoria',$id)->get(); // Usando el modelo Producto (singular)
         return view('tienda.buscar',compact('productos','categorias'));
     }
     
