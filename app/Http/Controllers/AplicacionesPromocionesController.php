@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\aplicaciones_promociones;
 use App\Models\productos;
 use App\Models\promociones;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class AplicacionesPromocionesController extends Controller
@@ -25,9 +26,10 @@ class AplicacionesPromocionesController extends Controller
      */
     public function create()
     {
-        $productos=productos::all();
-        $promociones=promociones::all();
-        return view('appromocion.create',compact('productos','promociones'));
+            $productos=productos::all();
+            $promociones=promociones::all();
+            return view('appromocion.create',compact('productos','promociones'));
+       
     }
 
     /**
@@ -35,8 +37,18 @@ class AplicacionesPromocionesController extends Controller
      */
     public function store(Request $request)
     {
-        $aplicaciones_promocione=aplicaciones_promociones::create($request->all());
-        return redirect('/appromociones');
+        try{
+            $aplicaciones_promocione=aplicaciones_promociones::create($request->all());
+            return redirect('/appromociones');
+        }
+        catch (QueryException $e) {
+            if ($e->getCode() == 23000) { // Código de error de duplicado
+                return redirect()->back()->with('error', 'Esta aplicacion de promocion ya existe.');
+
+            }
+    
+            return redirect()->back()->with('error', 'Ocurrió un error inesperado. Intenta de nuevo.');
+        }
     }
 
     /**
@@ -63,9 +75,18 @@ class AplicacionesPromocionesController extends Controller
      */
     public function update(Request $request, $id1 , $id2)
     {
-        $appromocion=aplicaciones_promociones::where('id_producto',$id1)->where('id_promocion',$id2)->delete();
-        $appromocion=aplicaciones_promociones::create($request->all());
-        return redirect('/appromociones');
+        try{
+            $appromocion=aplicaciones_promociones::create($request->all());
+            return redirect('/appromociones');
+        }
+        catch (QueryException $e) {
+            if ($e->getCode() == 23000) { // Código de error de duplicado
+                return redirect()->back()->with('error', 'Esta aplicacion de promocion ya existe.');
+
+            }
+    
+            return redirect()->back()->with('error', 'Ocurrió un error inesperado. Intenta de nuevo.');
+        }
     }
 
     /**

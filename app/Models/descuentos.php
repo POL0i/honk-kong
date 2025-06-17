@@ -20,6 +20,6 @@ class descuentos extends Model
 
     public function aplicaciones_descuentos()
     {
-        return $this->belongsToMany(aplicaciones_descuentos::class, 'id_descuento');
+        return $this->hasMany(aplicaciones_descuentos::class, 'id_descuento');
     }
 }
