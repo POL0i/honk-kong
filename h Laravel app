@@ -1,0 +1,35 @@
+[33mc8f9b6c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m listo
+[33m7506efe[m Merge branch 'main' of https://github.com/wilyKamijou/honk-kong
+[33mf1e1ad0[m cambios menores en apdescuento
+[33m323cd8e[m Merge remote-tracking branch 'origin/main'
+[33m9853940[m Mis cambios locales
+[33m35727e8[m se añadio los productos con promocion al carrito
+[33m6974503[m Merge branch 'main' of https://github.com/wilyKamijou/honk-kong
+[33m47606ec[m detalle pedio alfinnnnnnnnn y cositas
+[33md234739[m cambios en el login el register y el carrito de compras
+[33m30c9b3f[m Mis cambios locales
+[33m77e5b7d[m nueves funcuines del carrito
+[33m1a8a1f4[m funcion prcesar pago añadido mas formulario de relleno, pero falta algunas cosas
+[33mb815510[m se añadio carrto funciones, añadir,eliminar, ver, falta el procesar pago.....pensando logica decomo guardar info en la base de datos
+[33m5b9b56e[m añadio el perfil de usuario y sus funciones y pequeña mejora visual de los botonoes
+[33m93f882e[m añadidos roles y funciones de roles
+[33m3bd3f63[m Merge branch 'main' of https://github.com/wilyKamijou/honk-kong
+[33md391b86[m se añadio perfil aun nno tiene boton para axeder
+[33m4509b33[m Merge branch 'main' of https://github.com/wilyKamijou/honk-kong Merge cambios desde origin/main
+[33m1d99655[m WIP: cambios locales en login o redirección
+[33mf920b06[m se añadieron prmociones beta
+[33m6ce624c[m se mejoro la interface de reseñas y se añadio pagina reseñas para mostrar todas las reseñas existentes
+[33m5c56766[m ya funcionan los buscadores de categoria y limpoesa del menu inicion , ahora todos tienen una base
+[33mae5945e[m filtardor beta añadido y barra mejor diseñado
+[33m744a49c[m se añadio paguna quienes somos, contactanos ylogin
+[33m87cf195[m mejoras en la interface
+[33mf02c224[m interfcae de usuario mas o menos
+[33m3c9cd18[m tablas implementadas solo daltan 2
+[33m609a37e[m nuevas mejoras en relacines y se puede adminitrasr 3 tablas mas
+[33m30df857[m correciones en las llaves foraneas y modelos corespondientes
+[33m736c168[m mejoras de relaciones
+[33m443961b[m ahora se ve la tabla productos ms
+[33m2080ce7[m ahora se ve la tabla productos
+[33m314c7cf[m vercion2
+[33m4556116[m Install Jetstream
+[33m05c7d86[m Set up a fresh Laravel app
