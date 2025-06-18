@@ -15,15 +15,7 @@ use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\AplicacionesDescuentosController;
 use App\Http\Controllers\DetallePedidosController;
-use App\Http\Controllers\AplicacionesResenasController;
-use App\Http\Controllers\AplicacionesMetodosPagosController;
-use App\Http\Controllers\AplicacionesPedidosController;
-use App\Http\Controllers\AplicacionesEnviosController;
-use App\Http\Controllers\AplicacionesCarritoController;
-use App\Http\Controllers\AplicacionesProductosController;
-use App\Http\Controllers\AplicacionesCategoriasController;
-use App\http\Controllers\AplicacionesUsuariosController;
-
+use App\Models\aplicaciones_descuentos;
 
 // Ruta para mostrar el formulario de reseña
 Route::get('/reseñas/create/{producto}', [ResenasController::class, 'createByUser'])
@@ -155,7 +147,14 @@ Route::middleware([
         route::Put('/dtpedidos/{id1}/{id2}/actualizar', [DetallePedidosController::class, 'update'])->name('home');
         route::delete('/dtpedidos/{id1}/{id2}/eliminar', [DetallePedidosController::class, 'destroy'])->name('home');
         
-        //con autentificacion    
+        //applicacion de descuentos
+        route::get('/apdescuentos', [AplicacionesDescuentosController::class, 'index'])->name('home'); 
+        route::get('/apdescuentos/crear', [AplicacionesDescuentosController::class, 'create'])->name('home');
+        route::post('/apdescuentos/guardar',[AplicacionesDescuentosController::class, 'store'])->name('home');
+        route::get('/apdescuentos/{id1}/{id2}/editar',[AplicacionesDescuentosController::class, 'edit'])->name('home');
+        route::Put('/apdescuentos/{id1}/{id2}/actualizar', [AplicacionesDescuentosController::class, 'update'])->name('home');
+        route::delete('/apdescuentos/{id1}/{id2}/eliminar', [AplicacionesDescuentosController::class, 'destroy'])->name('home');
+        
 
 
 

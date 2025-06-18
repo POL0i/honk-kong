@@ -29,7 +29,7 @@
             {{-- Contenido de la reseña --}}
             <div class="reseña-contenido">
                 <blockquote class="reseña-mensaje">"{{ $reseña->comentario }}"</blockquote>
-                <time class="reseña-fecha">{{ \Carbon\Carbon::parse($reseña->fecha)->format('d/m/Y H:i') }}</time>
+                <p class="reseña-fecha">{{$reseña->fecha}}</p>
                 
                 {{-- Calificación con estrellas --}}
                 <div class="rating-stars" aria-label="Calificación: {{ $reseña->calificacion }} de 5 estrellas">

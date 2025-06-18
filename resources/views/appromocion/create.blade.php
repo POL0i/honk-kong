@@ -39,4 +39,9 @@
             <a href="/appromociones" class="btn btn-secondary">Cancelar</a>
         </div>
     </form>
+    @if (session('error'))
+    <div style="background-color: #f8d7da; color: #721c24; padding: 12px; border-radius: 8px; margin: 10px 0;">
+        {{ session('error') }}
+    </div>
+@endif
 @endsection

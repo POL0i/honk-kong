@@ -1,15 +1,12 @@
 @extends('base')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/producto.css') }}?v=1.1">
-<link rel="stylesheet" href="{{ asset('css/actions.css') }}?v=1.1">
-   <link rel="stylesheet" href="css/reseña.css">
+    <link rel="stylesheet" href="{{ asset('css/producto.css') }}?v=1.1">
+    <link rel="stylesheet" href="{{ asset('css/actions.css') }}?v=1.1">
+    <link rel="stylesheet" href="css/reseña.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 @endpush
-
 @section('content')
-
-
 <div>
     <div class="banner-content">
         <h1>¡Tu comida favorita, recién hecha!</h1>
@@ -19,7 +16,7 @@
     
     <!-- Productos -->
     <div>
-        <h1 class="section-title" style="color: #ffffff">NUESTROS PRODUCTOS</h1>
+        <h1 style="text-align: center; font-size: 50px; color: #ffffff">NUESTROS PRODUCTOS</h1>
         <div class="products-container">
             @foreach ($productos as $producto)
                 <div class="product-card">
