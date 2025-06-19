@@ -5,12 +5,43 @@ namespace App\Http\Controllers;
 use App\Models\envios;
 use App\Models\pedidos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use carbon\carbon;
 
 class EnviosController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+public function igualarEnvios()
+{
+    // Datos ficticios
+    $estados = ['preparacion', 'en_transito', 'reparto', 'entregado', 'fallido'];
+    $transportistas = ['DHL', 'FedEx', 'UPS', 'Correos', 'Seur'];
+    
+    // Usa el nombre correcto de la relación (envio, no envios)
+$pedidosSinEnvio = pedidos::doesntHave('envios')->get(); 
+    
+    if ($pedidosSinEnvio->isEmpty()) {
+        return redirect('/envios')->with('status', 'Todos los pedidos ya tienen envíos asociados');
+    }
+    
+    foreach ($pedidosSinEnvio as $pedido) {
+        $fechaEnvio = Carbon::now()->addDays(rand(1, 3));
+        
+        envios::create([
+            'id_pedido' => $pedido->id_pedido,
+            'direccion_envio' => $pedido->direccion ?? 'Dirección no especificada',
+            'fecha_envio' => $fechaEnvio,
+            'fecha_estimada_llegada' => $fechaEnvio->addDays(rand(2, 7)),
+            'metodo_envio' => $transportistas[array_rand($transportistas)],
+            'estado_envio' => $estados[array_rand($estados)],
+        ]);
+    }
+    
+    return redirect('/envios')->with('success', 'Se generaron '.$pedidosSinEnvio->count().' envíos nuevos');
+}
+
     public function index()
     {
         $envios=envios::all();

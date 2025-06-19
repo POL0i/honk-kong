@@ -1,109 +1,76 @@
+<!-- resources/views/adminPage.blade.php -->
+@extends('home')
 
-@extends('adminlte::page')  
-@section('title', 'Dashboard')
-
-@section('content_header')
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-@push('header')
-    <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-            <i class="fas fa-bars"></i>
-        </a>
-    </li>
-@endpush
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Panel de Control</h1>
+@section('content')
+<div class="container-fluid">
+    <!-- Fila de tarjetas resumen -->
+    <div class="row">
+        <!-- Tarjeta de Pedidos -->
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-gradient-info">
+                <div class="inner">
+                    <h3>{{ $totalPedidosHoy ?? '0' }}</h3>
+                    <p>Pedidos Hoy</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <a href="{{ route('reportes.pedidos') }}" class="small-box-footer">
+                    Ver Reportes <i class="fas fa-arrow-circle-right"></i>
+                </a>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
+        </div>
+        
+        <!-- Tarjeta de Ventas -->
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-gradient-success">
+                <div class="inner">
+                    <h3>${{ number_format($ventasHoy ?? 0, 2) }}</h3>
+                    <p>Ventas Hoy</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <a href="{{ route('reportes.graficos') }}" class="small-box-footer">
+                    Ver Gráficos <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Tarjeta de Clientes -->
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-gradient-warning">
+                <div class="inner">
+                    <h3>{{ $clientesNuevos ?? '0' }}</h3>
+                    <p>Clientes Nuevos</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <a href="/user" class="small-box-footer">
+                    Ver Clientes <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Tarjeta de Productos -->
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-gradient-danger">
+                <div class="inner">
+                    <h3>{{ $totalProductos ?? '0' }}</h3>
+                    <p>Productos</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <a href="/producto" class="small-box-footer">
+                    Ver Inventario <i class="fas fa-arrow-circle-right"></i>
+                </a>
             </div>
         </div>
     </div>
-@stop
 
-@section('content')
-    <div class="container-fluid">
-        <!-- Fila de tarjetas resumen -->
-        <div class="row">
-            <!-- Tarjeta de Pedidos -->
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-info">
-                    <div class="inner">
-                        <h3>{{ $totalPedidosHoy ?? '0' }}</h3>
-                        <p>Pedidos Hoy</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <a href="{{ route('reportes.pedidos') }}" class="small-box-footer">
-                        Ver Reportes <i class="fas fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Tarjeta de Ventas -->
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-success">
-                    <div class="inner">
-                        <h3>${{ number_format($ventasHoy ?? 0, 2) }}</h3>
-                        <p>Ventas Hoy</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <a href="{{ route('reportes.graficos') }}" class="small-box-footer">
-                        Ver Gráficos <i class="fas fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Tarjeta de Clientes -->
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-warning">
-                    <div class="inner">
-                        <h3>{{ $clientesNuevos ?? '0' }}</h3>
-                        <p>Clientes Nuevos</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-user-plus"></i>
-                    </div>
-                    <a href="/user" class="small-box-footer">
-                        Ver Clientes <i class="fas fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Tarjeta de Productos -->
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-danger">
-                    <div class="inner">
-                        <h3>{{ $totalProductos ?? '0' }}</h3>
-                        <p>Productos</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-boxes"></i>
-                    </div>
-                    <a href="/producto" class="small-box-footer">
-                        Ver Inventario <i class="fas fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Fila principal -->
+  <!-- Fila principal -->
         <div class="row">
             <!-- Sección de gráficos -->
             <div class="col-md-8">
@@ -204,44 +171,38 @@
                     </div>
                 </div>
                 
-                <!-- Lista de pedidos recientes -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Pedidos Recientes</h3>
-                        <div class="card-tools">
-                            <span class="badge badge-danger">{{ count($pedidosRecientes ?? []) }} Nuevos</span>
-                        </div>
-                    </div>
-                    <div class="card-body p-0">
-                        <ul class="products-list product-list-in-card pl-2 pr-2">
-                            @forelse($pedidosRecientes ?? [] as $pedido)
-                            <li class="item">
-                                <div class="product-img">
-                                    @if($pedido->producto->imagen_url)
-                                    <img src="{{ $pedido->producto->imagen_url }}" alt="{{ $pedido->producto->nombre }}" class="img-size-50">
-                                    @else
-                                    <img src="https://via.placeholder.com/50" alt="Product Image" class="img-size-50">
-                                    @endif
-                                </div>
-                                <div class="product-info">
-                                    <a href="javascript:void(0)" class="product-title">{{ $pedido->producto->nombre }}
-                                        <span class="badge badge-warning float-right">${{ number_format($pedido->total, 2) }}</span></a>
-                                    <span class="product-description">
-                                        Pedido #{{ $pedido->id }} - {{ $pedido->created_at->diffForHumans() }}
-                                    </span>
-                                </div>
-                            </li>
-                            @empty
-                            <li class="item text-center py-3">
-                                No hay pedidos recientes
-                            </li>
-                            @endforelse
-                        </ul>
-                    </div>
-                    <div class="card-footer text-center">
-                        <a href="{{ route('reportes.tabla') }}" class="uppercase">Ver Todos los Pedidos</a>
-                    </div>
-                </div>
+<!-- En la sección de pedidos recientes -->
+<ul class="products-list product-list-in-card pl-2 pr-2">
+    @forelse($pedidosRecientes ?? [] as $item)
+        @if($item['producto'])
+        <li class="item">
+            <div class="product-img">
+                @if($item['producto']->imagen_url)
+                <img src="{{ $item['producto']->imagen_url }}" alt="{{ $item['producto']->nombre }}" class="img-size-50">
+                @else
+                <img src="https://via.placeholder.com/50" alt="Product Image" class="img-size-50">
+                @endif
+            </div>
+            <div class="product-info">
+                <a href="javascript:void(0)" class="product-title">
+                    {{ $item['producto']->nombre }}
+                    <span class="badge badge-warning float-right">
+                        ${{ number_format($item['detalle']->precio, 2) }}
+                    </span>
+                </a>
+                <span class="product-description">
+                    Cantidad: {{ $item['detalle']->cantidad }} | 
+                    Pedido #{{ $item['pedido']->id }} - {{ $item['pedido']->created_at->diffForHumans() }}
+                </span>
+            </div>
+        </li>
+        @endif
+    @empty
+    <li class="item text-center py-3">
+        No hay pedidos recientes
+    </li>
+    @endforelse
+</ul>
             </div>
         </div>
     </div>
@@ -252,12 +213,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <!-- Estilos adicionales -->
     <style>
-        .sidebar-collapse .main-sidebar {
-            transform: translate(0, 0);
-        }
-        .navbar-nav .dropdown-menu {
-            position: absolute;
-        }
         .small-box {
             border-radius: .25rem;
             box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
@@ -330,16 +285,6 @@
             flex: 1;
             padding: 0 10px;
         }
-        .info-box .info-box-text {
-            display: block;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .info-box .info-box-number {
-            display: block;
-            font-weight: 700;
-        }
         #calendar-widget {
             width: 100%;
         }
@@ -363,21 +308,6 @@
 @section('js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Forzar la recarga del sidebar si está colapsado
-            if (localStorage.getItem('adminlte.sidebar.collapse')) {
-                document.body.classList.add('sidebar-collapse');
-            }
-            
-            // Botón de hamburguesa personalizado
-            const hamburger = document.createElement('li');
-            hamburger.className = 'nav-item';
-            hamburger.innerHTML = `
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-                    <i class="fas fa-bars"></i>
-                </a>
-            `;
-            document.querySelector('.main-header .navbar-nav').prepend(hamburger);
-            
             // Gráfico de ventas
             const salesChartCanvas = document.getElementById('sales-chart').getContext('2d');
             const salesChart = new Chart(salesChartCanvas, {
@@ -445,7 +375,6 @@
                 const calendarEl = document.getElementById('calendar-widget');
                 if (!calendarEl) return;
                 
-                // Crear estructura básica del calendario
                 const today = new Date();
                 const month = today.getMonth();
                 const year = today.getFullYear();
@@ -468,7 +397,6 @@
                     <div class="fc-daygrid-body">
                 `;
                 
-                // Días del mes
                 let day = 1;
                 for (let i = 0; i < 6; i++) {
                     if (day > daysInMonth) break;
@@ -494,9 +422,9 @@
             }
             
             initCalendarWidget();
-            
-            // Actualizar calendario al redimensionar
             window.addEventListener('resize', initCalendarWidget);
         });
     </script>
 @stop
+</div>
+@endsection

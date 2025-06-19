@@ -212,19 +212,35 @@
     }
 
     // Función para eliminar usuario
-    function confirmDelete(userId) {
-        const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
-        document.getElementById('modalTitle').textContent = 'Eliminar usuario';
-        document.getElementById('modalBody').textContent = '¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.';
-        
-        document.getElementById('confirmAction').onclick = function() {
-            const form = document.getElementById('actionForm');
-            form.action = `/user/${userId}/eliminar`;
-            form.innerHTML += '<input type="hidden" name="_method" value="DELETE">';
-            form.submit();
-        };
-        
-        modal.show();
-    }
+
+function confirmDelete(userId) {
+    const modalElement = document.getElementById('confirmModal');
+    const modal = new bootstrap.Modal(modalElement);
+    
+    // Configurar el contenido del modal
+    document.getElementById('modalTitle').textContent = 'Eliminar usuario';
+    document.getElementById('modalBody').textContent = '¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.';
+    
+    // Limpiar eventos previos del botón Confirmar
+    const confirmBtn = document.getElementById('confirmAction');
+    confirmBtn.onclick = null;
+    
+    // Configurar nuevo evento para el botón Confirmar
+    confirmBtn.onclick = function() {
+        const form = document.getElementById('deleteForm');
+        form.action = `/user/${productId}/eliminar`;
+        form.submit();
+        modal.hide();
+    };
+    
+    // Configurar evento para el botón Cancelar
+    const cancelBtn = modalElement.querySelector('.btn-secondary');
+    cancelBtn.onclick = function() {
+        modal.hide();
+    };
+    
+    // Mostrar el modal
+    modal.show();
+}
 </script>
 @endpush

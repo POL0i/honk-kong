@@ -16,12 +16,39 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\AplicacionesDescuentosController;
 use App\Http\Controllers\DetallePedidosController;
 use App\Models\aplicaciones_descuentos;
+use App\Http\Controllers\ReportePedidosController;
 
+Route::get('/pedidos/generate-fake', [PedidosController::class, 'generateFakePedidos'])
+    ->name('pedidos.generate-fake');
+Route::post('/envios/igualar', [EnviosController::class, 'igualarEnvios'])->name('envios.igualar');
+Route::post('/dtpedidos/generar-detalles', [DetallePedidosController::class, 'generarDetallesAutomaticos'])->name('dtpedidos.generar');
+Route::get('/appromociones/asignar-automaticas', [AplicacionesPromocionesController::class, 'asignarPromocionesAutomaticas'])
+    ->name('appromociones.asignar-automaticas');
+
+    Route::get('/adminPage', [ReportePedidosController::class, 'adminPage'])->name('adminPage');
+
+// Redirección desde home para admins
+Route::get('/home', function() {
+    return Auth::user()->esAdmin() ? redirect()->route('adminPage') : view('home');
+});
+
+Route::prefix('reportes')->group(function() {
+    Route::get('/pedidos', [ReportePedidosController::class, 'mostrarReportes'])->name('reportes.pedidos');
+    // Nuevas rutas para las vistas individuales
+    Route::get('/graficos', [ReportePedidosController::class, 'mostrarGraficos'])->name('reportes.graficos');
+    Route::get('/barras', [ReportePedidosController::class, 'mostrarBarras'])->name('reportes.barras');
+    Route::get('/pastel', [ReportePedidosController::class, 'mostrarPastel'])->name('reportes.pastel');
+    Route::get('/tabla', [ReportePedidosController::class, 'mostrarTabla'])->name('reportes.tabla');
+});
+
+Route::get('/apdescuentos/asignar-automaticos', [AplicacionesDescuentosController::class, 'asignarDescuentosAutomaticos'])
+    ->name('apdescuentos.asignar-automaticos');
 // Ruta para mostrar el formulario de reseña
 Route::get('/reseñas/create/{producto}', [ResenasController::class, 'createByUser'])
     ->name('reseñas.createByUser')
     ->middleware('auth'); // Asegura que solo usuarios autenticados puedan dejar reseñas
 
+    
 // Ruta para guardar la reseña (ya la tienes en tu formulario como route('reseñas.storeByUser'))
 Route::post('/reseñas', [ResenasController::class, 'storeByUser'])
     ->name('reseñas.storeByUser')
