@@ -12,6 +12,14 @@
     <h2 style= "font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Detalles Del Pedido</h2>
     <a href="/home" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Volver</a>
     <a href="/dtpedidos/crear" class="btn btn-primary"> Crear +</a>
+     <a href="#" class="btn btn-info" 
+       onclick="event.preventDefault(); document.getElementById('generar-detalles-form').submit();">
+        <i class="fas fa-plus-circle"></i> Generar Detalles Automáticos
+    </a>
+    
+    <form id="generar-detalles-form" action="{{ route('dtpedidos.generar') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
     <table class="table table-dark table-striped mt-4">
         <thead>
             <tr>

@@ -63,16 +63,20 @@
                                     <a href="/promociones/{{ $promocion->id_promocion }}/editar" 
                                        class="btn btn-outline-primary rounded-start"
                                        data-bs-toggle="tooltip"
+                                       data-bs-placement="top"
                                        title="Editar promoción">
                                         <i class="fas fa-pen"></i>
                                     </a>
                                     
-                                    <button class="btn btn-outline-danger rounded-end"
-                                            onclick="confirmDelete({{ $promocion->id_promocion }})"
-                                            data-bs-toggle="tooltip"
-                                            title="Eliminar promoción">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+<button class="btn btn-outline-danger rounded-end"
+        data-bs-toggle="modal"
+        data-bs-target="#confirmModal"
+        data-item-id="{{ $promocion->id_promocion }}"
+        data-item-type="promociones"
+        data-bs-toggle="tooltip"
+        title="Eliminar promoción">
+    <i class="fas fa-trash"></i>
+</button>
                                 </div>
                             </td>
                         </tr>
@@ -109,7 +113,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="confirmAction">Confirmar</button>
+                <button type="button" class="btn btn-danger" id="confirmAction">Confirmar</button>
             </div>
         </div>
     </div>
@@ -167,30 +171,52 @@
     }
 </style>
 @endpush
-
 @push('js')
 <script>
     // Inicializar tooltips
     document.addEventListener('DOMContentLoaded', function() {
+        // Tooltips
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
+        
+        // Manejar el modal
+        const confirmModal = document.getElementById('confirmModal');
+        if (confirmModal) {
+            confirmModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget; // Botón que disparó el modal
+                const itemId = button.getAttribute('data-item-id');
+                const itemType = button.getAttribute('data-item-type');
+                
+                // Configurar título y mensaje
+                const itemName = itemType === 'promociones' ? 'promoción' : 'producto';
+                document.getElementById('modalTitle').textContent = `Eliminar ${itemName}`;
+                document.getElementById('modalBody').textContent = `¿Estás seguro de eliminar esta ${itemName}? Esta acción no se puede deshacer.`;
+                
+                // Configurar el formulario de eliminación
+                const confirmBtn = document.getElementById('confirmAction');
+                confirmBtn.onclick = function() {
+                    const form = document.getElementById('deleteForm');
+                    form.action = `/${itemType}/${itemId}/eliminar`;
+                    form.submit();
+                };
+            });
+        }
     });
 
-    // Función para eliminar promoción
-    function confirmDelete(promocionId) {
+    // Función para mostrar el modal
+    function confirmDelete(itemId, itemType) {
+        // Crear un botón temporal con los atributos necesarios
+        const tempBtn = document.createElement('button');
+        tempBtn.setAttribute('data-bs-toggle', 'modal');
+        tempBtn.setAttribute('data-bs-target', '#confirmModal');
+        tempBtn.setAttribute('data-item-id', itemId);
+        tempBtn.setAttribute('data-item-type', itemType);
+        
+        // Disparar el evento del modal
         const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
-        document.getElementById('modalTitle').textContent = 'Eliminar promoción';
-        document.getElementById('modalBody').textContent = '¿Estás seguro de eliminar esta promoción? Esta acción no se puede deshacer.';
-        
-        document.getElementById('confirmAction').onclick = function() {
-            const form = document.getElementById('deleteForm');
-            form.action = `/promociones/${promocionId}/eliminar`;
-            form.submit();
-        };
-        
-        modal.show();
+        modal.show(tempBtn);
     }
 </script>
 @endpush

@@ -8,6 +8,9 @@
     <h2 style= "font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Aplicacion De Descuentos</h2>
     <a href="/home" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Volver</a>
     <a href="/apdescuentos/crear" class="btn btn-primary"> Crear +</a>
+    <a href="{{ route('apdescuentos.asignar-automaticos') }}" class="btn btn-primary" onclick="return confirm('¿Estás seguro de asignar descuentos automáticamente?')">
+    <i class="fas fa-magic"></i> Asignar Descuentos
+</a>
     <table class="table table-dark table-striped mt-4">
         <thead>
             <tr>

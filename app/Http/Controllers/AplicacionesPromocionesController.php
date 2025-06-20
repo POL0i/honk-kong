@@ -13,6 +13,57 @@ class AplicacionesPromocionesController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    /**
+ * Asigna promociones automáticamente a productos (máximo a la mitad de los productos)
+ */
+public function asignarPromocionesAutomaticas()
+{
+    // Obtener todas las promociones disponibles
+    $promociones = promociones::all();
+    
+    if ($promociones->isEmpty()) {
+        return redirect('/appromociones')->with('error', 'No hay promociones disponibles para asignar');
+    }
+    
+    // Obtener productos sin promociones aplicadas
+    $productos = productos::whereDoesntHave('aplicaciones_promociones')->get();
+    
+    if ($productos->isEmpty()) {
+        return redirect('/appromociones')->with('info', 'Todos los productos ya tienen promociones aplicadas');
+    }
+    
+    // Calcular máximo de productos a asignar (mitad del total)
+    $maxProductos = ceil($productos->count() / 2);
+    $productosAsignados = 0;
+    
+    foreach ($promociones as $promocion) {
+        // Obtener productos sin promoción para esta promoción específica
+        $productosDisponibles = productos::whereDoesntHave('aplicaciones_promociones', function($query) use ($promocion) {
+            $query->where('id_promocion', $promocion->id_promocion);
+        })->get();
+        
+        // Tomar hasta la mitad de los productos disponibles para esta promoción
+        $productosParaAsignar = $productosDisponibles->take($maxProductos);
+        
+        foreach ($productosParaAsignar as $producto) {
+            try {
+                aplicaciones_promociones::create([
+                    'id_producto' => $producto->id_producto,
+                    'id_promocion' => $promocion->id_promocion
+                ]);
+                
+                $productosAsignados++;
+                
+            } catch (QueryException $e) {
+                continue; // Si hay error, continuar con el siguiente
+            }
+        }
+    }
+    
+    return redirect('/appromociones')->with('success', "Se asignaron promociones a $productosAsignados productos (máximo la mitad del total)");
+}
+
     public function index()
     {
         $appromociones=aplicaciones_promociones::all();

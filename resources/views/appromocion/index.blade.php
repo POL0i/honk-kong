@@ -9,6 +9,12 @@
     <h2 style= "font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Aplicacion De Promociones</h2>
     <a href="/home" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Volver</a>
     <a href="/appromociones/crear" class="btn btn-primary"> Crear +</a>
+    <a href="{{ route('appromociones.asignar-automaticas') }}" 
+   class="btn btn-info"
+   title="Asignará promociones a máximo la mitad de los productos"
+   onclick="return confirm('¿Estás seguro de asignar promociones automáticamente? Se aplicarán a máximo la mitad de los productos disponibles.')">
+    <i class="fas fa-tags"></i> Asignar Promociones
+</a>
     <table class="table table-dark table-striped mt-4">
         <thead>
             <tr>

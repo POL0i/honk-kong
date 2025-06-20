@@ -16,6 +16,61 @@ class AplicacionesDescuentosController extends Controller
     /**
      * Display a listing of the resource.
      */
+    /**
+ * Asigna descuentos automáticamente a pedidos que no los tengan
+ */
+public function asignarDescuentosAutomaticos()
+{
+        $maxDescuentosPorPedido = 1; // Cambia este número según necesites
+    
+    $descuentos = descuentos::all();
+    
+    if ($descuentos->isEmpty()) {
+        return redirect('/apdescuentos')->with('error', 'No hay descuentos disponibles para asignar');
+    }
+    
+    // Obtener pedidos con menos del máximo de descuentos permitidos
+    $pedidos = pedidos::whereHas('aplicaciones_descuentos', function($query) use ($maxDescuentosPorPedido) {
+        $query->groupBy('id_pedido')
+              ->havingRaw('COUNT(*) < ?', [$maxDescuentosPorPedido]);
+    }, '<', 1)->orWhereDoesntHave('aplicaciones_descuentos')->get();
+    // Obtener todos los descuentos disponibles
+    $descuentos = descuentos::all();
+    
+    if ($descuentos->isEmpty()) {
+        return redirect('/apdescuentos')->with('error', 'No hay descuentos disponibles para asignar');
+    }
+    
+    // Obtener pedidos sin descuentos aplicados
+    $pedidos = pedidos::whereDoesntHave('aplicaciones_descuentos')->get();
+    
+    if ($pedidos->isEmpty()) {
+        return redirect('/apdescuentos')->with('info', 'Todos los pedidos ya tienen descuentos aplicados');
+    }
+    
+    $descuentosAsignados = 0;
+    
+    foreach ($pedidos as $pedido) {
+        // Seleccionar un descuento aleatorio
+        $descuento = $descuentos->random();
+        
+        try {
+            // Aplicar el descuento al pedido
+            aplicaciones_descuentos::create([
+                'id_pedido' => $pedido->id_pedido,
+                'id_descuento' => $descuento->id_descuento
+            ]);
+            
+            $descuentosAsignados++;
+            
+        } catch (QueryException $e) {
+            // Si hay un error (como duplicado), continuar con el siguiente pedido
+            continue;
+        }
+    }
+    
+    return redirect('/apdescuentos')->with('success', "Se asignaron $descuentosAsignados descuentos a pedidos");
+}
     public function index()
     {
         $apdes=DB::table('aplicaciones_descuentos as apdes')

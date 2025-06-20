@@ -9,6 +9,15 @@
     <h2 style= "font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Lista De pedidos</h2>
     <a href="/home" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Volver</a>
     <a href="/pedidos/crear" class="btn btn-primary"> Crear +</a>
+ 
+    <a href="{{ route('pedidos.generate-fake') }}" class="btn btn-info" onclick="return confirm('¿Estás seguro de generar 50 pedidos de prueba?')">
+        <i class="fas fa-magic me-1"></i> Generar 50 Pedidos de Prueba
+    </a>
+    <a href="{{ route('reportes.pedidos') }}" class="btn btn-info">
+    <i class="fas fa-chart-bar"></i> Reportes de Pedidos
+</a>
+
+
     <table class="table table-dark table-striped mt-4">
         <thead>
             <tr>

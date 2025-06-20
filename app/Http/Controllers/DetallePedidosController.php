@@ -15,6 +15,65 @@ class DetallePedidosController extends Controller
     /**
      * Display a listing of the resource.
      */
+public function generarDetallesAutomaticos()
+{
+    // Obtener todos los productos disponibles
+    $productos = productos::all();
+    
+    if ($productos->isEmpty()) {
+        return redirect('/dtpedidos')->with('error', 'No hay productos disponibles para generar detalles');
+    }
+    
+    // Obtener pedidos sin detalles o que podrían tener más (usando el nombre correcto de la relación)
+    $pedidos = pedidos::whereDoesntHave('detalle_pedido') // Nombre exacto de tu relación
+                ->orWhereHas('detalle_pedido', function($query) {
+                    $query->groupBy('id_pedido')
+                          ->havingRaw('COUNT(*) < 3'); // Pedidos con menos de 3 productos
+                })->get();
+    
+    if ($pedidos->isEmpty()) {
+        return redirect('/dtpedidos')->with('info', 'Todos los pedidos ya tienen suficientes detalles');
+    }
+    
+    $detallesGenerados = 0;
+    
+    foreach ($pedidos as $pedido) {
+        // Determinar cuántos productos añadir (1-3)
+        $cantidadProductos = rand(1, 3);
+        
+        // Obtener productos aleatorios que no estén ya en este pedido
+        $productosExistentes = $pedido->detalle_pedido->pluck('id_producto')->toArray(); // Usar el nombre correcto
+        $productosDisponibles = $productos->whereNotIn('id_producto', $productosExistentes);
+        
+        if ($productosDisponibles->isNotEmpty()) {
+            // Tomar hasta $cantidadProductos productos disponibles
+            $productosParaAnadir = $productosDisponibles->random(min($cantidadProductos, $productosDisponibles->count()));
+            
+foreach ($productosParaAnadir as $producto) {
+    // Generar cantidad aleatoria una sola vez
+    $cantidad = rand(1, 5);
+    
+    // Crear detalle con cantidad aleatoria (1-5) y el precio actual del producto
+    detalle_pedidos::create([
+        'id_pedido' => $pedido->id_pedido,
+        'id_producto' => $producto->id_producto,
+        'cantidad' => $cantidad,
+        'precio' => $producto->precio
+    ]);
+    
+    $detallesGenerados++;
+    
+    // Actualizar total del pedido usando la cantidad generada
+    $pedido->total += $producto->precio * $cantidad;
+    $pedido->save();
+}
+        }
+    }
+    
+    return redirect('/dtpedidos')->with('success', "Se generaron $detallesGenerados nuevos detalles de pedido");
+}
+
+
     public function index()
     {
         $clientes=User::all();

@@ -9,6 +9,15 @@
     <h2 style= "font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Lista De Envios</h2>
     <a href="/home" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Volver</a>
     <a href="/envios/crear" class="btn btn-primary"> Crear +</a>
+
+        <a href="#" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('igualar-form').submit();">
+            <i class="fas fa-sync-alt"></i> Igualar Envíos a Pedidos
+        </a>
+        
+        <form id="igualar-form" action="{{ route('envios.igualar') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+  
     <table class="table table-dark table-striped mt-4">
         <thead>
             <tr>

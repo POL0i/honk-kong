@@ -21,7 +21,7 @@ class pedidos extends Model
 
     public function envios()
     {
-        return $this->hasOne(envios::class, 'id_envio');
+        return $this->hasOne(envios::class, 'id_pedido', 'id_pedido');
     }
     public function detalle_pedido()
     {
