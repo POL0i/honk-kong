@@ -8,7 +8,22 @@
                 <h3 class="mb-0">
                     <i class="fas fa-users-cog text-primary me-2"></i>Administración de Usuarios
                 </h3>
+                <div style=" padding-top: 20px">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <form action="{{ route('users.fake') }}" method="POST" style="margin-bottom: 20px;">
+                        @csrf
+                        <label for="cantidad">Cantidad:</label>
+                        <input type="number" name="cantidad" value="10" min="1" style="width: 60px;">
+                        <button type="submit" class="btn btn-primary">Generar usuarios falsos</button>
+                    </form>
+    
+                </div>
                 <div>
+    
                     <a href="/home" class="btn btn-sm btn-outline-secondary me-2">
                         <i class="fas fa-chevron-left me-1"></i> Volver
                     </a>
@@ -16,6 +31,7 @@
                         <i class="fas fa-plus me-1"></i> Nuevo Usuario
                     </a>
                 </div>
+               
             </div>
         </div>
         
@@ -227,4 +243,5 @@
         modal.show();
     }
 </script>
+
 @endpush

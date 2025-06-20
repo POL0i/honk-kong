@@ -15,7 +15,10 @@ use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\AplicacionesDescuentosController;
 use App\Http\Controllers\DetallePedidosController;
-use App\Models\aplicaciones_descuentos;
+use App\Http\Controllers\UserFakeController;
+use App\Http\Controllers\VerificationController;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 // Ruta para mostrar el formulario de reseña
 Route::get('/reseñas/create/{producto}', [ResenasController::class, 'createByUser'])
@@ -37,6 +40,13 @@ Route::get('/perfil', [TiendaController::class, 'mostrarPerfil'])->name('mostrar
 Route::get('/perfil/{id}/editar', [TiendaController::class, 'editarperfil'])->name('editperfil');
 route::Put('/perfil/{id}/actualizar', [TiendaController::class, 'actualizarPerfil'])->name('actualizarPerfil');
 
+//prueva userfaker
+
+Route::post('/users/fake', [UserFakeController::class, 'generar'])->name('users.fake');
+Route::get('/verify', [VerificationController::class, 'form'])->name('verify.form');
+Route::post('/verify', [VerificationController::class, 'verify'])->name('verify.submit');
+
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/carrito/agregar/{id}', [CarritoController::class, 'agregar'])->name('carrito.agregar');
     Route::get('/carrito/ver', [CarritoController::class, 'ver'])->name('carrito.vercarrito');
@@ -48,7 +58,24 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/carrito/eliminar/{id}', [CarritoController::class, 'eliminarItem'])->name('carrito.eliminar.item');
 
 }); 
+/*
 
+Route::get('/', function (Request $request) {
+    $token = $request->query('token');
+
+    $user = User::where('verification_token', $token)
+                ->whereNotNull('email_verified_at')
+                ->first();
+
+
+    if (!$user) {
+        abort(403, 'Acceso no autorizado o correo no verificado.');
+    }
+
+    return view('tienda.inicio');
+});
+
+*/ 
 
 Route::middleware([
     'auth:sanctum',
@@ -58,8 +85,6 @@ Route::middleware([
     Route::get('/home', function () {
         return view('home');
     })->name('dashboard');
-    //rutas para producto
-
 
     Route::middleware(['auth', 'can:admin-only'])->group(function () {
 
