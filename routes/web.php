@@ -18,6 +18,17 @@ use App\Http\Controllers\DetallePedidosController;
 use App\Models\aplicaciones_descuentos;
 use App\Http\Controllers\ReportePedidosController;
 
+//rutas publicas
+Route::get('/', [TiendaController::class, 'index'])->name('inicio');
+Route::get('/quienes', [TiendaController::class, 'mostrar'])->name('quienes');
+Route::get('/contactanos', [TiendaController::class, 'contacto'])->name('contactanos');
+Route::get('/buscar/{id}', [TiendaController::class, 'buscar'])->name('buscar');
+Route::get('/reseña', [TiendaController::class, 'reseña'])->name('reseña');
+Route::get('/perfil', [TiendaController::class, 'mostrarPerfil'])->name('mostrarPerfil');
+Route::get('/perfil/{id}/editar', [TiendaController::class, 'editarperfil'])->name('editperfil');
+route::Put('/perfil/{id}/actualizar', [TiendaController::class, 'actualizarPerfil'])->name('actualizarPerfil');
+
+
 Route::get('/pedidos/generate-fake', [PedidosController::class, 'generateFakePedidos'])
     ->name('pedidos.generate-fake');
 Route::post('/envios/igualar', [EnviosController::class, 'igualarEnvios'])->name('envios.igualar');
@@ -27,11 +38,12 @@ Route::get('/appromociones/asignar-automaticas', [AplicacionesPromocionesControl
 
     Route::get('/adminPage', [ReportePedidosController::class, 'adminPage'])->name('adminPage');
 
-// Redirección desde home para admins
-Route::get('/home', function() {
-    return Auth::user()->esAdmin() ? redirect()->route('adminPage') : view('home');
+//este anda dando error denis si es cosa tuya sabras que hacer no se que hace esta madre y da error si lo desmarco
+/* Redirección desde home para admins
+Route::get('/', function() {
+    return Auth::user()->esAdmin() ? redirect()->route('/') : view('inicio');
 });
-
+*/
 Route::prefix('reportes')->group(function() {
     Route::get('/pedidos', [ReportePedidosController::class, 'mostrarReportes'])->name('reportes.pedidos');
     // Nuevas rutas para las vistas individuales
@@ -50,26 +62,14 @@ Route::get('/reseñas/create/{producto}', [ResenasController::class, 'createByUs
 
     
 // Ruta para guardar la reseña (ya la tienes en tu formulario como route('reseñas.storeByUser'))
-Route::post('/reseñas', [ResenasController::class, 'storeByUser'])
-    ->name('reseñas.storeByUser')
-    ->middleware('auth');
+Route::post('/reseñas', [ResenasController::class, 'storeByUser'])->name('reseñas.storeByUser')->middleware('auth');
 
-
-Route::get('/', [TiendaController::class, 'index'])->name('inicio');
-Route::get('/quienes', [TiendaController::class, 'mostrar'])->name('quienes');
-Route::get('/contactanos', [TiendaController::class, 'contacto'])->name('contactanos');
-Route::get('/buscar/{id}', [TiendaController::class, 'buscar'])->name('buscar');
-Route::get('/reseña', [TiendaController::class, 'reseña'])->name('reseña');
-Route::get('/perfil', [TiendaController::class, 'mostrarPerfil'])->name('mostrarPerfil');
-Route::get('/perfil/{id}/editar', [TiendaController::class, 'editarperfil'])->name('editperfil');
-route::Put('/perfil/{id}/actualizar', [TiendaController::class, 'actualizarPerfil'])->name('actualizarPerfil');
-
-//prueva userfaker
+/*prueva userfaker
 
 Route::post('/users/fake', [UserFakeController::class, 'generar'])->name('users.fake');
 Route::get('/verify', [VerificationController::class, 'form'])->name('verify.form');
 Route::post('/verify', [VerificationController::class, 'verify'])->name('verify.submit');
-
+*/
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/carrito/agregar/{id}', [CarritoController::class, 'agregar'])->name('carrito.agregar');
