@@ -2,7 +2,8 @@
 services:
   - type: web
     name: honk-kong-web  # Nombre del servicio web en Render
-    runtime: php
+    runtime: php   
+     phpVersion: 8.2 
     buildCommand: |
       composer install --no-dev --optimize-autoloader
       npm install
