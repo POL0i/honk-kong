@@ -1,38 +1,32 @@
 # render.yaml - Configuración específica para Honk Kong en Render.com
 services:
   - type: web
-    name: honk-kong-web  # Nombre del servicio web en Render
-    runtime: php   
-     phpVersion: 8.2 
-    buildCommand: bash build.sh
-      composer install --no-dev --optimize-autoloader
-      npm install
-      npm run build
-      php artisan optimize:clear
-      php artisan storage:link
+    name: honk-kong-web
+    runtime: php
+    phpVersion: 8.2
+    buildCommand: bash build.sh  # Esto es suficiente si tienes el archivo build.sh
     startCommand: php artisan serve --host=0.0.0.0 --port=${PORT}
     envVars:
-      # Configuración básica de Laravel
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
         value: false
       - key: APP_KEY
-        generateValue: true  # Render generará automáticamente una clave
+        generateValue: true
 
-      # Configuración de PostgreSQL (datos específicos de tu DB en Render)
+      # Configuración PostgreSQL
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
-        value: dpg-d1o1586r433s738bi9fg-a  # Hostname proporcionado por Render
+        value: dpg-d1o1586r433s738bi9fg-a
       - key: DB_PORT
         value: 5432
       - key: DB_DATABASE
-        value: hong-kong  # Nombre de la base de datos
+        value: hong-kong
       - key: DB_USERNAME
-        value: hong_kong_user  # Usuario de la DB
+        value: hong_kong_user
       - key: DB_PASSWORD
-        value: Pa78c48Qm3OM6WmVj1s1kwez5GmFvUJ9  # Contraseña de la DB
+        value: Pa78c48Qm3OM6WmVj1s1kwez5GmFvUJ9
 
       # Otras variables (ejemplo: configuración de mail o APIs externas)
       # - key: MAIL_MAILER
