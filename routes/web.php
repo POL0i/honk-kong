@@ -29,49 +29,11 @@ Route::get('/perfil/{id}/editar', [TiendaController::class, 'editarperfil'])->na
 route::Put('/perfil/{id}/actualizar', [TiendaController::class, 'actualizarPerfil'])->name('actualizarPerfil');
 
 
-Route::get('/pedidos/generate-fake', [PedidosController::class, 'generateFakePedidos'])
-    ->name('pedidos.generate-fake');
-Route::post('/envios/igualar', [EnviosController::class, 'igualarEnvios'])->name('envios.igualar');
-Route::post('/dtpedidos/generar-detalles', [DetallePedidosController::class, 'generarDetallesAutomaticos'])->name('dtpedidos.generar');
-Route::get('/appromociones/asignar-automaticas', [AplicacionesPromocionesController::class, 'asignarPromocionesAutomaticas'])
-    ->name('appromociones.asignar-automaticas');
 
-    Route::get('/adminPage', [ReportePedidosController::class, 'adminPage'])->name('adminPage');
-
-//este anda dando error denis si es cosa tuya sabras que hacer no se que hace esta madre y da error si lo desmarco
-/* Redirección desde home para admins
-Route::get('/', function() {
-    return Auth::user()->esAdmin() ? redirect()->route('/') : view('inicio');
-});
-*/
-Route::prefix('reportes')->group(function() {
-    Route::get('/pedidos', [ReportePedidosController::class, 'mostrarReportes'])->name('reportes.pedidos');
-    // Nuevas rutas para las vistas individuales
-    Route::get('/graficos', [ReportePedidosController::class, 'mostrarGraficos'])->name('reportes.graficos');
-    Route::get('/barras', [ReportePedidosController::class, 'mostrarBarras'])->name('reportes.barras');
-    Route::get('/pastel', [ReportePedidosController::class, 'mostrarPastel'])->name('reportes.pastel');
-    Route::get('/tabla', [ReportePedidosController::class, 'mostrarTabla'])->name('reportes.tabla');
-});
-
-Route::get('/apdescuentos/asignar-automaticos', [AplicacionesDescuentosController::class, 'asignarDescuentosAutomaticos'])
-    ->name('apdescuentos.asignar-automaticos');
-// Ruta para mostrar el formulario de reseña
-Route::get('/reseñas/create/{producto}', [ResenasController::class, 'createByUser'])
-    ->name('reseñas.createByUser')
-    ->middleware('auth'); // Asegura que solo usuarios autenticados puedan dejar reseñas
-
-    
-// Ruta para guardar la reseña (ya la tienes en tu formulario como route('reseñas.storeByUser'))
-Route::post('/reseñas', [ResenasController::class, 'storeByUser'])->name('reseñas.storeByUser')->middleware('auth');
-
-/*prueva userfaker
-
-Route::post('/users/fake', [UserFakeController::class, 'generar'])->name('users.fake');
-Route::get('/verify', [VerificationController::class, 'form'])->name('verify.form');
-Route::post('/verify', [VerificationController::class, 'verify'])->name('verify.submit');
-*/
 
 Route::middleware(['auth'])->group(function () {
+
+    //funciones del carrito publicas
     Route::get('/carrito/agregar/{id}', [CarritoController::class, 'agregar'])->name('carrito.agregar');
     Route::get('/carrito/ver', [CarritoController::class, 'ver'])->name('carrito.vercarrito');
     Route::post('/carrito/eliminar', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
@@ -81,25 +43,22 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/carrito/actualizar/{id}', [CarritoController::class, 'actualizar'])->name('carrito.actualizar');
     Route::delete('/carrito/eliminar/{id}', [CarritoController::class, 'eliminarItem'])->name('carrito.eliminar.item');
 
-}); 
-/*
+    //nuevas rutas de pago
+    Route::prefix('metodos-pago')->group(function() {
+    Route::get('/', [MetodosPagosController::class, 'index'])->name('metodos-pago.index');
+    Route::get('/crear', [MetodosPagosController::class, 'create'])->name('metodos-pago.create');
+    Route::post('/', [MetodosPagosController::class, 'store'])->name('metodos-pago.store');
+    Route::post('/{id}/predeterminado', [MetodosPagosController::class, 'setDefault'])->name('metodos-pago.set-default');
+    Route::delete('/{id}', [MetodosPagosController::class, 'destroy'])->name('metodos-pago.destroy');
+    Route::post('/procesar-pago', [CarritoController::class, 'procesarPago'])->middleware('auth')->name('procesar-pago');
 
-Route::get('/', function (Request $request) {
-    $token = $request->query('token');
+    // reseñas creadas por el usuario
+    Route::post('/reseñas', [ResenasController::class, 'storeByUser'])->name('reseñas.storeByUser')->middleware('auth');
 
-    $user = User::where('verification_token', $token)
-                ->whereNotNull('email_verified_at')
-                ->first();
-
-
-    if (!$user) {
-        abort(403, 'Acceso no autorizado o correo no verificado.');
-    }
-
-    return view('tienda.inicio');
 });
 
-*/ 
+}); 
+
 
 Route::middleware([
     'auth:sanctum',
@@ -130,7 +89,6 @@ Route::middleware([
 
         // web.php
         Route::post('/user/{id}/cambiar-rol', [UsersController::class, 'cambiarRol'])->name('user.cambiarRol');
-
 
         //categorias
         route::get('/categorias', [categoriasController::class, 'index'])->name('home'); 
@@ -204,9 +162,29 @@ Route::middleware([
         route::Put('/apdescuentos/{id1}/{id2}/actualizar', [AplicacionesDescuentosController::class, 'update'])->name('home');
         route::delete('/apdescuentos/{id1}/{id2}/eliminar', [AplicacionesDescuentosController::class, 'destroy'])->name('home');
         
+        //generar datos falsos 
+        Route::get('/pedidos/generate-fake', [PedidosController::class, 'generateFakePedidos'])
+            ->name('pedidos.generate-fake');
 
+        Route::post('/envios/igualar', [EnviosController::class, 'igualarEnvios'])
+            ->name('envios.igualar');
 
+        Route::post('/dtpedidos/generar-detalles', [DetallePedidosController::class, 'generarDetallesAutomaticos'])
+            ->name('dtpedidos.generar');
 
+        Route::get('/appromociones/asignar-automaticas', [AplicacionesPromocionesController::class, 'asignarPromocionesAutomaticas'])
+            ->name('appromociones.asignar-automaticas');
+
+        Route::get('/adminPage', [ReportePedidosController::class, 'adminPage'])
+            ->name('adminPage');
+
+        Route::get('/apdescuentos/asignar-automaticos', [AplicacionesDescuentosController::class, 'asignarDescuentosAutomaticos'])
+            ->name('apdescuentos.asignar-automaticos');
+        Route::post('/users/generate-fake', [UserController::class, 'generateFakeUsers'])
+        ->name('users.fake');
+        
+        Route::get('/reseñas/create/{producto}', [ResenasController::class, 'createByUser'])
+            ->name('reseñas.createByUser');
     });
 
 });

@@ -8,15 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class metodos_pagos extends Model
 {
     use HasFactory;
-    protected $primaryKey='id_pago';
-    protected $fillable=
-    [
+
+    protected $table = 'metodos_pagos';
+    protected $primaryKey = 'id_pago';
+
+    protected $fillable = [
+        'tipo',
+        'alias',
         'nombre_titular',
-        'numero_targera',
+        'ultimos_digitos',
+        'marca',
         'fecha_expiracion',
-        'cvc',
+        'codigo_qr',
+        'es_predeterminado',
         'user_id'
-    
     ];
 
     public function pedidos()
@@ -25,6 +30,6 @@ class metodos_pagos extends Model
     }
     public function users()
     {
-        return $this->belongsTo(user::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

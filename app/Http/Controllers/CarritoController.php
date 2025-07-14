@@ -73,81 +73,99 @@ class CarritoController extends Controller
         $categorias=categorias::all();
         return view('carrito.pago',compact('categorias'));
     }
-
-    public function procesarPago(Request $request)
-    {
-        if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'Debes iniciar sesión para completar el pago.');
-        }
-        
-        $request->validate([
-            'nombre_titular' => 'required|string',
-            'numero_targera' => 'required|string',
-            'fecha_expiracion' => 'required|string',
-            'cvc' => 'required|numeric',
-            'direccion_envio' => 'required|string',
-        ]);
-        
-        $user = auth()->user();
-        $carrito = session('carrito', []);
-        
-        if (empty($carrito)) {
-            return redirect()->back()->with('error', 'El carrito está vacío.');
-        }
-        
-        // 🔍 Verificar si ya existe un método de pago con el mismo número
-        $metodoExistente = metodos_pagos::where('numero_targera', $request->numero_targera)
-            ->where('user_id', $user->id)
-            ->first();
-        
-        // ✅ Usar el método existente o crearlo si no existe
-        if ($metodoExistente) {
-            $pago = $metodoExistente;
-        } else {
-            $pago = metodos_pagos::create([
-                'nombre_titular' => $request->nombre_titular,
-                'numero_targera' => $request->numero_targera,
-                'fecha_expiracion' => $request->fecha_expiracion,
-                'cvc' => $request->cvc,
-                'user_id' => $user->id
-            ]);
-        }
-        
-        // 🧾 Crear el pedido
-        $pedido = pedidos::create([
+public function procesarPago(Request $request)
+{
+    if (!auth()->check()) {
+        return redirect()->route('login')->with('error', 'Debes iniciar sesión para completar el pago.');
+    }
+    
+    $request->validate([
+        'metodo_pago' => 'required|in:tarjeta,qr,efectivo',
+        'direccion_envio' => 'required|string',
+        'nombre_titular' => 'required_if:metodo_pago,tarjeta',
+        'numero_tarjeta' => 'required_if:metodo_pago,tarjeta',
+        'fecha_expiracion' => 'required_if:metodo_pago,tarjeta',
+        'cvc' => 'required_if:metodo_pago,tarjeta'
+    ]);
+    
+    $user = auth()->user();
+    $carrito = session('carrito', []);
+    
+    if (empty($carrito)) {
+        return redirect()->back()->with('error', 'El carrito está vacío.');
+    }
+    
+    // Crear el método de pago si es necesario
+    if ($request->metodo_pago === 'tarjeta') {
+        $metodoPago = MetodosPagos::create([
+            'tipo' => 'tarjeta',
+            'nombre_titular' => $request->nombre_titular,
+            'ultimos_digitos' => substr(preg_replace('/\D/', '', $request->numero_tarjeta), -4),
+            'marca' => $request->marca ?? $this->detectarMarcaTarjeta($request->numero_tarjeta),
+            'fecha_expiracion' => $request->fecha_expiracion,
             'user_id' => $user->id,
-            'fecha' => now(),
-            'total' => collect($carrito)->sum(fn($item) => $item['precio'] * $item['cantidad']),
-            'estado' => 'Procesado',
-            'direccion_envio' => $request->direccion_envio,
-            'id_pago' => $pago->id_pago
+            'es_predeterminado' => true
         ]);
-        
-        // 🧩 Crear los detalles del pedido
-        foreach ($carrito as $item) {
-            detalle_pedidos::create([
-                'id_pedido' => $pedido->id_pedido,
-                'id_producto' => $item['id'],
-                'cantidad' => $item['cantidad'],
-                'precio' => $item['precio']
-            ]);
-        }
-        //crear envio
-        envios::create([
-            'direccion_envio' => $request->direccion_envio,
-            'fecha_envio' => now(),
-            'fecha_estimada_llegada' => now()->addMinutes(30),
-            'metodo_envio' => 'Envío estándar',
-            'estado_envio' => 'Procesado',
-            'id_pedido' => $pedido->id_pedido
+    } else {
+        // Usar método existente o crear uno genérico
+        $metodoPago = MetodosPagos::firstOrCreate([
+            'tipo' => $request->metodo_pago,
+            'user_id' => $user->id
+        ], [
+            'alias' => ucfirst($request->metodo_pago),
+            'es_predeterminado' => false
         ]);
-        
-        
-        // 🧹 Vaciar carrito
-        session()->forget('carrito');
-        
-        return redirect('/')->with('success', '¡Pedido realizado con éxito!');
-        
+    }
+    
+    $total = collect($carrito)->sum(fn($item) => $item['precio'] * $item['cantidad']);
+
+    // Crear el pedido
+    $pedido = Pedidos::create([
+        'user_id' => $user->id,
+        'fecha' => now(),
+        'total' => $total,
+        'estado' => $request->metodo_pago === 'efectivo' ? 'Pendiente' : 'Procesado',
+        'direccion_envio' => $request->direccion_envio,
+        'id_pago' => $metodoPago->id_pago,
+        'indicaciones' => $request->indicaciones ?? null
+    ]);
+    
+    // Crear detalles del pedido
+    foreach ($carrito as $item) {
+        DetallePedidos::create([
+            'id_pedido' => $pedido->id_pedido,
+            'id_producto' => $item['id'],
+            'cantidad' => $item['cantidad'],
+            'precio' => $item['precio']
+        ]);
+    }
+    
+    // Crear envío
+    Envios::create([
+        'direccion_envio' => $request->direccion_envio,
+        'fecha_envio' => $request->metodo_pago === 'efectivo' ? null : now(),
+        'fecha_estimada_llegada' => $request->metodo_pago === 'efectivo' ? null : now()->addDays(3),
+        'metodo_envio' => 'Estándar',
+        'estado_envio' => $request->metodo_pago === 'efectivo' ? 'Pendiente' : 'Procesado',
+        'id_pedido' => $pedido->id_pedido
+    ]);
+    
+    // Vaciar carrito
+    session()->forget('carrito');
+    
+    return redirect()->route('pedidos.show', $pedido->id_pedido)
+        ->with('success', '¡Pedido realizado con éxito!');
+}
+
+private function detectarMarcaTarjeta($numero)
+{
+    $numero = preg_replace('/\D/', '', $numero);
+    
+    if (preg_match('/^4/', $numero)) return 'Visa';
+    if (preg_match('/^5[1-5]/', $numero)) return 'Mastercard';
+    if (preg_match('/^3[47]/', $numero)) return 'American Express';
+    
+    return 'Otra';
 }
 public function actualizar(Request $request, $id)
 {

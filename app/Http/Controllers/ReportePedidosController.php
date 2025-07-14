@@ -15,19 +15,18 @@ class ReportePedidosController extends Controller
 public function adminPage()
 {
     // Obtener pedidos recientes con sus detalles y productos
-    $pedidosRecientes = pedidos::with(['detalle_pedidos.productos'])
-        ->latest()
-        ->take(5)
-        ->get()
-        ->map(function($pedido) {
-            // Para cada pedido, obtener el primer producto del detalle
-            $primerDetalle = $pedido->detalle_pedidos->first();
-            return [
-                'pedido' => $pedido,
-                'producto' => $primerDetalle ? $primerDetalle->productos : null,
-                'detalle' => $primerDetalle
-            ];
-        });
+$pedidosRecientes = pedidos::with(['detalle_pedido.productos']) // Usar el nombre exacto de la relación
+    ->latest()
+    ->take(5)
+    ->get()
+    ->map(function($pedido) {
+        $primerDetalle = $pedido->detalle_pedido->first(); // Cambiado a detalle_pedido
+        return [
+            'pedido' => $pedido,
+            'producto' => $primerDetalle ? $primerDetalle->productos : null,
+            'detalle' => $primerDetalle
+        ];
+    });
 
     return view('adminPage', [
         'totalPedidosHoy' => pedidos::whereDate('created_at', today())->count(),

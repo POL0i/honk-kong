@@ -63,18 +63,20 @@ public function createByUser($productoId)
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        $users=user::all();
-        return view('reseña.create',compact('users'));
-    }
+public function create()
+{
+    $users = User::all();
+    $productos = productos::all(); // Asegúrate de importar el modelo Producto
+    return view('reseña.create', compact('users', 'productos'));
+}
+    
 
     /**
      * Store a newly created resource in storage.
-     */
+*/
     public function store(Request $request)
     {
-        $reseña=resenas::create($request->all());
+        $reseña= Resena::create($request->all());
         return redirect('/reseñas');
     }
 

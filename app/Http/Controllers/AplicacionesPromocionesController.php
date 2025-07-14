@@ -17,52 +17,39 @@ class AplicacionesPromocionesController extends Controller
     /**
  * Asigna promociones automáticamente a productos (máximo a la mitad de los productos)
  */
-public function asignarPromocionesAutomaticas()
-{
-    // Obtener todas las promociones disponibles
-    $promociones = promociones::all();
-    
-    if ($promociones->isEmpty()) {
-        return redirect('/appromociones')->with('error', 'No hay promociones disponibles para asignar');
-    }
-    
-    // Obtener productos sin promociones aplicadas
-    $productos = productos::whereDoesntHave('aplicaciones_promociones')->get();
-    
-    if ($productos->isEmpty()) {
-        return redirect('/appromociones')->with('info', 'Todos los productos ya tienen promociones aplicadas');
-    }
-    
-    // Calcular máximo de productos a asignar (mitad del total)
-    $maxProductos = ceil($productos->count() / 2);
-    $productosAsignados = 0;
-    
-    foreach ($promociones as $promocion) {
-        // Obtener productos sin promoción para esta promoción específica
-        $productosDisponibles = productos::whereDoesntHave('aplicaciones_promociones', function($query) use ($promocion) {
-            $query->where('id_promocion', $promocion->id_promocion);
-        })->get();
-        
-        // Tomar hasta la mitad de los productos disponibles para esta promoción
-        $productosParaAsignar = $productosDisponibles->take($maxProductos);
-        
-        foreach ($productosParaAsignar as $producto) {
-            try {
-                aplicaciones_promociones::create([
-                    'id_producto' => $producto->id_producto,
-                    'id_promocion' => $promocion->id_promocion
-                ]);
-                
-                $productosAsignados++;
-                
-            } catch (QueryException $e) {
-                continue; // Si hay error, continuar con el siguiente
-            }
+
+    public function generateFakePromotions(Request $request)
+    {
+        $request->validate([
+            'cantidad' => 'required|integer|min:1|max:50'
+        ]);
+
+        // Obtener productos que no tienen promociones activas
+        $productosSinPromocion = Producto::whereDoesntHave('promociones', function($query) {
+            $query->where('fecha_fin', '>=', Carbon::now());
+        })->inRandomOrder()->take($request->cantidad)->get();
+
+        if ($productosSinPromocion->count() < $request->cantidad) {
+            return back()->with('warning', 
+                "Solo se pudieron crear {$productosSinPromocion->count()} promociones. No hay suficientes productos sin promoción activa.");
         }
+
+        foreach ($productosSinPromocion as $producto) {
+            $fechaInicio = Carbon::now();
+            $fechaFin = $fechaInicio->copy()->addDays(rand(7, 30)); // 1 a 4 semanas de promoción
+            
+            Promocion::create([
+                'producto_id' => $producto->id,
+                'descuento' => rand(5, 50), // 5% a 50% de descuento
+                'fecha_inicio' => $fechaInicio,
+                'fecha_fin' => $fechaFin,
+                'activa' => true
+            ]);
+        }
+
+        return back()->with('success', "Se generaron {$request->cantidad} promociones falsas correctamente");
     }
-    
-    return redirect('/appromociones')->with('success', "Se asignaron promociones a $productosAsignados productos (máximo la mitad del total)");
-}
+
 
     public function index()
     {

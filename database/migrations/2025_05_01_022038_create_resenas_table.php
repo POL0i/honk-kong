@@ -12,13 +12,32 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('resenas', function (Blueprint $table) {
-            $table->id('id_reseña');
+            $table->id('id_resena');
+            
+            // Relación con usuarios
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->onDelete('cascade');
+            
+            // Relación con productos (nota el nombre de la clave foránea)
+            $table->unsignedBigInteger('producto_id');
+            $table->foreign('producto_id')
+                  ->references('id_producto')
+                  ->on('productos')
+                  ->onDelete('cascade');
+            
+            // Contenido de la reseña
             $table->text('comentario');
-            $table->integer('calificacion')->check('calificacion >= 1 AND calificacion <= 5');
-            $table->date('fecha');
-
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->integer('calificacion')
+                  ->check('calificacion >= 1 AND calificacion <= 5');
+            
+            // Metadata
             $table->timestamps();
+            $table->softDeletes();
+            
+            // Índices
+            $table->index('user_id');
+            $table->index('producto_id');
         });
     }
 

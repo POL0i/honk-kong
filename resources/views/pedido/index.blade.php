@@ -13,9 +13,6 @@
     <a href="{{ route('pedidos.generate-fake') }}" class="btn btn-info" onclick="return confirm('¿Estás seguro de generar 50 pedidos de prueba?')">
         <i class="fas fa-magic me-1"></i> Generar 50 Pedidos de Prueba
     </a>
-    <a href="{{ route('reportes.pedidos') }}" class="btn btn-info">
-    <i class="fas fa-chart-bar"></i> Reportes de Pedidos
-</a>
 
 
     <table class="table table-dark table-striped mt-4">
