@@ -40,6 +40,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/carrito/pago', [CarritoController::class, 'pago'])->name('carrito.pago');
     Route::post('/carrito/procesar', [CarritoController::class, 'procesarPago'])->name('carrito.procesar');
 
+// Nueva ruta para mostrar la confirmación
+Route::get('/pedido/confirmacion/{id}', [CarritoController::class, 'mostrarConfirmacion'])->name('pedido.confirmacion');
+
+Route::get('/pedido/detalles/{id_pedido}', [CarritoController::class, 'mostrarDetallesPedido'])
+    ->name('pedido.detalles');
+
     Route::post('/carrito/actualizar/{id}', [CarritoController::class, 'actualizar'])->name('carrito.actualizar');
     Route::delete('/carrito/eliminar/{id}', [CarritoController::class, 'eliminarItem'])->name('carrito.eliminar.item');
 
@@ -158,9 +164,9 @@ Route::middleware([
         route::get('/apdescuentos', [AplicacionesDescuentosController::class, 'index'])->name('home'); 
         route::get('/apdescuentos/crear', [AplicacionesDescuentosController::class, 'create'])->name('home');
         route::post('/apdescuentos/guardar',[AplicacionesDescuentosController::class, 'store'])->name('home');
-        route::get('/apdescuentos/{id1}/{id2}/editar',[AplicacionesDescuentosController::class, 'edit'])->name('home');
-        route::Put('/apdescuentos/{id1}/{id2}/actualizar', [AplicacionesDescuentosController::class, 'update'])->name('home');
-        route::delete('/apdescuentos/{id1}/{id2}/eliminar', [AplicacionesDescuentosController::class, 'destroy'])->name('home');
+        route::get('/apdescuentos/{id1}/{id2}/editar',[AplicacionesDescuentosController::class, 'edit'])->name('appdescuentos.edit');
+        route::Put('/apdescuentos/{id1}/{id2}/actualizar', [AplicacionesDescuentosController::class, 'update'])->name('appdescuentos.update');
+        route::delete('/apdescuentos/{id1}/{id2}/eliminar', [AplicacionesDescuentosController::class, 'destroy'])->name('appdescuentos.destroy');
         
         //generar datos falsos 
         Route::get('/pedidos/generate-fake', [PedidosController::class, 'generateFakePedidos'])

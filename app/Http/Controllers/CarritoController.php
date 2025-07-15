@@ -97,7 +97,7 @@ public function procesarPago(Request $request)
     
     // Crear el método de pago si es necesario
     if ($request->metodo_pago === 'tarjeta') {
-        $metodoPago = MetodosPagos::create([
+        $metodoPago = metodos_pagos::create([
             'tipo' => 'tarjeta',
             'nombre_titular' => $request->nombre_titular,
             'ultimos_digitos' => substr(preg_replace('/\D/', '', $request->numero_tarjeta), -4),
@@ -108,7 +108,7 @@ public function procesarPago(Request $request)
         ]);
     } else {
         // Usar método existente o crear uno genérico
-        $metodoPago = MetodosPagos::firstOrCreate([
+        $metodoPago = metodos_pagos::firstOrCreate([
             'tipo' => $request->metodo_pago,
             'user_id' => $user->id
         ], [
@@ -120,7 +120,7 @@ public function procesarPago(Request $request)
     $total = collect($carrito)->sum(fn($item) => $item['precio'] * $item['cantidad']);
 
     // Crear el pedido
-    $pedido = Pedidos::create([
+    $pedido = pedidos::create([
         'user_id' => $user->id,
         'fecha' => now(),
         'total' => $total,
@@ -132,7 +132,7 @@ public function procesarPago(Request $request)
     
     // Crear detalles del pedido
     foreach ($carrito as $item) {
-        DetallePedidos::create([
+        detalle_pedidos::create([
             'id_pedido' => $pedido->id_pedido,
             'id_producto' => $item['id'],
             'cantidad' => $item['cantidad'],
@@ -141,7 +141,7 @@ public function procesarPago(Request $request)
     }
     
     // Crear envío
-    Envios::create([
+    envios::create([
         'direccion_envio' => $request->direccion_envio,
         'fecha_envio' => $request->metodo_pago === 'efectivo' ? null : now(),
         'fecha_estimada_llegada' => $request->metodo_pago === 'efectivo' ? null : now()->addDays(3),
@@ -153,8 +153,55 @@ public function procesarPago(Request $request)
     // Vaciar carrito
     session()->forget('carrito');
     
-    return redirect()->route('pedidos.show', $pedido->id_pedido)
-        ->with('success', '¡Pedido realizado con éxito!');
+//    return redirect()->route('pedidos.show', $pedido->id_pedido)
+//        ->with('success', '¡Pedido realizado con éxito!');
+      return redirect()->route('pedido.detalles', $pedido->id_pedido)
+    ->with('success', '¡Pedido realizado con éxito!');
+
+}
+
+public function mostrarDetallesPedido($id_pedido)
+{
+    // Obtener el pedido con sus relaciones
+    $pedido = pedidos::with([
+            'detalle_pedido.productos',  // Relación de detalles del pedido y sus productos
+            'metodos_pagos',             // Método de pago
+            'users'                      // Usuario que hizo el pedido
+        ])
+        ->where('id_pedido', $id_pedido)
+        ->firstOrFail();
+
+    // Verificar que el pedido pertenece al usuario autenticado
+    if ($pedido->user_id != auth()->id()) {
+        abort(403, 'No tienes permiso para ver este pedido');
+    }
+    // Obtener las categorías (igual que en el método ver())
+    $categorias = categorias::all(); // Asegúrate de importar el modelo: use App\Models\categorias;
+
+    return view('carrito.detalles', [
+        'pedido' => $pedido,
+        'detalles' => $pedido->detalle_pedido,
+        'metodo_pago' => $pedido->metodos_pagos,
+        'usuario' => $pedido->users,
+        'categorias' => $categorias
+    ]);
+}
+
+public function mostrarConfirmacion($id)
+{
+
+    $pedidos = pedidos::with(['detalles.producto', 'metodoPago'])
+                ->where('user_id', auth()->id())
+                ->findOrFail($id);
+      
+    return view('carrito.confirmacion', [
+      'pedidos' => $pedidos,
+        'detalles_pedidos' => $pedidos->detalle_pedidos, // Nombre correcto de la relación
+        'metodos_pagos' => $pedidos->metodos_pagos, // Nombre correcto de la relación
+        'direccion' => $pedidos->direccion_envio,
+        'total' => $pedidos->total,
+         'categorias' => $categorias    
+    ]);
 }
 
 private function detectarMarcaTarjeta($numero)

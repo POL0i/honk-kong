@@ -121,7 +121,8 @@
             <input type="number" name="cvc" placeholder="CVC" required maxlength="3" oninput="this.value = this.value.slice(0, 3)">
         </div>
         <input type="text" name="direccion_envio" placeholder="Dirección de envío" required>
-        <textarea name="indicaciones" placeholder="Indicaciones adicionales para la entrega"></textarea>
+        <input type="text" id="indicacione" name="indicaciones" placeholder="Indicaciones adicionales para la entrega" maxlength="19" required>
+       
         <div class="form-buttons">
             <button type="submit" class="btn-confirmar">Confirmar pago</button>
             <a href="/" class="btn-cancelar">Cancelar</a>
