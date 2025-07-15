@@ -186,7 +186,7 @@ Route::middleware([
 
         Route::get('/apdescuentos/asignar-automaticos', [AplicacionesDescuentosController::class, 'asignarDescuentosAutomaticos'])
             ->name('apdescuentos.asignar-automaticos');
-        Route::post('/users/generate-fake', [UserController::class, 'generateFakeUsers'])
+        Route::post('/users/generate-fake', [UsersController::class, 'generateFakeUsers'])
         ->name('users.fake');
         
         Route::get('/reseñas/create/{producto}', [ResenasController::class, 'createByUser'])

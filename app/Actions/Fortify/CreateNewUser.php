@@ -40,7 +40,7 @@ class CreateNewUser implements CreatesNewUsers
             'role'=> $esPrimero ? 'admin' : 'cliente',
             'verification_code' => $code, 
         ]);
-        Mail::to($user->email)->send(new VerificationCodeMail($code));
+        //Mail::to($user->email)->send(new VerificationCodeMail($code));
 
         return $user;
     }
