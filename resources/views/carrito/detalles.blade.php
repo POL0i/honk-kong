@@ -224,7 +224,7 @@
     </div>
     
     <div class="action-buttons">
-        <a href="/" class="btn btn-primary">Volver al inicio</a>
+        <a href="/" class="btn btn-primary">Volver al inicio</a>c
     </div>
 </div>
 @endsection
